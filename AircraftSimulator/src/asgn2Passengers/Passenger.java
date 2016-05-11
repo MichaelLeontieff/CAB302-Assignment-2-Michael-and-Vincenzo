@@ -73,9 +73,23 @@ public abstract class Passenger {
 	 */
 	public Passenger(int bookingTime, int departureTime) throws PassengerException  {
 		//Stuff here 
-		this.passID = "" + Passenger.index; 
-		Passenger.index++; 
+		if (bookingTime < 0) {
+			throw new PassengerException("Invalid booking time");
+		} else if (departureTime <= 0) {
+			throw new PassengerException("Invalid departure time");
+		} else if (departureTime < bookingTime) {
+			throw new PassengerException("Booking time is after departure time");
+		} else {
+			// set fields
+			this.passID = "" + Passenger.index; 
+			Passenger.index++; 
+			this.bookingTime = bookingTime;
+			this.departureTime = departureTime;
+			// set state of passenger
+			newState = true;
+		}
 		//Stuff here 
+		
 	}
 	
 	/**
@@ -143,7 +157,7 @@ public abstract class Passenger {
 	 * @return the bookingTime
 	 */
 	public int getBookingTime() {
-		
+		return bookingTime;
 	}
 
 	/**
@@ -153,7 +167,7 @@ public abstract class Passenger {
 	 * @return the confirmationTime
 	 */
 	public int getConfirmationTime() {
-		
+		return confirmationTime;
 	}
 
 	/**
@@ -162,7 +176,7 @@ public abstract class Passenger {
 	 * @return the departureTime
 	 */
 	public int getDepartureTime() {
-		
+		return departureTime;
 	}
 	
 	/**
@@ -171,7 +185,7 @@ public abstract class Passenger {
 	 * @return the enterQueueTime
 	 */
 	public int getEnterQueueTime() {
-		
+		return enterQueueTime;
 	}
 
 	/**
@@ -180,7 +194,7 @@ public abstract class Passenger {
 	 * @return the exitQueueTime
 	 */
 	public int getExitQueueTime() {
-		
+		return exitQueueTime;
 	}
 
 	/**
@@ -189,7 +203,7 @@ public abstract class Passenger {
 	 * @return the passID
 	 */
 	public String getPassID() {
-		
+		return passID;
 	}
 
 	/**
@@ -198,7 +212,7 @@ public abstract class Passenger {
 	 * @return <code>boolean</code> true if Confirmed state; false otherwise 
 	 */
 	public boolean isConfirmed() {
-		
+		return confirmed;
 	}
 		
 	/**
@@ -207,7 +221,7 @@ public abstract class Passenger {
 	 * @return <code>boolean</code> true if Flown state; false otherwise 
 	 */
 	public boolean isFlown() {
-		
+		return flown;
 	}
 	
 	/**
@@ -216,7 +230,7 @@ public abstract class Passenger {
 	 * @return <code>boolean</code> true if New state; false otherwise 
 	 */
 	public boolean isNew() {
-		
+		return newState;
 	}
 
 	/**
@@ -225,7 +239,7 @@ public abstract class Passenger {
 	 * @return <code>boolean</code> true if Queued state; false otherwise 
 	 */
 	public boolean isQueued() {
-		
+		return inQueue;
 	}
 	
 	/**
@@ -234,7 +248,7 @@ public abstract class Passenger {
 	 * @return <code>boolean</code> true if Refused state; false otherwise 
 	 */
 	public boolean isRefused() {
-		
+		return refused;
 	}
 	
 	/**
