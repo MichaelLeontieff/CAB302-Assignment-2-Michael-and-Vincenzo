@@ -8,6 +8,9 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import asgn2Aircraft.A380;
+import asgn2Aircraft.Aircraft;
 import asgn2Aircraft.AircraftException;
 import asgn2Passengers.PassengerException;
 
@@ -19,9 +22,19 @@ public class AircraftTests {
 
 	/**
 	 * @throws java.lang.Exception
+	 *
 	 */
+	
+	// constants
+	private final String testFlightCode = "LAX123";
+	private final int testDepartTime = 1100;
+	
+	// test objects
+	private Aircraft exceptionTestObject;
+	
 	@Before
 	public void setUp() throws Exception {
+		
 	}
 	
 	// CONSTRUCTOR TESTS
@@ -29,23 +42,23 @@ public class AircraftTests {
 		// constructor exception tests
 	
 	@Test
-	public void ValidParametersExceptionTest() {
-		fail("Not yet implemented");
+	public void ValidParametersExceptionTest() throws AircraftException {
+		exceptionTestObject = new A380(testFlightCode, testDepartTime);
 	}
 
 	@Test (expected = AircraftException.class)  
-	public void IsNullFlightCodeExceptionTest() {
-		fail("Not yet implemented");
+	public void IsNullFlightCodeExceptionTest() throws AircraftException {
+		exceptionTestObject = new A380(null, testDepartTime);
 	}
 	
 	@Test (expected = AircraftException.class)
-	public void DepartTimeLessThanZeroExceptionTest() {
-		fail("Not yet implemented");
+	public void DepartTimeLessThanZeroExceptionTest() throws AircraftException {
+		exceptionTestObject = new A380(testFlightCode, -1);
 	}
 	
 	@Test (expected = AircraftException.class)
-	public void DepartTimeZeroExceptionTest() {
-		fail("Not yet implemented");
+	public void DepartTimeZeroExceptionTest() throws AircraftException {
+		exceptionTestObject = new A380(testFlightCode, 0);
 	}
 	
 	@Test (expected = AircraftException.class)
