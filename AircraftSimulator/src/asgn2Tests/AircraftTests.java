@@ -30,6 +30,7 @@ public class AircraftTests {
 	private final int testDepartTime = 1100;
 	
 	// test objects
+	private Aircraft fieldTestObject;
 	private Aircraft exceptionTestObject;
 	
 	@Before
@@ -38,7 +39,7 @@ public class AircraftTests {
 	}
 	
 	// CONSTRUCTOR TESTS
-	
+		
 		// constructor exception tests
 	
 	@Test
@@ -62,23 +63,23 @@ public class AircraftTests {
 	}
 	
 	@Test (expected = AircraftException.class)
-	public void FirstLessThanZeroExceptionTest() {
-		fail("Not yet implemented");
+	public void FirstLessThanZeroExceptionTest() throws AircraftException {
+		exceptionTestObject = new A380(testFlightCode, testDepartTime, -1, 1, 1, 1 );
 	}
 	
 	@Test (expected = AircraftException.class)
-	public void BusinessLessThanZeroExceptionTest() {
-		fail("Not yet implemented");
+	public void BusinessLessThanZeroExceptionTest() throws AircraftException {
+		exceptionTestObject = new A380(testFlightCode, testDepartTime, 1, -1, 1, 1 );
 	}
 	
 	@Test (expected = AircraftException.class)
-	public void PremiumLessThanZeroExceptionTest() {
-		fail("Not yet implemented");
+	public void PremiumLessThanZeroExceptionTest() throws AircraftException {
+		exceptionTestObject = new A380(testFlightCode, testDepartTime, 1, 1, -1, 1 );
 	}
 	
 	@Test (expected = AircraftException.class)
-	public void EconomyLessThanZeroExceptionTest() {
-		fail("Not yet implemented");
+	public void EconomyLessThanZeroExceptionTest() throws AircraftException {
+		exceptionTestObject = new A380(testFlightCode, testDepartTime, 1, 1, 1, -1 );
 	}
 	
 	// CANCEL BOOKING TESTS
