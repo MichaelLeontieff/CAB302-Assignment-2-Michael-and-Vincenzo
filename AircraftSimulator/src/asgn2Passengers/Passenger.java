@@ -136,6 +136,7 @@ public abstract class Passenger {
 			// revert previous state
 			this.confirmed = false;
 			// added comment
+			// comment 2
 		}
 	}
 
