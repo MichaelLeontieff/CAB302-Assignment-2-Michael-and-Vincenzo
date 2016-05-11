@@ -85,8 +85,8 @@ public abstract class Passenger {
 			Passenger.index++; 
 			this.bookingTime = bookingTime;
 			this.departureTime = departureTime;
-			// set state of passenger
-			newState = true;
+			// set new state of passenger
+			this.newState = true;
 		}
 		//Stuff here 
 		
@@ -116,7 +116,26 @@ public abstract class Passenger {
 	 *         isFlown(this) OR (cancellationTime < 0) OR (departureTime < cancellationTime)
 	 */
 	public void cancelSeat(int cancellationTime) throws PassengerException {
-
+		
+		if (cancellationTime < 0) {
+			throw new PassengerException("Cancellation time less than 0");
+		} else if (departureTime < cancellationTime) {
+			throw new PassengerException("Departure time set before cancellation time");
+		}
+		
+		if (!isConfirmed()) {
+			if (isNew() || isQueued() || isRefused() || isFlown()) {
+				throw new PassengerException("Passenger doesn't conform to state required by pre-condition");
+			}
+		} else {
+			// if we reach here it's valid and can be cancelled 
+			// set new state
+			this.newState = true;
+			// set new booking time
+			this.bookingTime = cancellationTime;
+			// revert previous state
+			this.confirmed = false;
+		}
 	}
 
 	/**
@@ -350,7 +369,7 @@ public abstract class Passenger {
 	 * @param <code>Passenger</code> state to transfer
 	 */
 	protected void copyPassengerState(Passenger p) {
-		
+	
 	}
 	
 	//Various private helper methods to check arguments and throw exceptions
