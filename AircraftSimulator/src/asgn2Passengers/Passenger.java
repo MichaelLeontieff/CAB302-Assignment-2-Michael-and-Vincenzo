@@ -135,6 +135,7 @@ public abstract class Passenger {
 			this.bookingTime = cancellationTime;
 			// revert previous state
 			this.confirmed = false;
+			// added comment
 		}
 	}
 
