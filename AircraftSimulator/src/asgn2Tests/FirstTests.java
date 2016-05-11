@@ -20,12 +20,20 @@ import asgn2Passengers.PassengerException;
  *
  */
 public class FirstTests {
+	
+	//constants
+	private final int testBookingTime = 1;
+	private final int testDepartureTime  = 10;
+	
+	//test objects
+	private First myPassenger;
 
 	/**
 	 * @throws PassengerException
 	 */
 	@Before
 	public void setUp() throws PassengerException {
+		myPassenger = new First(testBookingTime, testDepartureTime);
 	}
 	
 	/**
