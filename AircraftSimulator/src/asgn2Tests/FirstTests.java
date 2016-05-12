@@ -5,10 +5,7 @@ package asgn2Tests;
 
 import static org.junit.Assert.*;
 
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import asgn2Passengers.First;
@@ -42,22 +39,22 @@ public class FirstTests {
 	 */
 	@Test (expected = PassengerException.class)
 	public void testFirstBookingTimeLessThanZero() throws PassengerException {
-		
+		First testPassenger = new First(-1, testDepartureTime);
 	}
 	
 	@Test (expected = PassengerException.class)
 	public void testFirstBookingEqualToZero() throws PassengerException {
-		
+		First testPassenger = new First(testBookingTime, 0);
 	}
 	
 	@Test (expected = PassengerException.class)
 	public void testFirstDepartureTimeLessThanZero() throws PassengerException {
-		
+		First testPassenger = new First(testBookingTime, -1);
 	}
 	
 	@Test (expected = PassengerException.class)
 	public void testFirstBookingDepartureTimeLessThanBookingTime() throws PassengerException {
-		
+		First testPassenger = new First(5, 3);
 	}
 
 	/**
@@ -65,7 +62,7 @@ public class FirstTests {
 	 */
 	@Test
 	public void testNoSeatsMsg() {
-		
+		assertEquals("No seats available in First", myPassenger.noSeatsMsg());
 	}
 
 	/**
@@ -73,8 +70,8 @@ public class FirstTests {
 	 */
 	@Test
 	public void testUpgrade() {
-		
-	}
+		assertTrue(myPassenger == myPassenger.upgrade());
+	}// or myPassenger.getBookingTime == myPassenger.upgrade.getBookingTime?
 
 	/**
 	 * Test method for {@link asgn2Passengers.Passenger#cancelSeat(int)}.
@@ -163,6 +160,7 @@ public class FirstTests {
 	public void testGetPassID() {
 		
 	} 
+
 	/**
 	 * Test method for {@link asgn2Passengers.Passenger#isConfirmed()}.
 	 */
