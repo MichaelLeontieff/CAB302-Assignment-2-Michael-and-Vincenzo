@@ -59,6 +59,7 @@ public abstract class Passenger {
 	protected int exitQueueTime;
 	protected int confirmationTime;
 	protected int departureTime; 
+	private boolean previousState;
 	
 	
 	/**
@@ -116,13 +117,13 @@ public abstract class Passenger {
 	 *         isFlown(this) OR (cancellationTime < 0) OR (departureTime < cancellationTime)
 	 */
 	public void cancelSeat(int cancellationTime) throws PassengerException {
-		
 		if (cancellationTime < 0) {
 			throw new PassengerException("Cancellation time less than 0");
 		} else if (departureTime < cancellationTime) {
 			throw new PassengerException("Departure time set before cancellation time");
 		}
 		
+		// if passenger occupies other unsupported state
 		if (!isConfirmed()) {
 			if (isNew() || isQueued() || isRefused() || isFlown()) {
 				throw new PassengerException("Passenger doesn't conform to state required by pre-condition");
@@ -135,8 +136,7 @@ public abstract class Passenger {
 			this.bookingTime = cancellationTime;
 			// revert previous state
 			this.confirmed = false;
-			// added comment
-			// comment 2
+			
 		}
 	}
 
@@ -154,7 +154,26 @@ public abstract class Passenger {
 	 * 		   OR (confirmationTime < 0) OR (departureTime < confirmationTime)
 	 */
 	public void confirmSeat(int confirmationTime, int departureTime) throws PassengerException {
-	
+		
+		if (confirmationTime < 0) {
+			throw new PassengerException("Confirmation time less than 0");
+		} else if (departureTime < confirmationTime) {
+			throw new PassengerException("Departure time set before confirmation time");
+		}
+		
+		if (isNew() || isQueued()) {
+			// valid if it reaches here
+			// set new state
+			this.confirmed = true;
+			this.confirmationTime = confirmationTime;
+			// revert old states
+			this.newState = false;
+			this.inQueue = false;
+		} else {
+			if (isConfirmed() || isRefused() || isFlown()) {
+				throw new PassengerException("Passenger doesn't conform to state required by pre-condition");
+			}
+		}
 	}
 
 	/**
@@ -169,7 +188,20 @@ public abstract class Passenger {
 	 *         isFlown(this) OR (departureTime <= 0)
 	 */
 	public void flyPassenger(int departureTime) throws PassengerException {
+		if (departureTime <= 0) {
+			throw new PassengerException("Departure Time equal to or less than zero");
+		}
 		
+		// if passenger occupies other unsupported state
+		if (!isConfirmed()) {
+			if (isNew() || isQueued() || isRefused() || isFlown()) {
+				throw new PassengerException("Passenger doesn't conform to state required by pre-condition");
+			}
+		} else {
+			// if we reach here it's valid and can be cancelled 
+			// set new state
+			this.flown = true;
+		}
 	}
 
 	/**
