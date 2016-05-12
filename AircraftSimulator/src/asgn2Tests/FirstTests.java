@@ -5,7 +5,10 @@ package asgn2Tests;
 
 import static org.junit.Assert.*;
 
+import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import asgn2Passengers.First;
@@ -21,6 +24,7 @@ public class FirstTests {
 	//constants
 	private final int testBookingTime = 1;
 	private final int testDepartureTime  = 10;
+	private final int testConfirmationTime = 5;
 	
 	//test objects
 	private First myPassenger;
@@ -169,18 +173,33 @@ public class FirstTests {
 
 	/**
 	 * Test method for {@link asgn2Passengers.Passenger#isConfirmed()}.
+	 * @throws PassengerException 
 	 */
 	@Test
-	public void testIsConfirmed() {
-		fail("Not yet implemented");
+	public void testIsConfirmed() throws PassengerException {
+		myPassenger.confirmSeat(testConfirmationTime, testDepartureTime);
+		assertTrue(myPassenger.isConfirmed());
+	}
+	
+	@Test
+	public void testIsConfirmedCancelledSeat() throws PassengerException {
+
 	}
 
 	/**
 	 * Test method for {@link asgn2Passengers.Passenger#isFlown()}.
+	 * @throws PassengerException 
 	 */
 	@Test
-	public void testIsFlown() {
-		fail("Not yet implemented");
+	public void testIsFlown() throws PassengerException {
+		myPassenger.confirmSeat(testConfirmationTime, testDepartureTime);
+		myPassenger.flyPassenger(testDepartureTime);
+		assertTrue(myPassenger.isFlown());
+	}
+	
+	@Test
+	public void testIsFlownCancelledSeat() throws PassengerException {
+
 	}
 
 	/**
@@ -188,23 +207,52 @@ public class FirstTests {
 	 */
 	@Test
 	public void testIsNew() {
-		fail("Not yet implemented");
+		assertTrue(myPassenger.isNew());
+	}
+	
+	@Test
+	public void testIsNewAfterBeingConfirmed() throws PassengerException {
+
+	}
+	
+	@Test
+	public void testIsNewAfterCancellingSeat() throws PassengerException {
+
+	}
+	
+	@Test
+	public void testIsNewAfterBeingQueued() throws PassengerException {
+
 	}
 
 	/**
 	 * Test method for {@link asgn2Passengers.Passenger#isQueued()}.
+	 * @throws PassengerException 
 	 */
 	@Test
-	public void testIsQueued() {
-		fail("Not yet implemented");
+	public void testIsQueued() throws PassengerException {
+		myPassenger.queuePassenger(7, testDepartureTime);
+		assertTrue(myPassenger.isQueued());
+	}
+	
+	@Test
+	public void testIsQueuedAfterBeingConfirmed() throws PassengerException {
+
 	}
 
 	/**
 	 * Test method for {@link asgn2Passengers.Passenger#isRefused()}.
+	 * @throws PassengerException 
 	 */
 	@Test
-	public void testIsRefused() {
-		fail("Not yet implemented");
+	public void testIsRefused() throws PassengerException {
+		myPassenger.refusePassenger(7);
+		assertTrue(myPassenger.isRefused());
+	}
+	
+	@Test
+	public void testIsRefusedAfterBeingQueued() throws PassengerException {
+
 	}
 
 	/**
@@ -220,14 +268,6 @@ public class FirstTests {
 	 */
 	@Test
 	public void testRefusePassenger() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for {@link asgn2Passengers.Passenger#toString()}.
-	 */
-	@Test
-	public void testToString() {
 		fail("Not yet implemented");
 	}
 
