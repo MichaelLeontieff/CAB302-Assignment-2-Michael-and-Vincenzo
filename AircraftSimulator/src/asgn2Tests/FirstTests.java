@@ -282,12 +282,27 @@ public class FirstTests {
 
 	/**
 	 * Test method for {@link asgn2Passengers.Passenger#wasConfirmed()}.
+	 * @throws PassengerException 
 	 */
 	@Test
-	public void testWasConfirmed() {
-		fail("Not yet implemented");
+	public void testWasConfirmedAfterCancellingSeat() throws PassengerException {
+		myPassenger.confirmSeat(6, testDepartureTime);
+		myPassenger.cancelSeat(8);
+		assertTrue(myPassenger.wasConfirmed());
 	}
-
+	
+	@Test
+	public void testWasConfirmedAfterFlying() throws PassengerException {
+		myPassenger.confirmSeat(6, testDepartureTime);
+		myPassenger.flyPassenger(testDepartureTime);
+		assertTrue(myPassenger.wasConfirmed());
+	}
+	
+	@Test
+	public void testWasConfirmedAfterNeverBeingConfirmed() throws PassengerException {
+		myPassenger.queuePassenger(6, testDepartureTime);
+		assertFalse(myPassenger.wasConfirmed());
+	}
 	/**
 	 * Test method for {@link asgn2Passengers.Passenger#wasQueued()}.
 	 * @throws PassengerException 
