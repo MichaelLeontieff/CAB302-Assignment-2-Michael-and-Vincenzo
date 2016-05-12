@@ -290,10 +290,26 @@ public class FirstTests {
 
 	/**
 	 * Test method for {@link asgn2Passengers.Passenger#wasQueued()}.
+	 * @throws PassengerException 
 	 */
 	@Test
-	public void testWasQueued() {
-		fail("Not yet implemented");
+	public void testWasQueuedAfterBeingConfirmed() throws PassengerException {
+		myPassenger.queuePassenger(7, testDepartureTime);
+		myPassenger.confirmSeat(8, testDepartureTime);
+		assertTrue(myPassenger.wasQueued());
+	}
+	
+	@Test
+	public void testWasQueuedAfterBeingRefused() throws PassengerException {
+		myPassenger.queuePassenger(7, testDepartureTime);
+		myPassenger.refusePassenger(8);
+		assertTrue(myPassenger.wasQueued());
+	}
+	
+	@Test
+	public void testWasQueuedAfterNeverBeingQueued() throws PassengerException {
+		myPassenger.confirmSeat(8, testDepartureTime);
+		assertFalse(myPassenger.wasQueued());
 	}
 
 	/**
