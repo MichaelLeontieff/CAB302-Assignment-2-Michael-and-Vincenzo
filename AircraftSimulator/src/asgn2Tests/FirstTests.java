@@ -5,21 +5,24 @@ package asgn2Tests;
 
 import static org.junit.Assert.*;
 
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import asgn2Passengers.First;
 import asgn2Passengers.PassengerException;
 
 /**
- * @author Vinnie
+ * @author Vincenzo Iandolo
+ * @version 1.0
  *
  */
 public class FirstTests {
 	
+	//constants
+	private final int testBookingTime = 1;
+	private final int testDepartureTime  = 10;
+	
+	//test objects
 	private First myPassenger;
 
 	/**
@@ -27,7 +30,7 @@ public class FirstTests {
 	 */
 	@Before
 	public void setUp() throws PassengerException {
-		myPassenger = new First(1, 10);
+		myPassenger = new First(testBookingTime, testDepartureTime);
 	}
 	
 	/**
@@ -36,17 +39,17 @@ public class FirstTests {
 	 */
 	@Test (expected = PassengerException.class)
 	public void testFirstBookingTimeLessThanZero() throws PassengerException {
-		First testPassenger = new First(-1, 10);
+		First testPassenger = new First(-1, testDepartureTime);
 	}
 	
 	@Test (expected = PassengerException.class)
 	public void testFirstBookingEqualToZero() throws PassengerException {
-		First testPassenger = new First(1, 0);
+		First testPassenger = new First(testBookingTime, 0);
 	}
 	
 	@Test (expected = PassengerException.class)
 	public void testFirstDepartureTimeLessThanZero() throws PassengerException {
-		First testPassenger = new First(1, -1);
+		First testPassenger = new First(testBookingTime, -1);
 	}
 	
 	@Test (expected = PassengerException.class)
@@ -59,7 +62,7 @@ public class FirstTests {
 	 */
 	@Test
 	public void testNoSeatsMsg() {
-
+		assertEquals("No seats available in First", myPassenger.noSeatsMsg());
 	}
 
 	/**
@@ -67,40 +70,8 @@ public class FirstTests {
 	 */
 	@Test
 	public void testUpgrade() {
-		
-	}
-
-	/**
-	 * Test method for {@link asgn2Passengers.First#First(int, int)}.
-	 */
-	@Test
-	public void testFirstIntInt() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for {@link asgn2Passengers.First#First()}.
-	 */
-	@Test
-	public void testFirst() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for {@link asgn2Passengers.Passenger#Passenger(int, int)}.
-	 */
-	@Test
-	public void testPassengerIntInt() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for {@link asgn2Passengers.Passenger#Passenger()}.
-	 */
-	@Test
-	public void testPassenger() {
-		fail("Not yet implemented");
-	}
+		assertTrue(myPassenger == myPassenger.upgrade());
+	}// or myPassenger.getBookingTime == myPassenger.upgrade.getBookingTime?
 
 	/**
 	 * Test method for {@link asgn2Passengers.Passenger#cancelSeat(int)}.
@@ -131,15 +102,24 @@ public class FirstTests {
 	 */
 	@Test
 	public void testGetBookingTime() {
-		fail("Not yet implemented");
+		
 	}
 
 	/**
 	 * Test method for {@link asgn2Passengers.Passenger#getConfirmationTime()}.
+	 * @throws PassengerException 
 	 */
 	@Test
-	public void testGetConfirmationTime() {
-		fail("Not yet implemented");
+	public void testGetConfirmationTime() throws PassengerException {
+		
+	}
+	
+	/**
+	 * Test method for {@link asgn2Passengers.Passenger#getConfirmationTime()}.
+	 */
+	@Test
+	public void testGetConfirmationTimeBeforeConfirmingSeat() {
+		
 	}
 
 	/**
@@ -147,23 +127,30 @@ public class FirstTests {
 	 */
 	@Test
 	public void testGetDepartureTime() {
-		fail("Not yet implemented");
+		
 	}
 
 	/**
 	 * Test method for {@link asgn2Passengers.Passenger#getEnterQueueTime()}.
+	 * @throws PassengerException 
 	 */
 	@Test
-	public void testGetEnterQueueTime() {
-		fail("Not yet implemented");
+	public void testGetEnterQueueTime() throws PassengerException {
+		
 	}
 
 	/**
 	 * Test method for {@link asgn2Passengers.Passenger#getExitQueueTime()}.
+	 * @throws PassengerException 
 	 */
 	@Test
-	public void testGetExitQueueTime() {
-		fail("Not yet implemented");
+	public void testGetExitQueueTimeAfterConfirmingASeat() throws PassengerException {
+		
+	}
+	
+	@Test
+	public void testGetExitQueueTimeAfterBeingRefused() throws PassengerException {
+		
 	}
 
 	/**
@@ -171,8 +158,8 @@ public class FirstTests {
 	 */
 	@Test
 	public void testGetPassID() {
-		fail("Not yet implemented");
-	}
+		
+	} 
 
 	/**
 	 * Test method for {@link asgn2Passengers.Passenger#isConfirmed()}.
