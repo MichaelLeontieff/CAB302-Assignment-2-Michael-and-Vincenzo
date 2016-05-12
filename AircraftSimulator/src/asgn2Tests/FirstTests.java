@@ -102,7 +102,7 @@ public class FirstTests {
 	 */
 	@Test
 	public void testGetBookingTime() {
-		
+		assertEquals(1, myPassenger.getBookingTime());
 	}
 
 	/**
@@ -111,7 +111,8 @@ public class FirstTests {
 	 */
 	@Test
 	public void testGetConfirmationTime() throws PassengerException {
-		
+		myPassenger.confirmSeat(3, testDepartureTime);
+		assertEquals(3, myPassenger.getConfirmationTime());
 	}
 	
 	/**
@@ -119,7 +120,7 @@ public class FirstTests {
 	 */
 	@Test
 	public void testGetConfirmationTimeBeforeConfirmingSeat() {
-		
+		assertEquals(0, myPassenger.getConfirmationTime());
 	}
 
 	/**
@@ -127,7 +128,7 @@ public class FirstTests {
 	 */
 	@Test
 	public void testGetDepartureTime() {
-		
+		assertEquals(10, myPassenger.getDepartureTime());
 	}
 
 	/**
@@ -136,7 +137,8 @@ public class FirstTests {
 	 */
 	@Test
 	public void testGetEnterQueueTime() throws PassengerException {
-		
+		myPassenger.queuePassenger(7, testDepartureTime);
+		assertEquals(7, myPassenger.getEnterQueueTime());
 	}
 
 	/**
@@ -145,12 +147,16 @@ public class FirstTests {
 	 */
 	@Test
 	public void testGetExitQueueTimeAfterConfirmingASeat() throws PassengerException {
-		
+		myPassenger.queuePassenger(7, testDepartureTime);
+		myPassenger.confirmSeat(9, testDepartureTime);
+		assertEquals(9, myPassenger.getExitQueueTime());
 	}
 	
 	@Test
 	public void testGetExitQueueTimeAfterBeingRefused() throws PassengerException {
-		
+		myPassenger.queuePassenger(7, testDepartureTime);
+		myPassenger.refusePassenger(8);
+		assertEquals(8, myPassenger.getExitQueueTime());
 	}
 
 	/**
@@ -158,8 +164,8 @@ public class FirstTests {
 	 */
 	@Test
 	public void testGetPassID() {
-		
-	} 
+		assertEquals("", myPassenger.getPassID());
+	} //not sure where passID comes from or where it is set?
 
 	/**
 	 * Test method for {@link asgn2Passengers.Passenger#isConfirmed()}.
