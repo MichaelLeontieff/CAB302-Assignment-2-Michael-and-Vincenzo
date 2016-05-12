@@ -31,7 +31,7 @@ public class A380 extends Aircraft {
 	 * See {@link asgn2Aircraft.Aircraft#Aircraft(String, int, int, int, int, int)}
 	 */
 	public A380(String flightCode,int departureTime) throws AircraftException {
-		super(flightCode, departureTime, FIRST, BUSINESS, PREMIUM, ECONOMY);
+		
 		this.type = "A380";
 	}
 
