@@ -1,50 +1,298 @@
 /**
  * 
  */
-package asgn2Passengers;
+package asgn2Tests;
+
+import static org.junit.Assert.*;
+
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import asgn2Passengers.First;
+import asgn2Passengers.PassengerException;
 
 /**
- * @author hogan
+ * @author Vincenzo Iandolo
+ * @version 1.0
  *
  */
-public class First extends Passenger {
+public class FirstTests {
+	
+	//constants
+	private final int testBookingTime = 1;
+	private final int testDepartureTime  = 10;
+	private final int testConfirmationTime = 5;
+	
+	//test objects
+	private First myPassenger;
 
 	/**
-	 * First Constructor (Partially Supplied) 
-	 * Passenger is created in New state, later given a Confirmed First Class reservation, 
-	 * Queued, or Refused booking if waiting list is full. 
-	 * 
-	 * @param bookingTime <code>int</code> day of the original booking. 
-	 * @param departureTime <code>int</code> day of the intended flight.  
-	 * @throws PassengerException if invalid bookingTime or departureTime 
-	 * @see asgnPassengers.Passenger#Passenger(int,int)
+	 * @throws PassengerException
 	 */
-	public First(int bookingTime, int departureTime) throws PassengerException {
-		//Call super here 
-		super(bookingTime, departureTime);
-		
-		this.passID = "F:" + this.passID;
-
-		
+	@Before
+	public void setUp() throws PassengerException {
+		myPassenger = new First(testBookingTime, testDepartureTime);
 	}
 	
 	/**
-	 * Simple constructor to support {@link asgn2Passengers.Passenger#upgrade()} in other subclasses
+	 * Test method for {@link asgn2Passengers.First#First(int, int)}.
+	 * @throws PassengerException
 	 */
-	protected First() {
-
+	@Test (expected = PassengerException.class)
+	public void testFirstBookingTimeLessThanZero() throws PassengerException {
+		First testPassenger = new First(-1, testDepartureTime);
 	}
-
-	@Override
-	public String noSeatsMsg() {
-		return "No seats available in First";
-	}
-
 	
-	@Override
-	public Passenger upgrade() {
-		//Think about it :) 
-		
-		// return null or current passwnger
+	@Test (expected = PassengerException.class)
+	public void testFirstBookingEqualToZero() throws PassengerException {
+		First testPassenger = new First(testBookingTime, 0);
 	}
+	
+	@Test (expected = PassengerException.class)
+	public void testFirstDepartureTimeLessThanZero() throws PassengerException {
+		First testPassenger = new First(testBookingTime, -1);
+	}
+	
+	@Test (expected = PassengerException.class)
+	public void testFirstBookingDepartureTimeLessThanBookingTime() throws PassengerException {
+		First testPassenger = new First(5, 3);
+	}
+
+	/**
+	 * Test method for {@link asgn2Passengers.First#noSeatsMsg()}.
+	 */
+	@Test
+	public void testNoSeatsMsg() {
+		assertEquals("No seats available in First", myPassenger.noSeatsMsg());
+	}
+
+	/**
+	 * Test method for {@link asgn2Passengers.First#upgrade()}.
+	 */
+	@Test
+	public void testUpgrade() {
+		assertTrue(myPassenger == myPassenger.upgrade());
+	}// or myPassenger.getBookingTime == myPassenger.upgrade.getBookingTime?
+
+	/**
+	 * Test method for {@link asgn2Passengers.Passenger#cancelSeat(int)}.
+	 */
+	@Test
+	public void testCancelSeat() {
+		fail("Not yet implemented");
+	}
+
+	/**
+	 * Test method for {@link asgn2Passengers.Passenger#confirmSeat(int, int)}.
+	 */
+	@Test
+	public void testConfirmSeat() {
+		fail("Not yet implemented");
+	}
+
+	/**
+	 * Test method for {@link asgn2Passengers.Passenger#flyPassenger(int)}.
+	 */
+	@Test
+	public void testFlyPassenger() {
+		fail("Not yet implemented");
+	}
+
+	/**
+	 * Test method for {@link asgn2Passengers.Passenger#getBookingTime()}.
+	 */
+	@Test
+	public void testGetBookingTime() {
+		assertEquals(1, myPassenger.getBookingTime());
+	}
+
+	/**
+	 * Test method for {@link asgn2Passengers.Passenger#getConfirmationTime()}.
+	 * @throws PassengerException 
+	 */
+	@Test
+	public void testGetConfirmationTime() throws PassengerException {
+		myPassenger.confirmSeat(3, testDepartureTime);
+		assertEquals(3, myPassenger.getConfirmationTime());
+	}
+	
+	/**
+	 * Test method for {@link asgn2Passengers.Passenger#getConfirmationTime()}.
+	 */
+	@Test
+	public void testGetConfirmationTimeBeforeConfirmingSeat() {
+		assertEquals(0, myPassenger.getConfirmationTime());
+	}
+
+	/**
+	 * Test method for {@link asgn2Passengers.Passenger#getDepartureTime()}.
+	 */
+	@Test
+	public void testGetDepartureTime() {
+		assertEquals(10, myPassenger.getDepartureTime());
+	}
+
+	/**
+	 * Test method for {@link asgn2Passengers.Passenger#getEnterQueueTime()}.
+	 * @throws PassengerException 
+	 */
+	@Test
+	public void testGetEnterQueueTime() throws PassengerException {
+		myPassenger.queuePassenger(7, testDepartureTime);
+		assertEquals(7, myPassenger.getEnterQueueTime());
+	}
+
+	/**
+	 * Test method for {@link asgn2Passengers.Passenger#getExitQueueTime()}.
+	 * @throws PassengerException 
+	 */
+	@Test
+	public void testGetExitQueueTimeAfterConfirmingASeat() throws PassengerException {
+		myPassenger.queuePassenger(7, testDepartureTime);
+		myPassenger.confirmSeat(9, testDepartureTime);
+		assertEquals(9, myPassenger.getExitQueueTime());
+	}
+	
+	@Test
+	public void testGetExitQueueTimeAfterBeingRefused() throws PassengerException {
+		myPassenger.queuePassenger(7, testDepartureTime);
+		myPassenger.refusePassenger(8);
+		assertEquals(8, myPassenger.getExitQueueTime());
+	}
+
+	/**
+	 * Test method for {@link asgn2Passengers.Passenger#getPassID()}.
+	 */
+	@Test
+	public void testGetPassID() {
+		assertEquals("", myPassenger.getPassID());
+	} //not sure where passID comes from or where it is set?
+
+	/**
+	 * Test method for {@link asgn2Passengers.Passenger#isConfirmed()}.
+	 * @throws PassengerException 
+	 */
+	@Test
+	public void testIsConfirmed() throws PassengerException {
+		myPassenger.confirmSeat(testConfirmationTime, testDepartureTime);
+		assertTrue(myPassenger.isConfirmed());
+	}
+	
+	@Test
+	public void testIsConfirmedCancelledSeat() throws PassengerException {
+
+	}
+
+	/**
+	 * Test method for {@link asgn2Passengers.Passenger#isFlown()}.
+	 * @throws PassengerException 
+	 */
+	@Test
+	public void testIsFlown() throws PassengerException {
+		myPassenger.confirmSeat(testConfirmationTime, testDepartureTime);
+		myPassenger.flyPassenger(testDepartureTime);
+		assertTrue(myPassenger.isFlown());
+	}
+	
+	@Test
+	public void testIsFlownCancelledSeat() throws PassengerException {
+
+	}
+
+	/**
+	 * Test method for {@link asgn2Passengers.Passenger#isNew()}.
+	 */
+	@Test
+	public void testIsNew() {
+		assertTrue(myPassenger.isNew());
+	}
+	
+	@Test
+	public void testIsNewAfterBeingConfirmed() throws PassengerException {
+
+	}
+	
+	@Test
+	public void testIsNewAfterCancellingSeat() throws PassengerException {
+
+	}
+	
+	@Test
+	public void testIsNewAfterBeingQueued() throws PassengerException {
+
+	}
+
+	/**
+	 * Test method for {@link asgn2Passengers.Passenger#isQueued()}.
+	 * @throws PassengerException 
+	 */
+	@Test
+	public void testIsQueued() throws PassengerException {
+		myPassenger.queuePassenger(7, testDepartureTime);
+		assertTrue(myPassenger.isQueued());
+	}
+	
+	@Test
+	public void testIsQueuedAfterBeingConfirmed() throws PassengerException {
+
+	}
+
+	/**
+	 * Test method for {@link asgn2Passengers.Passenger#isRefused()}.
+	 * @throws PassengerException 
+	 */
+	@Test
+	public void testIsRefused() throws PassengerException {
+		myPassenger.refusePassenger(7);
+		assertTrue(myPassenger.isRefused());
+	}
+	
+	@Test
+	public void testIsRefusedAfterBeingQueued() throws PassengerException {
+
+	}
+
+	/**
+	 * Test method for {@link asgn2Passengers.Passenger#queuePassenger(int, int)}.
+	 */
+	@Test
+	public void testQueuePassenger() {
+		fail("Not yet implemented");
+	}
+
+	/**
+	 * Test method for {@link asgn2Passengers.Passenger#refusePassenger(int)}.
+	 */
+	@Test
+	public void testRefusePassenger() {
+		fail("Not yet implemented");
+	}
+
+	/**
+	 * Test method for {@link asgn2Passengers.Passenger#wasConfirmed()}.
+	 */
+	@Test
+	public void testWasConfirmed() {
+		fail("Not yet implemented");
+	}
+
+	/**
+	 * Test method for {@link asgn2Passengers.Passenger#wasQueued()}.
+	 */
+	@Test
+	public void testWasQueued() {
+		fail("Not yet implemented");
+	}
+
+	/**
+	 * Test method for {@link asgn2Passengers.Passenger#copyPassengerState(asgn2Passengers.Passenger)}.
+	 */
+	@Test
+	public void testCopyPassengerState() {
+		fail("Not yet implemented");
+	}
+
 }
