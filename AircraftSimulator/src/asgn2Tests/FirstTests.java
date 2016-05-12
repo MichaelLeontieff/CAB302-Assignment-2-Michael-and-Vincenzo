@@ -5,10 +5,7 @@ package asgn2Tests;
 
 import static org.junit.Assert.*;
 
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import asgn2Passengers.First;
@@ -183,7 +180,9 @@ public class FirstTests {
 	
 	@Test
 	public void testIsConfirmedCancelledSeat() throws PassengerException {
-
+		myPassenger.confirmSeat(testConfirmationTime, testDepartureTime);
+		myPassenger.cancelSeat(7);
+		assertFalse(myPassenger.isConfirmed());
 	}
 
 	/**
@@ -199,7 +198,9 @@ public class FirstTests {
 	
 	@Test
 	public void testIsFlownCancelledSeat() throws PassengerException {
-
+		myPassenger.confirmSeat(testConfirmationTime, testDepartureTime);
+		myPassenger.cancelSeat(7);
+		assertFalse(myPassenger.isFlown());
 	}
 
 	/**
@@ -212,17 +213,21 @@ public class FirstTests {
 	
 	@Test
 	public void testIsNewAfterBeingConfirmed() throws PassengerException {
-
+		myPassenger.confirmSeat(testConfirmationTime, testDepartureTime);
+		assertFalse(myPassenger.isNew());
 	}
 	
 	@Test
 	public void testIsNewAfterCancellingSeat() throws PassengerException {
-
+		myPassenger.confirmSeat(testConfirmationTime, testDepartureTime);
+		myPassenger.cancelSeat(7);
+		assertTrue(myPassenger.isNew());
 	}
 	
 	@Test
 	public void testIsNewAfterBeingQueued() throws PassengerException {
-
+		myPassenger.queuePassenger(7, testDepartureTime);
+		assertFalse(myPassenger.isNew());
 	}
 
 	/**
@@ -237,7 +242,9 @@ public class FirstTests {
 	
 	@Test
 	public void testIsQueuedAfterBeingConfirmed() throws PassengerException {
-
+		myPassenger.queuePassenger(7, testDepartureTime);
+		myPassenger.confirmSeat(8, testDepartureTime);
+		assertFalse(myPassenger.isQueued());
 	}
 
 	/**
@@ -252,7 +259,9 @@ public class FirstTests {
 	
 	@Test
 	public void testIsRefusedAfterBeingQueued() throws PassengerException {
-
+		myPassenger.queuePassenger(6, testDepartureTime);
+		myPassenger.refusePassenger(7);
+		assertTrue(myPassenger.isRefused());
 	}
 
 	/**
