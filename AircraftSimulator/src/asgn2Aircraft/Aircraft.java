@@ -65,10 +65,11 @@ public abstract class Aircraft {
 	 * @throws AircraftException if isNull(flightCode) OR (departureTime <=0) OR ({first,business,premium,economy} <0)
 	 */
 	public Aircraft(String flightCode,int departureTime, int first, int business, int premium, int economy) throws AircraftException {
-		//Lots here
+		//check for exceptions
 		if (flightCode == null || departureTime <= 0 || first < 0 || business < 0 || premium < 0 || economy < 0) {
 			throw new AircraftException("Invalid entries in parameters");
 		}
+		// declare everything
 		this.status = "";
 		this.flightCode = flightCode;
 		this.departureTime = departureTime;
@@ -219,7 +220,11 @@ public abstract class Aircraft {
 	 * @return <code>List<Passenger></code> object containing the passengers.  
 	 */
 	public List<Passenger> getPassengers() {
-		
+		List<Passenger> copyPassengers = new ArrayList<Passenger>();
+		for (Passenger passenger : this.seats) {
+			copyPassengers.add(passenger);
+		}
+		return copyPassengers;
 	}
 	
 	/**
