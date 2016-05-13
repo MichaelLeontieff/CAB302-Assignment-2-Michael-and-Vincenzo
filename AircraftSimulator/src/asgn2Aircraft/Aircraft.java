@@ -161,7 +161,7 @@ public abstract class Aircraft {
 			}
 		}
 		return full;
-	}
+	} /*could be done differently and say: if (getNumFirst() == this.firstCapacity)
 	
 	/**
 	 * Method to finalise the aircraft seating on departure. 
@@ -242,8 +242,8 @@ public abstract class Aircraft {
 	 */
 	public List<Passenger> getPassengers() {
 		List<Passenger> copyPassengers = new ArrayList<Passenger>();
-		for (Passenger passenger : this.seats) {
-			copyPassengers.add(passenger);
+		for (Passenger p : this.seats) {
+			copyPassengers.add(p);
 		}
 		return copyPassengers;
 	}
