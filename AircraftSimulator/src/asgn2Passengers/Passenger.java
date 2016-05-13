@@ -174,11 +174,16 @@ public abstract class Passenger {
 			// set new state
 			this.confirmed = true;
 			this.confirmationTime = confirmationTime;
+			this.departureTime = departureTime;
 			// revert old states
 			this.newState = false;
 			this.inQueue = false;
 			// record state
 			this.wasConfirmed = true;
+			// if queued set exitQueue time
+			if (isQueued()) {
+				this.exitQueueTime = confirmationTime;
+			}
 		} else {
 			if (isConfirmed() || isRefused() || isFlown()) {
 				throw new PassengerException("Passenger doesn't conform to state required by pre-condition");
