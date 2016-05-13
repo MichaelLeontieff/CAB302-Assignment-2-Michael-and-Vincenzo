@@ -52,6 +52,9 @@ public abstract class Aircraft {
 	protected int departureTime; 
 	protected String status;
 	protected List<Passenger> seats;
+	
+	private static final int A380_TOTAL = 484;
+	private static final int B747_TOTAL = 353;
 
 	/**
 	 * Constructor sets flight info and the basic size parameters. 
@@ -69,7 +72,7 @@ public abstract class Aircraft {
 		if (flightCode == null || departureTime <= 0 || first < 0 || business < 0 || premium < 0 || economy < 0) {
 			throw new AircraftException("Invalid entries in parameters");
 		}
-		// declare everything
+		// set each field
 		this.status = "";
 		this.flightCode = flightCode;
 		this.departureTime = departureTime;
@@ -144,7 +147,20 @@ public abstract class Aircraft {
 	 * @return <code>boolean</code> true if aircraft full; false otherwise 
 	 */
 	public boolean flightFull() {
-		
+		boolean full = false;
+		// check the A380 capacity
+		if (this.type == "A380") {
+			if (getNumPassengers() == A380_TOTAL) {
+				full = true;
+			}
+		}
+		// check the B747 capacity
+		else if (this.type == "B747") {
+			if (getNumPassengers() == B747_TOTAL) {
+				full = true;
+			}
+		}
+		return full;
 	}
 	
 	/**
