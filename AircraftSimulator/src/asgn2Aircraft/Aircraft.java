@@ -170,6 +170,7 @@ public abstract class Aircraft {
 	 * @return <code>int</code> number of Business Class passengers 
 	 */
 	public int getNumBusiness() {
+		return numBusiness;
 		
 	}
 	
@@ -180,7 +181,7 @@ public abstract class Aircraft {
 	 * @return <code>int</code> number of Economy Class passengers 
 	 */
 	public int getNumEonomy() {
-		
+		return numEconomy;
 	}
 
 	/**
@@ -189,7 +190,7 @@ public abstract class Aircraft {
 	 * @return <code>int</code> number of First Class passengers 
 	 */
 	public int getNumFirst() {
-		
+		return numFirst;
 	}
 
 	/**
@@ -198,7 +199,8 @@ public abstract class Aircraft {
 	 * @return <code>int</code> number of Confirmed passengers 
 	 */
 	public int getNumPassengers() {
-		
+		return capacity;
+		//return numFirst + numBusiness + numPremium + numEconomy;
 	}
 	
 	/**
@@ -207,7 +209,7 @@ public abstract class Aircraft {
 	 * @return <code>int</code> number of Premium Economy Class passengers
 	 */
 	public int getNumPremium() {
-		
+		return numPremium;
 	}
 	
 	/**
