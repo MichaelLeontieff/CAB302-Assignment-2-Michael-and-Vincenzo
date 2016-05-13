@@ -218,6 +218,9 @@ public abstract class Passenger {
 			// if we reach here it's valid and can be cancelled 
 			// set new state
 			this.flown = true;
+			this.departureTime = departureTime;
+			// remove old state
+			this.confirmed = false;
 		}
 	}
 
