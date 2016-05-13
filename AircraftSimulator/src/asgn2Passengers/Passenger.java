@@ -462,7 +462,7 @@ public abstract class Passenger {
 	 * @return <code>boolean</code> true if was Queued state; false otherwise
 	 */
 	public boolean wasQueued() {
-		
+		return wasQueued;
 	}
 	
 	/**
