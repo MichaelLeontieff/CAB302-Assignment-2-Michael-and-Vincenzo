@@ -175,15 +175,15 @@ public abstract class Passenger {
 			this.confirmed = true;
 			this.confirmationTime = confirmationTime;
 			this.departureTime = departureTime;
-			// revert old states
-			this.newState = false;
-			this.inQueue = false;
 			// record state
 			this.wasConfirmed = true;
 			// if queued set exitQueue time
 			if (isQueued()) {
 				this.exitQueueTime = confirmationTime;
 			}
+			// revert old states
+			this.newState = false;
+			this.inQueue = false;
 		} else {
 			if (isConfirmed() || isRefused() || isFlown()) {
 				throw new PassengerException("Passenger doesn't conform to state required by pre-condition");
@@ -388,7 +388,30 @@ public abstract class Passenger {
 	 * 			OR (refusalTime < 0) OR (refusalTime < bookingTime)
 	 */
 	public void refusePassenger(int refusalTime) throws PassengerException {
+		if (refusalTime < 0) {
+			throw new PassengerException("Refusal time less than 0");
+		} else if (refusalTime < bookingTime) {
+			throw new PassengerException("Refusal time less than Booking time");
+		}
 		
+		if (isNew() || isQueued()) {
+			// valid if it reaches here
+			// set new state
+			this.refused = true;
+
+			// if queued set exitQueue time
+			if (isQueued()) {
+				this.exitQueueTime = refusalTime;
+			}
+			
+			// revert old states
+			this.newState = false;
+			this.inQueue = false;
+		} else {
+			if (isConfirmed() || isRefused() || isFlown()) {
+				throw new PassengerException("Passenger doesn't conform to state required by pre-condition");
+			}
+		}
 	}
 	
 	/* (non-Javadoc) (Supplied) 
