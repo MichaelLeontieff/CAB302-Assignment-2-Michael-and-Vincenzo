@@ -453,7 +453,7 @@ public abstract class Passenger {
 	 * @return <code>boolean</code> true if was Confirmed state; false otherwise
 	 */
 	public boolean wasConfirmed() {
-		
+		return wasConfirmed;
 	}
 
 	/**
