@@ -368,6 +368,8 @@ public abstract class Passenger {
 			this.departureTime = departureTime;
 			// remove old state
 			this.newState = false;
+			// record state in variable
+			this.wasQueued = true;
 		}
 	}
 	
