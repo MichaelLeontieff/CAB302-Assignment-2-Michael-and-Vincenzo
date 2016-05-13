@@ -215,7 +215,7 @@ public abstract class Passenger {
 				throw new PassengerException("Passenger doesn't conform to state required by pre-condition");
 			}
 		} else {
-			// if we reach here it's valid and can be cancelled 
+			// if we reach here it's valid and can passenger can be flown 
 			// set new state
 			this.flown = true;
 			this.departureTime = departureTime;
@@ -349,7 +349,26 @@ public abstract class Passenger {
 	 *         isFlown(this) OR (queueTime < 0) OR (departureTime < queueTime)
 	 */
 	public void queuePassenger(int queueTime, int departureTime) throws PassengerException {
+		if (departureTime < queueTime) {
+			throw new PassengerException("Departure Time less than Queue Time");
+		} else if (queueTime < 0) {
+			throw new PassengerException("Queue Time less than zero");
+		}
 		
+		// if passenger occupies other unsupported state
+		if (!isNew()) {
+			if (isQueued() || isConfirmed() || isRefused() || isFlown()) {
+				throw new PassengerException("Passenger doesn't conform to state required by pre-condition");
+			}
+		} else {
+			// if we reach here it's valid and passenger can be queued 
+			// set new state
+			this.inQueue = true;
+			this.enterQueueTime = queueTime;
+			this.departureTime = departureTime;
+			// remove old state
+			this.newState = false;
+		}
 	}
 	
 	/**
