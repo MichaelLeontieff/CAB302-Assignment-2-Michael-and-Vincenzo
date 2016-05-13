@@ -271,7 +271,11 @@ public abstract class Aircraft {
 	 * @return <code>boolean</code> true if isConfirmed(p); false otherwise 
 	 */
 	public boolean hasPassenger(Passenger p) {
-		
+		boolean included = false;
+		if (p.isConfirmed()) {
+			included = true;
+		}
+		return included;
 	}
 	
 
