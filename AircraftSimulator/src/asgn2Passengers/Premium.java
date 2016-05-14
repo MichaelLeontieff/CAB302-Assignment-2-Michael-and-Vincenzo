@@ -20,6 +20,8 @@ public class Premium extends Passenger {
 	 * @see asgnPassengers.Passenger#Passenger(int,int)
 	 */
 	public Premium(int bookingTime,int departureTime) throws PassengerException {
+		//Call super here 
+		super(bookingTime, departureTime);
 		//Stuff here
 		this.passID = "P:" + this.passID;
 	}
