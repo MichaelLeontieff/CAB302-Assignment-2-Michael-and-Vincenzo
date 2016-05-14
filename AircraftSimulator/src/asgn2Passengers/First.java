@@ -44,7 +44,7 @@ public class First extends Passenger {
 	@Override
 	public Passenger upgrade() {
 		//Think about it :) 
-		
-		// return null or current passwnger
+		// cannot be upgraded from first ergo return current passenger
+		return this;
 	}
 }
