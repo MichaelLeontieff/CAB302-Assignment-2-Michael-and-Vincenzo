@@ -114,36 +114,88 @@ public class A380Tests {
 	// CANCEL BOOKING TESTS
 	
 	@Test
-	public void CancelBookingTestCheckPassengerCount() throws PassengerException, AircraftException {
+	public void CancelBookingTestCheckPassengerDecrementCount() throws PassengerException, AircraftException {
 		// create aircraft
 		cancelBookingTest = new A380(testFlightCode, testDepartTime, 1, 1, 1, 1 );
-		
 		// create passenger in confirmed state
 		testPassenger = new First(testBookingTime, testDepartTime);
-		
 		// add passenger to aircraft
 		cancelBookingTest.confirmBooking(testPassenger, 10);	
-		
 		// cancel booking
 		cancelBookingTest.cancelBooking(testPassenger, 10);
-		
+		// check condition
 		assertTrue(cancelBookingTest.getNumPassengers() == 0);
 	}
+	
+	@Test
+	public void CancelBookingTestCheckFirstDecrementCount() throws PassengerException, AircraftException {
+		// create aircraft
+		cancelBookingTest = new A380(testFlightCode, testDepartTime, 1, 1, 1, 1 );		
+		// create passenger in confirmed state
+		testPassenger = new First(testBookingTime, testDepartTime);				
+		// add passenger to aircraft
+		cancelBookingTest.confirmBooking(testPassenger, 10);					
+		// cancel booking
+		cancelBookingTest.cancelBooking(testPassenger, 10);
+		// check condition
+		assertTrue(cancelBookingTest.getNumFirst() == 0);
+	}
+	
+	@Test
+	public void CancelBookingTestCheckBusinessDecrementCount() throws PassengerException, AircraftException {
+		// create aircraft
+		cancelBookingTest = new A380(testFlightCode, testDepartTime, 1, 1, 1, 1 );		
+		// create passenger in confirmed state
+		testPassenger = new Business(testBookingTime, testDepartTime);				
+		// add passenger to aircraft
+		cancelBookingTest.confirmBooking(testPassenger, 10);					
+		// cancel booking
+		cancelBookingTest.cancelBooking(testPassenger, 10);
+		// check condition
+		assertTrue(cancelBookingTest.getNumBusiness() == 0);
+	}
+	
+	@Test
+	public void CancelBookingTestCheckPremiumDecrementCount() throws PassengerException, AircraftException {
+		// create aircraft
+		cancelBookingTest = new A380(testFlightCode, testDepartTime, 1, 1, 1, 1 );		
+		// create passenger in confirmed state
+		testPassenger = new Premium(testBookingTime, testDepartTime);				
+		// add passenger to aircraft
+		cancelBookingTest.confirmBooking(testPassenger, 10);					
+		// cancel booking
+		cancelBookingTest.cancelBooking(testPassenger, 10);
+		// check condition
+		assertTrue(cancelBookingTest.getNumPremium() == 0);
+	}
+	
+	@Test
+	public void CancelBookingTestCheckEconomyDecrementCount() throws PassengerException, AircraftException {
+		// create aircraft
+		cancelBookingTest = new A380(testFlightCode, testDepartTime, 1, 1, 1, 1 );		
+		// create passenger in confirmed state
+		testPassenger = new Economy(testBookingTime, testDepartTime);				
+		// add passenger to aircraft
+		cancelBookingTest.confirmBooking(testPassenger, 10);					
+		// cancel booking
+		cancelBookingTest.cancelBooking(testPassenger, 10);
+		// check condition
+		assertTrue(cancelBookingTest.getNumEconomy() == 0);
+	}
+	
+	
 	
 	@Test
 	public void CancelBookingTestCheckForPassengerObject() throws PassengerException, AircraftException {
 		// create aircraft
 		cancelBookingTest = new A380(testFlightCode, testDepartTime, 1, 1, 1, 1 );
-		
 		// create passenger in confirmed state
 		testPassenger = new First(testBookingTime, testDepartTime);
-		
 		// add passenger to aircraft
 		cancelBookingTest.confirmBooking(testPassenger, 10);	
-		
 		// cancel booking
 		cancelBookingTest.cancelBooking(testPassenger, 10);
-		
+		// check condition
 		assertFalse(cancelBookingTest.getPassengers().contains(cancelBookingTest));
 	}
 	
