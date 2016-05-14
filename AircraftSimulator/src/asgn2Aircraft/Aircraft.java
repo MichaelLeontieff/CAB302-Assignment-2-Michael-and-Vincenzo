@@ -94,7 +94,18 @@ public abstract class Aircraft {
 	 */
 	public void cancelBooking(Passenger p,int cancellationTime) throws PassengerException, AircraftException {
 		//Stuff here
+		// Some local exception checking
+		if (!hasPassenger(p)) {
+			throw new AircraftException("The passenger is not recorded in the aircraft seating");
+		}
+		// Transition method on the passenger
+		p.cancelSeat(cancellationTime);
+		// Update of status string for the aircraft
 		this.status += Log.setPassengerMsg(p,"C","N");
+		// Remove passenger from seat storage for the aircraft
+		this.seats.remove(p);
+		// Decrement the counts
+		this.decrementCounts(p);
 		//Stuff here
 	}
 
@@ -123,26 +134,6 @@ public abstract class Aircraft {
 		// Increment the counts
 		this.incrementCounts(p);
 		//Stuff here
-	}
-	
-	/**
-	 * Increments passenger counts depending on their fare class as well as the overall
-	 * number of passengers count. 
-	 * 
-	 * @param p <code>Passenger</code> whose count is to be incremented
-	 */
-	private void incrementCounts(Passenger p) {
-		if (p.getPassID().contains("F:")) {
-			this.numFirst++;
-		}
-		else if (p.getPassID().contains("J:")) {
-			this.numBusiness++;
-		}
-		else if (p.getPassID().contains("P:")) {
-			this.numPremium++;
-		} else {
-			this.numEconomy++;
-		}
 	}
 
 	/**
@@ -407,5 +398,43 @@ public abstract class Aircraft {
 	private String noSeatsAvailableMsg(Passenger p) {
 		String msg = "";
 		return msg + p.noSeatsMsg(); 
+	}
+	
+	/**
+	 * Increments passenger counts depending on their fare class. 
+	 * 
+	 * @param p <code>Passenger</code> whose count is to be incremented
+	 */
+	private void incrementCounts(Passenger p) {
+		if (p.getPassID().contains("F:")) {
+			this.numFirst++;
+		}
+		else if (p.getPassID().contains("J:")) {
+			this.numBusiness++;
+		}
+		else if (p.getPassID().contains("P:")) {
+			this.numPremium++;
+		} else {
+			this.numEconomy++;
+		}
+	}
+	
+	/**
+	 * Decrements passenger counts depending on their fare class. 
+	 * 
+	 * @param p <code>Passenger</code> whose count is to be decremented
+	 */
+	private void decrementCounts(Passenger p) {
+		if (p.getPassID().contains("F:")) {
+			this.numFirst--;
+		}
+		else if (p.getPassID().contains("J:")) {
+			this.numBusiness--;
+		}
+		else if (p.getPassID().contains("P:")) {
+			this.numPremium--;
+		} else {
+			this.numEconomy--;
+		}
 	}
 }
