@@ -20,6 +20,8 @@ public class Economy extends Passenger {
 	 * @see asgnPassengers.Passenger#Passenger(int,int)
 	 */
 	public Economy(int bookingTime,int departureTime) throws PassengerException {
+		//Call super here 
+		super(bookingTime, departureTime);
 		//Stuff here
 		this.passID = "Y:" + this.passID;
 	}
