@@ -52,9 +52,6 @@ public abstract class Aircraft {
 	protected int departureTime; 
 	protected String status;
 	protected List<Passenger> seats;
-	
-	private static final int A380_TOTAL = 484;
-	private static final int B747_TOTAL = 353;
 
 	/**
 	 * Constructor sets flight info and the basic size parameters. 
@@ -120,7 +117,7 @@ public abstract class Aircraft {
 	 * @throws AircraftException if no seats available in <code>Passenger</code> fare class. 
 	 */
 	public void confirmBooking(Passenger p,int confirmationTime) throws AircraftException, PassengerException { 
-	/*	//Stuff here
+		//Stuff here
 		// Some local exception checking
 		if (!seatsAvailable(p)) {
 			throw new AircraftException(noSeatsAvailableMsg(p));
@@ -133,7 +130,7 @@ public abstract class Aircraft {
 		this.seats.add(p);
 		// Increment the counts
 		this.incrementCounts(p);
-		//Stuff here */
+		//Stuff here 
 	}
 
 	/**
