@@ -110,10 +110,41 @@ public abstract class Aircraft {
 	 */
 	public void confirmBooking(Passenger p,int confirmationTime) throws AircraftException, PassengerException { 
 		//Stuff here
+		// Some local exception checking
+		if (!seatsAvailable(p)) {
+			throw new AircraftException(noSeatsAvailableMsg(p));
+		}
+		// Transition method on the passenger
+		p.confirmSeat(confirmationTime, this.departureTime);
+		// Update of status string for the aircraft
 		this.status += Log.setPassengerMsg(p,"N/Q","C");
+		// Add passenger to seat storage for the aircraft
+		this.seats.add(p);
+		// Increment the counts
+		this.incrementCounts(p);
 		//Stuff here
 	}
 	
+	/**
+	 * Increments passenger counts depending on their fare class as well as the overall
+	 * number of passengers count. 
+	 * 
+	 * @param p <code>Passenger</code> whose count is to be incremented
+	 */
+	private void incrementCounts(Passenger p) {
+		if (p.getPassID().contains("F:")) {
+			this.numFirst++;
+		}
+		else if (p.getPassID().contains("J:")) {
+			this.numBusiness++;
+		}
+		else if (p.getPassID().contains("P:")) {
+			this.numPremium++;
+		} else {
+			this.numEconomy++;
+		}
+	}
+
 	/**
 	 * State dump intended for use in logging the final state of the aircraft. (Supplied) 
 	 * 
@@ -299,24 +330,24 @@ public abstract class Aircraft {
 	 * @param p <code>Passenger</code> to be Confirmed
 	 * @return <code>boolean</code> true if seats in Class(p); false otherwise
 	 */
-	public boolean seatsAvailable(Passenger p) {		
+	public boolean seatsAvailable(Passenger p) { //not sure if this will work	
 		boolean available = false;
-		if (p.getPassID() == "F:") { //this won't work
+		if (p.getPassID().contains("F:")) { 
 			if (this.numFirst < this.firstCapacity) {
 				available = true;
 			}
 		}
-		else if (p.getPassID() == "J:") {
+		else if (p.getPassID().contains("J:")) {
 			if (this.numBusiness < this.businessCapacity) {
 				available = true;
 			}
 		}
-		else if (p.getPassID() == "P:") {
+		else if (p.getPassID().contains("P:")) {
 			if (this.numPremium < this.premiumCapacity) {
 				available = true;
 			}
 		}
-		else if (p.getPassID() == "J:") {
+		else if (p.getPassID().contains("J:")) {
 			if (this.numEconomy < this.economyCapacity) {
 				available = true;
 			}
