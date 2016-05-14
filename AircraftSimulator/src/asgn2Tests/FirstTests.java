@@ -180,10 +180,49 @@ public class FirstTests {
 	
 	/**
 	 * Test method for {@link asgn2Passengers.Passenger#flyPassenger(int)}.
+	 * @throws PassengerException 
 	 */
 	@Test
-	public void testFlyPassenger() {
-		fail("Not yet implemented");
+	public void testFlyPassenger() throws PassengerException {
+		myPassenger.confirmSeat(testConfirmationTime, testDepartureTime);
+		myPassenger.flyPassenger(testDepartureTime);
+		assertTrue(myPassenger.isFlown());
+	}
+	
+	@Test (expected = PassengerException.class)
+	public void testFlyPassengerWhenPassengerStateIsNew() throws PassengerException {
+		myPassenger.flyPassenger(testDepartureTime);
+	}
+	
+	@Test (expected = PassengerException.class)
+	public void testFlyPassengerWhenPassengerStateIsQueued() throws PassengerException {
+		myPassenger.queuePassenger(6, testDepartureTime);
+		myPassenger.flyPassenger(testDepartureTime);
+	}
+	
+	@Test (expected = PassengerException.class)
+	public void testFlyPassengerWhenPassengerStateIsRefused() throws PassengerException {
+		myPassenger.refusePassenger(8);
+		myPassenger.flyPassenger(testDepartureTime);
+	}
+	
+	@Test (expected = PassengerException.class)
+	public void testFlyPassengerWhenPassengerStateIsFlown() throws PassengerException {
+		myPassenger.confirmSeat(testConfirmationTime, testDepartureTime);
+		myPassenger.flyPassenger(testDepartureTime);
+		myPassenger.flyPassenger(20);
+	}
+	
+	@Test (expected = PassengerException.class)
+	public void testFlyPassengerDepartureTimeEqualsZero() throws PassengerException {
+		myPassenger.confirmSeat(testConfirmationTime, testDepartureTime);
+		myPassenger.flyPassenger(0);
+	}
+	
+	@Test (expected = PassengerException.class)
+	public void testFlyPassengerDepartureTimeLessThanZero() throws PassengerException {
+		myPassenger.confirmSeat(testConfirmationTime, testDepartureTime);
+		myPassenger.flyPassenger(-1);
 	}
 
 	/**
