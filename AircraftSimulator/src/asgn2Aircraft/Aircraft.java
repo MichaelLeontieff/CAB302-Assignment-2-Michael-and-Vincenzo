@@ -233,7 +233,7 @@ public abstract class Aircraft {
 	 * 
 	 * @return <code>int</code> number of Economy Class passengers 
 	 */
-	public int getNumEonomy() {
+	public int getNumEconomy() {
 		return numEconomy;
 	}
 
