@@ -344,7 +344,8 @@ public abstract class Aircraft {
 			}
 		}
 		return available;
-	}
+	} /* could also maybe have: if (p instanceof First) { do stuff} 
+									else if (p instance of Business) { do stuff } */
 
 	/* 
 	 * (non-Javadoc) (Supplied) 
