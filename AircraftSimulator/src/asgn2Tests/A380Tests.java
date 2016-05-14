@@ -54,15 +54,17 @@ public class A380Tests {
 	@Before
 	public void setUp() throws Exception {
 		// for getter testing, create aircraft and populate it with one of each passenger
-		getTestNumPassClass = new A380(testFlightCode, testDepartTime, 5, 5, 5, 5 );
+		getTestNumPassClass = new A380(testFlightCode, testDepartTime, 1, 1, 1, 1 );
 		
 		FirstPassenger = new First(testBookingTime, testDepartTime);
 		BusinessPassenger = new Business(testBookingTime, testDepartTime);
 		PremEconPassenger = new Premium(testBookingTime, testDepartTime);
 		EconPassenger = new Economy(testBookingTime, testDepartTime);	
 		
-		// TODO  ^ require further setup of objects once bugs squashed ^
-		
+		getTestNumPassClass.confirmBooking(FirstPassenger, testConfirmTime);
+		getTestNumPassClass.confirmBooking(BusinessPassenger, testConfirmTime);
+		getTestNumPassClass.confirmBooking(PremEconPassenger, testConfirmTime);
+		getTestNumPassClass.confirmBooking(EconPassenger, testConfirmTime);
 	}
 	
 	// CONSTRUCTOR TESTS
@@ -118,7 +120,6 @@ public class A380Tests {
 		
 		// create passenger in confirmed state
 		testPassenger = new First(testBookingTime, testDepartTime);
-		testPassenger.confirmSeat(testBookingTime, testDepartTime);
 		
 		// add passenger to aircraft
 		cancelBookingTest.confirmBooking(testPassenger, 10);	
@@ -136,7 +137,6 @@ public class A380Tests {
 		
 		// create passenger in confirmed state
 		testPassenger = new First(testBookingTime, testDepartTime);
-		testPassenger.confirmSeat(testBookingTime, testDepartTime);
 		
 		// add passenger to aircraft
 		cancelBookingTest.confirmBooking(testPassenger, 10);	
@@ -155,7 +155,6 @@ public class A380Tests {
 				
 		// create passenger in confirmed state
 		testPassenger = new First(testBookingTime, testDepartTime);
-		testPassenger.confirmSeat(testConfirmTime, testDepartTime);
 				
 		// DO NOT ADD TO AIRCRAFT SEATING
 		
@@ -172,7 +171,6 @@ public class A380Tests {
 		
 		// create passenger in confirmed state
 		testPassenger = new First(testBookingTime, testDepartTime);
-		testPassenger.confirmSeat(testBookingTime, testDepartTime);
 		
 		// add passenger to aircraft
 		generalTester.confirmBooking(testPassenger, 10);	
@@ -188,7 +186,6 @@ public class A380Tests {
 				
 		// create passenger in confirmed state
 		testPassenger = new First(testBookingTime, testDepartTime);
-		testPassenger.confirmSeat(testBookingTime, testDepartTime);
 				
 		// add passenger to aircraft
 		generalTester.confirmBooking(testPassenger, 10);	
@@ -204,7 +201,6 @@ public class A380Tests {
 				
 		// create passenger in confirmed state
 		testPassenger = new First(testBookingTime, testDepartTime);
-		testPassenger.confirmSeat(testBookingTime, testDepartTime);
 				
 		// add passenger to aircraft
 		generalTester.confirmBooking(testPassenger, 10);	
@@ -219,14 +215,6 @@ public class A380Tests {
 		generalTester = new A380(testFlightCode, testDepartTime, 1, 1, 1, 1 );
 		// create passenger in confirmed state
 		testPassenger = new Business(testBookingTime, testDepartTime);
-		
-		
-		// state pre-conditions that must be all false
-		System.out.println(testPassenger.isConfirmed());
-		System.out.println(testPassenger.isRefused());
-		System.out.println(testPassenger.isFlown());
-		
-		testPassenger.confirmSeat(testBookingTime, testDepartTime);	
 
 		// add passenger to aircraft
 		generalTester.confirmBooking(testPassenger, 10);			
@@ -240,7 +228,7 @@ public class A380Tests {
 		generalTester = new A380(testFlightCode, testDepartTime, 1, 1, 1, 1 );
 		// create passenger in confirmed state
 		testPassenger = new Economy(testBookingTime, testDepartTime);
-		testPassenger.confirmSeat(testBookingTime, testDepartTime);	
+		
 		// add passenger to aircraft
 		generalTester.confirmBooking(testPassenger, 10);			
 		// check for containment
@@ -253,7 +241,7 @@ public class A380Tests {
 		generalTester = new A380(testFlightCode, testDepartTime, 1, 1, 1, 1 );
 		// create passenger in confirmed state
 		testPassenger = new Premium(testBookingTime, testDepartTime);
-		testPassenger.confirmSeat(testBookingTime, testDepartTime);	
+
 		// add passenger to aircraft
 		generalTester.confirmBooking(testPassenger, 10);			
 		// check for containment
@@ -267,7 +255,6 @@ public class A380Tests {
 		
 		// create passenger in confirmed state
 		testPassenger = new First(testBookingTime, testDepartTime);
-		testPassenger.confirmSeat(testBookingTime, testDepartTime);
 		
 		// add passenger to aircraft, expecting exception
 		generalTester.confirmBooking(testPassenger, 10);	
@@ -290,7 +277,6 @@ public class A380Tests {
 				
 		// create passenger in confirmed state
 		testPassenger = new First(testBookingTime, testDepartTime);
-		testPassenger.confirmSeat(testBookingTime, testDepartTime);
 				
 		// add passenger to aircraft
 		generalTester.confirmBooking(testPassenger, 10);	
@@ -314,7 +300,6 @@ public class A380Tests {
 				
 		// create passenger in confirmed state
 		testPassenger = new First(testBookingTime, testDepartTime);
-		testPassenger.confirmSeat(testBookingTime, testDepartTime);
 				
 		// add passenger to single available seat of aircraft
 		generalTester.confirmBooking(testPassenger, 10);	
@@ -332,7 +317,6 @@ public class A380Tests {
 				
 		// create passenger in confirmed state
 		testPassenger = new First(testBookingTime, testDepartTime);
-		testPassenger.confirmSeat(testBookingTime, testDepartTime);
 				
 		// add passenger to aircraft
 		generalTester.confirmBooking(testPassenger, 10);	
@@ -390,10 +374,7 @@ public class A380Tests {
 	
 	@Test
 	public void GetPassengersTest() {
-		List<Passenger> comparisonPassengerList;
-		comparisonPassengerList.add(index, element);
-		// TODO determine indexing of passengers in seats list
-		// in order to construct comparison list
+		fail("Not yet implemented");
 	}
 	
 	// HAS PASSENGER TESTS
@@ -412,12 +393,12 @@ public class A380Tests {
 	
 	@Test
 	public void HasSeatsAvailableTrueTest() throws AircraftException {
-		
+		fail("Not yet implemented");
 	}
 	
 	@Test
 	public void HasSeatsAvailableFalseTest() {
-		
+		fail("Not yet implemented");
 	}
 	
 	// UPGRADE BOOKING TESTS
