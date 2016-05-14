@@ -211,6 +211,45 @@ public class A380Tests {
 		assertTrue(cancelBookingTest.getNumFirst() == 1);
 	}
 	
+	@Test
+	public void ConfirmBookingTestCheckBusinessClassPassengerCount() throws PassengerException, AircraftException {
+		// create aircraft
+		generalTester = new A380(testFlightCode, testDepartTime, 1, 1, 1, 1 );
+		// create passenger in confirmed state
+		testPassenger = new Business(testBookingTime, testDepartTime);
+		testPassenger.confirmSeat(testBookingTime, testDepartTime);	
+		// add passenger to aircraft
+		generalTester.confirmBooking(testPassenger, 10);			
+		// check for containment
+		assertTrue(cancelBookingTest.getNumBusiness() == 1);
+	}
+	
+	@Test
+	public void ConfirmBookingTestCheckEconomyClassPassengerCount() throws PassengerException, AircraftException {
+		// create aircraft
+		generalTester = new A380(testFlightCode, testDepartTime, 1, 1, 1, 1 );
+		// create passenger in confirmed state
+		testPassenger = new Economy(testBookingTime, testDepartTime);
+		testPassenger.confirmSeat(testBookingTime, testDepartTime);	
+		// add passenger to aircraft
+		generalTester.confirmBooking(testPassenger, 10);			
+		// check for containment
+		assertTrue(cancelBookingTest.getNumEconomy() == 1);
+	}
+	
+	@Test
+	public void ConfirmBookingTestCheckPremiumClassPassengerCount() throws PassengerException, AircraftException {
+		// create aircraft
+		generalTester = new A380(testFlightCode, testDepartTime, 1, 1, 1, 1 );
+		// create passenger in confirmed state
+		testPassenger = new Premium(testBookingTime, testDepartTime);
+		testPassenger.confirmSeat(testBookingTime, testDepartTime);	
+		// add passenger to aircraft
+		generalTester.confirmBooking(testPassenger, 10);			
+		// check for containment
+		assertTrue(cancelBookingTest.getNumPremium() == 1);
+	}
+	
 	@Test (expected = AircraftException.class)
 	public void NoSeatsAvailableExceptionTest() throws AircraftException, PassengerException {
 		// create aircraft with no seats (it had one job)
