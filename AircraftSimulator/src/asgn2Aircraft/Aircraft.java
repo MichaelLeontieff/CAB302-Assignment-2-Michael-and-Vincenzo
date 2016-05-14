@@ -338,7 +338,7 @@ public abstract class Aircraft {
 				available = true;
 			}
 		}
-		else if (p.getPassID().contains("J:")) {
+		else if (p.getPassID().contains("Y:")) {
 			if (this.numEconomy < this.economyCapacity) {
 				available = true;
 			}
@@ -370,8 +370,24 @@ public abstract class Aircraft {
 	 * by upgrades to First), and then finally, we do the same for Economy, upgrading 
 	 * where possible to Premium.  
 	 */
-	public void upgradeBookings() { 
-		
+	public void upgradeBookings() { //not sure if this works
+		for (Passenger p : this.seats) {
+			if (p.getPassID().contains("J:")) {
+				if (this.numFirst < this.firstCapacity) {
+					p.upgrade();
+				}
+			}
+			else if (p.getPassID().contains("P:")) {
+				if (this.numBusiness < this.businessCapacity) {
+					p.upgrade();
+				}
+			}
+			else if (p.getPassID().contains("Y:")) {
+				if (this.numPremium < this.premiumCapacity) {
+					p.upgrade();
+				}
+			}
+		}
 	}
 
 	/**
