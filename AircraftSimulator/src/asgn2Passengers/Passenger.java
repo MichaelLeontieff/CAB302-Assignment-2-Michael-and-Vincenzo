@@ -120,11 +120,15 @@ public abstract class Passenger {
 	 *         isFlown(this) OR (cancellationTime < 0) OR (departureTime < cancellationTime)
 	 */
 	public void cancelSeat(int cancellationTime) throws PassengerException {
-		if (cancellationTime < 0) {
-			throw new PassengerException("Cancellation time less than 0");
-		} else if (departureTime < cancellationTime) {
-			throw new PassengerException("Departure time set before cancellation time");
-		}
+		// exception testing
+		checkInvalidTimeParameter(cancellationTime, "Cancellation Time");
+		checkBoundsTime(departureTime, cancellationTime, "Refusal and Booking");
+		
+//		if (cancellationTime < 0) {
+//			throw new PassengerException("Cancellation time less than 0");
+//		} else if (departureTime < cancellationTime) {
+//			throw new PassengerException("Departure time set before cancellation time");
+//		}
 		
 		// if passenger occupies other unsupported state
 		if (!isConfirmed()) {
@@ -163,11 +167,15 @@ public abstract class Passenger {
 	 * 		   OR (confirmationTime < 0) OR (departureTime < confirmationTime)
 	 */
 	public void confirmSeat(int confirmationTime, int departureTime) throws PassengerException {
-		if (confirmationTime < 0) {
-			throw new PassengerException("Confirmation time less than 0");
-		} else if (departureTime < confirmationTime) {
-			throw new PassengerException("Departure time set before confirmation time");
-		}
+		// exception testing
+		checkInvalidTimeParameter(confirmationTime, "Confirmation Time");
+		checkBoundsTime(departureTime, confirmationTime, "Departure and Confirmation");
+		
+//		if (confirmationTime < 0) {
+//			throw new PassengerException("Confirmation time less than 0");
+//		} else if (departureTime < confirmationTime) {
+//			throw new PassengerException("Departure time set before confirmation time");
+//		}
 		
 		if (isNew() || isQueued()) {
 			// valid if it reaches here
@@ -388,11 +396,15 @@ public abstract class Passenger {
 	 * 			OR (refusalTime < 0) OR (refusalTime < bookingTime)
 	 */
 	public void refusePassenger(int refusalTime) throws PassengerException {
-		if (refusalTime < 0) {
-			throw new PassengerException("Refusal time less than 0");
-		} else if (refusalTime < bookingTime) {
-			throw new PassengerException("Refusal time less than Booking time");
-		}
+		// exception checking
+		checkInvalidTimeParameter(refusalTime, "Refusal Time");
+		checkBoundsTime(refusalTime, bookingTime, "Refusal and Booking");
+		
+//		if (refusalTime < 0) {
+//			throw new PassengerException("Refusal time less than 0");
+//		} else if (refusalTime < bookingTime) {
+//			throw new PassengerException("Refusal time less than Booking time");
+//		}
 		
 		if (isNew() || isQueued()) {
 			// valid if it reaches here
@@ -490,5 +502,17 @@ public abstract class Passenger {
 	//Various private helper methods to check arguments and throw exceptions
 	
 	// TODO refactor code to eliminate repetition through private helper methods
+	
+	private void checkInvalidTimeParameter(int givenTime, String valueName) throws PassengerException {
+		if (givenTime < 0) {
+			throw new PassengerException(valueName + " less than 0");
+		}
+	}
+	
+	private void checkBoundsTime(int lessThanTime, int greaterThanTime, String preceed) throws PassengerException {
+		if (lessThanTime < greaterThanTime) {
+			throw new PassengerException(preceed + " don't conform to range requirements");
+		}
+	}
 
 }
