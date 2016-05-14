@@ -156,8 +156,7 @@ public abstract class Aircraft {
 	 */
 	public boolean flightEmpty() {
 		boolean empty = false;
-		// if (getNumPassengers() == 0)
-		if (numFirst == 0 && numBusiness == 0 && numPremium == 0 && numEconomy == 0) {
+	    if (this.getNumPassengers() == 0){
 			empty = true;
 		}
 		return empty;
@@ -172,13 +171,15 @@ public abstract class Aircraft {
 		boolean full = false;
 		// check the A380 capacity
 		if (this.type == "A380") {
-			if (getNumPassengers() == A380_TOTAL) {
+			//if (this.getNumPassengers() == A380_TOTAL) {
+			if (this.getNumPassengers() == this.capacity) {
 				full = true;
 			}
 		}
 		// check the B747 capacity
 		else if (this.type == "B747") {
-			if (getNumPassengers() == B747_TOTAL) {
+			//if (this.getNumPassengers() == B747_TOTAL) {
+			if (this.getNumPassengers() == this.capacity) {
 				full = true;
 			}
 		}
@@ -205,7 +206,7 @@ public abstract class Aircraft {
 	 * @return <code>Bookings</code> object containing the status.  
 	 */
 	public Bookings getBookings() {
-		
+		return new Bookings(this.numFirst, this.numBusiness, this.numPremium, this.numEconomy, this.getNumPassengers(), this. );
 	}
 	
 	/**
