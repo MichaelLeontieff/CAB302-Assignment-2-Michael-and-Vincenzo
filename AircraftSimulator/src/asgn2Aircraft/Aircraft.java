@@ -221,8 +221,8 @@ public abstract class Aircraft {
 	 * @return <code>int</code> number of Confirmed passengers 
 	 */
 	public int getNumPassengers() {
-		return capacity;
-		//return numFirst + numBusiness + numPremium + numEconomy;
+		//return capacity;
+		return numFirst + numBusiness + numPremium + numEconomy;
 	}
 	
 	/**
@@ -300,7 +300,28 @@ public abstract class Aircraft {
 	 * @return <code>boolean</code> true if seats in Class(p); false otherwise
 	 */
 	public boolean seatsAvailable(Passenger p) {		
-		
+		boolean available = false;
+		if (p.getPassID() == "F:") { //this won't work
+			if (this.numFirst < this.firstCapacity) {
+				available = true;
+			}
+		}
+		else if (p.getPassID() == "J:") {
+			if (this.numBusiness < this.businessCapacity) {
+				available = true;
+			}
+		}
+		else if (p.getPassID() == "P:") {
+			if (this.numPremium < this.premiumCapacity) {
+				available = true;
+			}
+		}
+		else if (p.getPassID() == "J:") {
+			if (this.numEconomy < this.economyCapacity) {
+				available = true;
+			}
+		}
+		return available;
 	}
 
 	/* 
