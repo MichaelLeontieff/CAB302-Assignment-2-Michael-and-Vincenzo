@@ -74,24 +74,19 @@ public abstract class Passenger {
 	 * OR (departureTime < bookingTime) 
 	 */
 	public Passenger(int bookingTime, int departureTime) throws PassengerException  {
-		//Stuff here 
-		if (bookingTime < 0) {
-			throw new PassengerException("Invalid booking time");
-		} else if (departureTime <= 0) {
-			throw new PassengerException("Invalid departure time");
-		} else if (departureTime < bookingTime) {
-			throw new PassengerException("Booking time is after departure time");
-		} else {
-			// set fields
-			this.passID = "" + Passenger.index; 
-			Passenger.index++; 
-			this.bookingTime = bookingTime;
-			this.departureTime = departureTime;
-			// set new state of passenger
-			this.newState = true;
-		}
-		//Stuff here 
+		// Private helper exception testing
+		checkInvalidTimeParameter(bookingTime, "Booking Time", false);
+		checkInvalidTimeParameter(departureTime, "Departure Time", true);	
+		checkBoundsTime(departureTime, bookingTime, "Departure and Booking");
 		
+		// if we reach here then parameters are valid
+		// set fields
+		this.passID = "" + Passenger.index; 
+		Passenger.index++; 
+		this.bookingTime = bookingTime;
+		this.departureTime = departureTime;
+		// set new state of passenger
+		this.newState = true;
 	}
 	
 	/**
@@ -121,14 +116,8 @@ public abstract class Passenger {
 	 */
 	public void cancelSeat(int cancellationTime) throws PassengerException {
 		// exception testing
-		checkInvalidTimeParameter(cancellationTime, "Cancellation Time");
+		checkInvalidTimeParameter(cancellationTime, "Cancellation Time", false);
 		checkBoundsTime(departureTime, cancellationTime, "Refusal and Booking");
-		
-//		if (cancellationTime < 0) {
-//			throw new PassengerException("Cancellation time less than 0");
-//		} else if (departureTime < cancellationTime) {
-//			throw new PassengerException("Departure time set before cancellation time");
-//		}
 		
 		// if passenger occupies other unsupported state
 		if (!isConfirmed()) {
@@ -167,16 +156,11 @@ public abstract class Passenger {
 	 * 		   OR (confirmationTime < 0) OR (departureTime < confirmationTime)
 	 */
 	public void confirmSeat(int confirmationTime, int departureTime) throws PassengerException {
-		// exception testing
-		checkInvalidTimeParameter(confirmationTime, "Confirmation Time");
+		// Private helper Exception Testing
+		checkInvalidTimeParameter(confirmationTime, "Confirmation Time", false);
 		checkBoundsTime(departureTime, confirmationTime, "Departure and Confirmation");
-		
-//		if (confirmationTime < 0) {
-//			throw new PassengerException("Confirmation time less than 0");
-//		} else if (departureTime < confirmationTime) {
-//			throw new PassengerException("Departure time set before confirmation time");
-//		}
-		
+
+		// PRE: isNew(this) OR inQueue(this)<br>
 		if (isNew() || isQueued()) {
 			// valid if it reaches here
 			// set new state
@@ -186,6 +170,7 @@ public abstract class Passenger {
 			// record state
 			this.wasConfirmed = true;
 			// if queued set exitQueue time
+
 			if (isQueued()) {
 				this.exitQueueTime = confirmationTime;
 			}
@@ -213,9 +198,8 @@ public abstract class Passenger {
 	 *         isFlown(this) OR (departureTime <= 0)
 	 */
 	public void flyPassenger(int departureTime) throws PassengerException {
-		if (departureTime <= 0) {
-			throw new PassengerException("Departure Time equal to or less than zero");
-		}
+		// Private helper exception testing
+		checkInvalidTimeParameter(departureTime, "Departure Time", true);
 		
 		// if passenger occupies other unsupported state
 		if (!isConfirmed()) {
@@ -357,11 +341,9 @@ public abstract class Passenger {
 	 *         isFlown(this) OR (queueTime < 0) OR (departureTime < queueTime)
 	 */
 	public void queuePassenger(int queueTime, int departureTime) throws PassengerException {
-		if (departureTime < queueTime) {
-			throw new PassengerException("Departure Time less than Queue Time");
-		} else if (queueTime < 0) {
-			throw new PassengerException("Queue Time less than zero");
-		}
+		// Private helper exception testing
+		checkBoundsTime(departureTime, queueTime, "Departure and Queue");
+		checkInvalidTimeParameter(queueTime, "Queue Time", false);
 		
 		// if passenger occupies other unsupported state
 		if (!isNew()) {
@@ -396,15 +378,9 @@ public abstract class Passenger {
 	 * 			OR (refusalTime < 0) OR (refusalTime < bookingTime)
 	 */
 	public void refusePassenger(int refusalTime) throws PassengerException {
-		// exception checking
-		checkInvalidTimeParameter(refusalTime, "Refusal Time");
+		// Private helper exception testing
+		checkInvalidTimeParameter(refusalTime, "Refusal Time", false);
 		checkBoundsTime(refusalTime, bookingTime, "Refusal and Booking");
-		
-//		if (refusalTime < 0) {
-//			throw new PassengerException("Refusal time less than 0");
-//		} else if (refusalTime < bookingTime) {
-//			throw new PassengerException("Refusal time less than Booking time");
-//		}
 		
 		if (isNew() || isQueued()) {
 			// valid if it reaches here
@@ -503,9 +479,15 @@ public abstract class Passenger {
 	
 	// TODO refactor code to eliminate repetition through private helper methods
 	
-	private void checkInvalidTimeParameter(int givenTime, String valueName) throws PassengerException {
-		if (givenTime < 0) {
-			throw new PassengerException(valueName + " less than 0");
+	private void checkInvalidTimeParameter(int givenTime, String valueName, boolean inclusive) throws PassengerException {
+		if (inclusive) {
+			if (givenTime <= 0) {
+				throw new PassengerException(valueName + " less than 0");
+			}
+		} else {
+			if (givenTime < 0) {
+				throw new PassengerException(valueName + " less than 0");
+			}
 		}
 	}
 	
