@@ -87,7 +87,7 @@ public class FirstTests {
 	}// should i keep two asserts in one test?
 	
 	@Test
-	public void testCancelSeatAfterQueueingThenConfiringSeat() throws PassengerException {
+	public void testCancelSeatAfterQueueingThenConfirmingSeat() throws PassengerException {
 		myPassenger.queuePassenger(6, testDepartureTime);
 		myPassenger.confirmSeat(testConfirmationTime, testDepartureTime);
 		myPassenger.cancelSeat(8);
@@ -134,12 +134,50 @@ public class FirstTests {
 
 	/**
 	 * Test method for {@link asgn2Passengers.Passenger#confirmSeat(int, int)}.
+	 * @throws PassengerException 
 	 */
 	@Test
-	public void testConfirmSeat() {
-		fail("Not yet implemented");
+	public void testConfirmSeat() throws PassengerException {
+		myPassenger.confirmSeat(testConfirmationTime, testDepartureTime);
+		assertTrue(myPassenger.isConfirmed());
 	}
-
+	
+	@Test
+	public void testConfirmSeatAfterCancellingSeat() throws PassengerException {
+		myPassenger.confirmSeat(testConfirmationTime, testDepartureTime);
+		myPassenger.cancelSeat(9);
+		assertFalse(myPassenger.isConfirmed());
+	}
+	
+	@Test (expected = PassengerException.class)
+	public void testConfirmSeatAfterConfirmingAgain() throws PassengerException {
+		myPassenger.confirmSeat(testConfirmationTime, testDepartureTime);
+		myPassenger.confirmSeat(testConfirmationTime, testDepartureTime);
+	}
+	
+	@Test (expected = PassengerException.class)
+	public void testConfirmSeatWhenPassengerStateIsRefused() throws PassengerException {
+		myPassenger.refusePassenger(8);
+		myPassenger.confirmSeat(testConfirmationTime, testDepartureTime);
+	}
+	
+	@Test (expected = PassengerException.class)
+	public void testConfirmSeatWhenPassengerStateIsFlown() throws PassengerException {
+		myPassenger.confirmSeat(testConfirmationTime, testDepartureTime);
+		myPassenger.flyPassenger(testDepartureTime);
+		myPassenger.confirmSeat(12, 20);
+	}
+	
+	@Test (expected = PassengerException.class)
+	public void testConfirmSeatConfirmationTimeLessThanZero() throws PassengerException {
+		myPassenger.confirmSeat(-1, testDepartureTime);
+	}
+	
+	@Test (expected = PassengerException.class)
+	public void testConfirmSeatConfirmationTimeGreaterThanDepartureTime() throws PassengerException {
+		myPassenger.confirmSeat(testConfirmationTime, 2);
+	}
+	
 	/**
 	 * Test method for {@link asgn2Passengers.Passenger#flyPassenger(int)}.
 	 */
