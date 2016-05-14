@@ -471,9 +471,24 @@ public abstract class Passenger {
 	 * @param <code>Passenger</code> state to transfer
 	 */
 	protected void copyPassengerState(Passenger p) {
-	
+	// copy state of parameter into state of "this"
+		if (p.confirmed) {
+			
+		} else if (p.newState) {
+			this.newState = true;
+			this.bookingTime = p.bookingTime;
+			this.departureTime = p.departureTime;
+		} else if (p.refused) {
+			
+		} else if (p.flown) {
+			
+		} else if (p.inQueue) {
+			
+		}
 	}
 	
 	//Various private helper methods to check arguments and throw exceptions
+	
+	// TODO refactor code to eliminate repetition through private helper methods
 
 }
