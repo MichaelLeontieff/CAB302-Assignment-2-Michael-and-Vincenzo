@@ -207,7 +207,9 @@ public abstract class Aircraft {
 	 * @return <code>Bookings</code> object containing the status.  
 	 */
 	public Bookings getBookings() {
-		return new Bookings(this.numFirst, this.numBusiness, this.numPremium, this.numEconomy, this.getNumPassengers(), this.getNumPassengers() - this.capacity);
+		int total = numFirst + numBusiness + numPremium + numEconomy;
+		int available = (firstCapacity - numFirst) + (businessCapacity - numBusiness) + (premiumCapacity - numPremium) + (economyCapacity - numEconomy);
+		return new Bookings(numFirst, numBusiness, numPremium, numEconomy, total, available);
 	}
 	
 	/**
