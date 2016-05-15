@@ -5,6 +5,7 @@ package asgn2Tests;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
@@ -14,6 +15,7 @@ import org.junit.Test;
 import asgn2Aircraft.A380;
 import asgn2Aircraft.Aircraft;
 import asgn2Aircraft.AircraftException;
+import asgn2Aircraft.Bookings;
 import asgn2Passengers.Business;
 import asgn2Passengers.Economy;
 import asgn2Passengers.First;
@@ -330,13 +332,11 @@ public class A380Tests {
 	public void FlightFullFullTest() throws AircraftException, PassengerException {
 		// create aircraft with single available seat
 		generalTester = new A380(testFlightCode, testDepartTime, 1, 0, 0, 0 );
-				
 		// create passenger in confirmed state
-		testPassenger = new First(testBookingTime, testDepartTime);
-				
+		testPassenger = new First(testBookingTime, testDepartTime);	
 		// add passenger to single available seat of aircraft
 		generalTester.confirmBooking(testPassenger, 10);	
-		
+		// check condition
 		assertTrue(generalTester.flightFull());
 	}
 	
@@ -346,14 +346,11 @@ public class A380Tests {
 	@Test
 	public void FlyPassengersCorrectStateChangeTest() throws AircraftException, PassengerException {
 		// create aircraft
-		generalTester = new A380(testFlightCode, testDepartTime, 1, 1, 1, 1 );
-				
+		generalTester = new A380(testFlightCode, testDepartTime, 1, 1, 1, 1 );		
 		// create passenger in confirmed state
-		testPassenger = new First(testBookingTime, testDepartTime);
-				
+		testPassenger = new First(testBookingTime, testDepartTime);			
 		// add passenger to aircraft
-		generalTester.confirmBooking(testPassenger, 10);	
-		
+		generalTester.confirmBooking(testPassenger, 10);		
 		// fly passengers
 		generalTester.flyPassengers(15);
 				
@@ -361,11 +358,34 @@ public class A380Tests {
 		assertTrue(generalTester.getPassengers().get(0).isFlown());
 	}
 	
+	@Test
+	public void FlyPassengersEmptySeatingTest() throws AircraftException, PassengerException {
+		// create aircraft
+		generalTester = new A380(testFlightCode, testDepartTime, 1, 1, 1, 1 );		
+		// create passenger in confirmed state
+		testPassenger = new First(testBookingTime, testDepartTime);			
+		// fly passengers
+		generalTester.flyPassengers(15);		
+		// fetch first (and only) passenger in passenger list and check it's state
+		assertTrue(generalTester.getPassengers().isEmpty());
+	}
+	
 	// GET BOOKINGS TESTS
 	
 	@Test 
-	public void GetBookingsTest() {
-		fail("Not yet implemented");
+	public void GetBookingsTest() throws AircraftException, PassengerException {
+		// create aircraft
+		generalTester = new A380(testFlightCode, testDepartTime, 1, 1, 1, 1 );		
+		Bookings comparison = new Bookings(1, 0, 0, 1, 2, 2);
+		// create passengers
+		Passenger FirstBookingTest = new First(testBookingTime, testDepartTime);
+		Passenger EconomyBookingTest = new Economy(testBookingTime, testDepartTime);
+		generalTester.confirmBooking(FirstBookingTest, testConfirmTime);
+		generalTester.confirmBooking(EconomyBookingTest, testConfirmTime);
+		String comparator = comparison.toString();
+		String comparatorTwo = generalTester.getBookings().toString();
+		assertEquals(comparator, comparatorTwo);
+	// TODO fix issue of comparing memory references instead of actual value
 	}
 	
 	// GET NUM BUSINESS TESTS
@@ -406,8 +426,33 @@ public class A380Tests {
 	// GET PASSENGERS TESTS
 	
 	@Test
-	public void GetPassengersTest() {
-		fail("Not yet implemented");
+	public void GetPassengersTest() throws AircraftException, PassengerException {
+		List<Passenger> seats = new ArrayList<Passenger>();
+		// create aircraft
+		generalTester = new A380(testFlightCode, testDepartTime, 1, 1, 1, 1 );
+		// create passenger in confirmed state
+		testPassenger = new First(testBookingTime, testDepartTime);	
+		// add passenger to single available seat of aircraft
+		generalTester.confirmBooking(testPassenger, 10);	
+		// add passenger to comparison list
+		seats.add(testPassenger);
+		// check condition
+		assertEquals(seats.toString(), generalTester.getPassengers().toString());
+	}
+	
+	@Test
+	public void GetPassengersAfterCancelledPassengerTest() throws AircraftException, PassengerException {
+		List<Passenger> seats = new ArrayList<Passenger>();
+		// create aircraft
+		generalTester = new A380(testFlightCode, testDepartTime, 1, 1, 1, 1 );
+		// create passenger in confirmed state
+		testPassenger = new First(testBookingTime, testDepartTime);	
+		// add passenger to single available seat of aircraft
+		generalTester.confirmBooking(testPassenger, 10);	
+		// remove it again
+		generalTester.cancelBooking(testPassenger, 11);
+		// check condition
+		assertEquals(seats.toString(), generalTester.getPassengers().toString());
 	}
 	
 	// HAS PASSENGER TESTS
