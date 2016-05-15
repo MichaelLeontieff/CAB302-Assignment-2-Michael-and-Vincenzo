@@ -40,7 +40,10 @@ public class Business extends Passenger {
 
 	@Override
 	public Passenger upgrade() {
-		// copy passenger state
-		// create new object for first and copy over
+		// Create new passenger object of type First()  upgrade
+		Passenger upgradedToFirst = new First();
+		// copy over previous states
+		upgradedToFirst.copyPassengerState(this);
+		return upgradedToFirst;
 	}
 }
