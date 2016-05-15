@@ -224,7 +224,7 @@ public class A380Tests {
 		// add passenger to aircraft
 		generalTester.confirmBooking(testPassenger, 10);		
 		// check for containment
-		assertTrue(generalTester.getPassengers().contains(generalTester));
+		assertTrue(generalTester.getPassengers().contains(testPassenger));
 	}
 	
 	@Test
