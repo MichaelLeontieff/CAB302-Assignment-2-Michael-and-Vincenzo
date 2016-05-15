@@ -292,7 +292,7 @@ public class FirstTests {
 	 */
 	@Test
 	public void testGetPassID() {
-		assertEquals("", myPassenger.getPassID());
+		assertEquals("F:56", myPassenger.getPassID());
 	} //not sure where passID comes from or where it is set?
 
 	/**
@@ -401,6 +401,13 @@ public class FirstTests {
 		assertTrue(myPassenger.isQueued());
 	}
 	
+	@Test
+	public void testQueuePassengerAfterBeingConfirmed() throws PassengerException {
+		myPassenger.queuePassenger(6, testDepartureTime);
+		myPassenger.confirmSeat(7, testDepartureTime);
+		assertFalse(myPassenger.isQueued());
+	}
+	
 	@Test (expected = PassengerException.class)
 	public void testQueuePassengerWhenPassengerStateIsAlreadyQueued() throws PassengerException {
 		myPassenger.queuePassenger(6, testDepartureTime);
@@ -438,12 +445,56 @@ public class FirstTests {
 	
 	/**
 	 * Test method for {@link asgn2Passengers.Passenger#refusePassenger(int)}.
+	 * @throws PassengerException 
 	 */
 	@Test
-	public void testRefusePassenger() {
-		fail("Not yet implemented");
+	public void testRefusePassenger() throws PassengerException {
+		myPassenger.refusePassenger(7);
+		assertTrue(myPassenger.isRefused());
 	}
-
+	
+	@Test
+	public void testRefusePassengerAfterBeingQueued() throws PassengerException {
+		myPassenger.queuePassenger(7, testDepartureTime);
+		myPassenger.refusePassenger(9);
+		assertTrue(myPassenger.isRefused());
+	}
+	
+	@Test
+	public void testRefusePassengerAfterNeverBeingRefused() throws PassengerException {
+		myPassenger.confirmSeat(testConfirmationTime, testDepartureTime);
+		assertFalse(myPassenger.isRefused());
+	}
+	
+	@Test (expected = PassengerException.class)
+	public void testRefusePassengerWhenPassengerStateIsConfirmed() throws PassengerException {
+		myPassenger.confirmSeat(testConfirmationTime, testDepartureTime);
+		myPassenger.refusePassenger(8);
+	}
+	
+	@Test (expected = PassengerException.class)
+	public void testRefusePassengerWhenPassengerStateIsAlreadyRefused() throws PassengerException {
+		myPassenger.refusePassenger(6);
+		myPassenger.refusePassenger(8);
+	}
+	
+	@Test (expected = PassengerException.class)
+	public void testRefusePassengerWhenPassengerStateIsFlown() throws PassengerException {
+		myPassenger.confirmSeat(testConfirmationTime, testDepartureTime);
+		myPassenger.flyPassenger(testDepartureTime);
+		myPassenger.refusePassenger(15);
+	}
+	
+	@Test (expected = PassengerException.class)
+	public void testRefusePassengerWhenRefusalTimeIsLessThanZero() throws PassengerException {
+		myPassenger.refusePassenger(-1);
+	}
+	
+/*	@Test (expected = PassengerException.class)
+	public void testRefusePassengerWhenRefusalTimeIsLessThanBookingTime() throws PassengerException {
+		myPassenger.refusePassenger(-1);
+	} unsure how to test this */
+	
 	/**
 	 * Test method for {@link asgn2Passengers.Passenger#wasConfirmed()}.
 	 * @throws PassengerException 
