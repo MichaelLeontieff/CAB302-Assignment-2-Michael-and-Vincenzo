@@ -393,12 +393,49 @@ public class FirstTests {
 
 	/**
 	 * Test method for {@link asgn2Passengers.Passenger#queuePassenger(int, int)}.
+	 * @throws PassengerException 
 	 */
 	@Test
-	public void testQueuePassenger() {
-		fail("Not yet implemented");
+	public void testQueuePassenger() throws PassengerException {
+		myPassenger.queuePassenger(6, testDepartureTime);
+		assertTrue(myPassenger.isQueued());
 	}
-
+	
+	@Test (expected = PassengerException.class)
+	public void testQueuePassengerWhenPassengerStateIsAlreadyQueued() throws PassengerException {
+		myPassenger.queuePassenger(6, testDepartureTime);
+		myPassenger.queuePassenger(8, testDepartureTime);
+	}
+	
+	@Test (expected = PassengerException.class)
+	public void testQueuePassengerWhenPassengerStateIsConfirmed() throws PassengerException {
+		myPassenger.confirmSeat(testConfirmationTime, testDepartureTime);
+		myPassenger.queuePassenger(8, testDepartureTime);
+	}
+	
+	@Test (expected = PassengerException.class)
+	public void testQueuePassengerWhenPassengerStateIsRefused() throws PassengerException {
+		myPassenger.refusePassenger(6);
+		myPassenger.queuePassenger(8, testDepartureTime);
+	}
+	
+	@Test (expected = PassengerException.class)
+	public void testQueuePassengerWhenPassengerStateIsFlown() throws PassengerException {
+		myPassenger.confirmSeat(testConfirmationTime, testDepartureTime);
+		myPassenger.flyPassenger(testDepartureTime);
+		myPassenger.queuePassenger(8, testDepartureTime);
+	}
+	
+	@Test (expected = PassengerException.class)
+	public void testQueuePassengerWhenQueueTimeIsLessThanZero() throws PassengerException {
+		myPassenger.queuePassenger(-1, testDepartureTime);
+	}
+	
+	@Test (expected = PassengerException.class)
+	public void testQueuePassengerWhenDepartureTimeIsLessThanQueueTime() throws PassengerException {
+		myPassenger.queuePassenger(8, 5);
+	}
+	
 	/**
 	 * Test method for {@link asgn2Passengers.Passenger#refusePassenger(int)}.
 	 */
