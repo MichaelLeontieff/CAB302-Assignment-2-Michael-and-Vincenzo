@@ -33,6 +33,10 @@ public class Economy extends Passenger {
 
 	@Override
 	public Passenger upgrade() {
-
+		// Create new passenger object
+		Passenger upgraded = new Premium();
+		// copy over previous states
+		upgraded.copyPassengerState(this);
+		return upgraded;
 	}
 }
