@@ -169,22 +169,12 @@ public abstract class Aircraft {
 	 */
 	public boolean flightFull() {
 		boolean full = false;
-		// check the A380 capacity
-		if (this.type == "A380") {
-			//if (this.getNumPassengers() == A380_TOTAL) {
-			if (this.getNumPassengers() == this.capacity) {
-				full = true;
-			}
-		}
-		// check the B747 capacity
-		else if (this.type == "B747") {
-			//if (this.getNumPassengers() == B747_TOTAL) {
-			if (this.getNumPassengers() == this.capacity) {
-				full = true;
-			}
+		// check the capacity
+		if (this.getNumPassengers() == this.capacity) {
+			full = true;
 		}
 		return full;
-	} /*could be done differently and say: if (getNumFirst() == this.firstCapacity)
+	}
 	
 	/**
 	 * Method to finalise the aircraft seating on departure. 
@@ -248,7 +238,6 @@ public abstract class Aircraft {
 	 * @return <code>int</code> number of Confirmed passengers 
 	 */
 	public int getNumPassengers() {
-		//return capacity;
 		return numFirst + numBusiness + numPremium + numEconomy;
 	}
 	
