@@ -565,10 +565,37 @@ public class A380Tests {
 	
 	// UPGRADE BOOKING TESTS
 	
-	@Test (expected = PassengerException.class)
-	public void UpgradeBookingsTest() {
+	@Test
+	public void UpgradeBookingsFromEconomyFullTest() {
 		fail("Not yet implemented");
 	}
+	
+	@Test
+	public void UpgradeBookingsFromEconomyNotFullTest() {
+		fail("Not yet implemented");
+	}
+	
+	@Test
+	public void UpgradeBookingsFromPremiumFullTest() {
+		fail("Not yet implemented");
+	}
+	
+	@Test
+	public void UpgradeBookingsFromPremiumNotFullTest() {
+		fail("Not yet implemented");
+	}
+	
+	@Test
+	public void UpgradeBookingsFromBusinessFullTest() {
+		fail("Not yet implemented");
+	}
+	
+	@Test
+	public void UpgradeBookingsFromBusinessNotFullTest() {
+		fail("Not yet implemented");
+	}
+	
+
 	
 	
 	
