@@ -32,6 +32,7 @@ public class FirstTests {
 	private static final int TEST_QUEUE_TIME = 4;
 	private static final int TEST_REFUSAL_TIME = 7;
 	private static final int TEST_GREATER_QUEUE_TIME = 8;
+	private static final int ALTERNATE_DEPARTURE_TIME = 20;
 	
 	// Declare test objects
 	private First myPassenger;
@@ -89,64 +90,91 @@ public class FirstTests {
 	 */
 	@Test
 	public void testUpgradeBookingTime() throws PassengerException {
+		// Set passenger to a confirmed state as upgrade will only get called on a passenger in a seat
 		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
+		// Create new passenger instance which is an upgrade of the original passenger
 		Passenger upgradedPassenger = myPassenger.upgrade();
+		// Check if matching Booking Times
 		assertTrue(myPassenger.getBookingTime() == upgradedPassenger.getBookingTime());
 	}
 	
 	@Test
 	public void testUpgradeDepartureTime() throws PassengerException {
+		// Set passenger to a confirmed state
 		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
+		// Create new passenger instance which is an upgrade of the original passenger
 		Passenger upgradedPassenger = myPassenger.upgrade();
+		// Check if matching Departure Times
 		assertTrue(myPassenger.getDepartureTime() == upgradedPassenger.getDepartureTime());
 	}
 	
 	@Test
 	public void testUpgradeConfirmationTime() throws PassengerException {
+		// Set passenger to a confirmed state
 		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
+		// Create new passenger instance which is an upgrade of the original passenger
 		Passenger upgradedPassenger = myPassenger.upgrade();
+		// Check if matching Confirmation Times
 		assertTrue(myPassenger.getConfirmationTime() == upgradedPassenger.getConfirmationTime());
 	}
 	
 	@Test
 	public void testUpgradePassID() throws PassengerException {
+		// Set passenger to a confirmed state
 		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
+		// Create new passenger instance which is an upgrade of the original passenger
 		Passenger upgradedPassenger = myPassenger.upgrade();
+		// Check if the passID's do not match
 		assertTrue(myPassenger.getPassID() != upgradedPassenger.getPassID());
-	} //if a first is upgraded, do their passID change?
+	} //if a first is upgraded, does their passID change?
 	
 	@Test
 	public void testUpgradeBothConfirmed() throws PassengerException {
+		// Set passenger to a confirmed state
 		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
+		// Create new passenger instance which is an upgrade of the original passenger
 		Passenger upgradedPassenger = myPassenger.upgrade();
+		// Check if both passenger instances are in confirmed states
 		assertTrue(myPassenger.isConfirmed() == upgradedPassenger.isConfirmed());
 	}
 	
 	@Test
 	public void testUpgradeBothNotNew() throws PassengerException {
+		// Set passenger to a confirmed state
 		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
+		// Create new passenger instance which is an upgrade of the original passenger
 		Passenger upgradedPassenger = myPassenger.upgrade();
+		// Check if both passenger instances are not in new states 
 		assertTrue(myPassenger.isNew() == upgradedPassenger.isNew());
 	}
 	
 	@Test
 	public void testUpgradeBothNotQueued() throws PassengerException {
+		// Set passenger to a confirmed state
 		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
+		// Create new passenger instance which is an upgrade of the original passenger
 		Passenger upgradedPassenger = myPassenger.upgrade();
+		// Check if both passenger instances are not in queued states
 		assertTrue(myPassenger.isQueued() == upgradedPassenger.isQueued());
 	}
 
 	@Test
 	public void testUpgradeBothNotRefused() throws PassengerException {
+		// Set passenger to a confirmed state
 		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
+		// Create new passenger instance which is an upgrade of the original passenger
 		Passenger upgradedPassenger = myPassenger.upgrade();
+		// Check if both passengers are not in refused states
 		assertTrue(myPassenger.isRefused() == upgradedPassenger.isRefused());
 	}
 	
 	@Test
 	public void testUpgradeBothNotFlown() throws PassengerException {
+		// Set passenger to a confirmed state
 		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
+		// Create new passenger instance which is an upgrade of the original passenger
 		Passenger upgradedPassenger = myPassenger.upgrade();
+		// Check if both passengers are not in flown states
 		assertTrue(myPassenger.isFlown() == upgradedPassenger.isFlown());
 	}
 
@@ -472,6 +500,32 @@ public class FirstTests {
 		assertEquals(10, myPassenger.getDepartureTime());
 	}
 	
+	@Test
+	public void testGetDepartureTimeAfterQueueingPassengerWithDifferentDepartureTime() throws PassengerException {
+		// Set passenger to a queued state
+		myPassenger.queuePassenger(TEST_QUEUE_TIME, ALTERNATE_DEPARTURE_TIME);
+		// Check condition
+		assertEquals(20, myPassenger.getDepartureTime());
+	}
+	
+	@Test
+	public void testGetDepartureTimeAfterConfirmingPassengerWithDifferentDepartureTime() throws PassengerException {
+		// Set passenger to a confirmed state
+		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, ALTERNATE_DEPARTURE_TIME);
+		// Check condition
+		assertEquals(20, myPassenger.getDepartureTime());
+	}
+	
+	@Test
+	public void testGetDepartureTimeAfterFlyingPassengerWithDifferentDepartureTime() throws PassengerException {
+		// Set passenger to a confirmed state
+		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
+		// Set Passenger to a flown state
+		myPassenger.flyPassenger(ALTERNATE_DEPARTURE_TIME);
+		// Check condition
+		assertEquals(20, myPassenger.getDepartureTime());
+	}
+	
 	// GET ENTER QUEUE TIME TESTS
 
 	/**
@@ -519,7 +573,7 @@ public class FirstTests {
 	 */
 	@Test
 	public void testGetPassID() {
-		assertEquals("F:75", myPassenger.getPassID());
+		assertEquals("F:78", myPassenger.getPassID());
 	} //not sure where passID comes from or where it is set?
 
 	// IS CONFIRMED TESTS
