@@ -11,6 +11,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import asgn2Passengers.First;
+import asgn2Passengers.Passenger;
 import asgn2Passengers.PassengerException;
 
 /**
@@ -84,11 +85,70 @@ public class FirstTests {
 
 	/**
 	 * Test method for {@link asgn2Passengers.First#upgrade()}.
+	 * @throws PassengerException 
 	 */
 	@Test
-	public void testUpgrade() {
-		assertTrue(myPassenger == myPassenger.upgrade());
-	}// or myPassenger.getBookingTime == myPassenger.upgrade.getBookingTime?
+	public void testUpgradeBookingTime() throws PassengerException {
+		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
+		Passenger upgradedPassenger = myPassenger.upgrade();
+		assertTrue(myPassenger.getBookingTime() == upgradedPassenger.getBookingTime());
+	}
+	
+	@Test
+	public void testUpgradeDepartureTime() throws PassengerException {
+		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
+		Passenger upgradedPassenger = myPassenger.upgrade();
+		assertTrue(myPassenger.getDepartureTime() == upgradedPassenger.getDepartureTime());
+	}
+	
+	@Test
+	public void testUpgradeConfirmationTime() throws PassengerException {
+		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
+		Passenger upgradedPassenger = myPassenger.upgrade();
+		assertTrue(myPassenger.getConfirmationTime() == upgradedPassenger.getConfirmationTime());
+	}
+	
+	@Test
+	public void testUpgradePassID() throws PassengerException {
+		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
+		Passenger upgradedPassenger = myPassenger.upgrade();
+		assertTrue(myPassenger.getPassID() != upgradedPassenger.getPassID());
+	} //if a first is upgraded, do their passID change?
+	
+	@Test
+	public void testUpgradeBothConfirmed() throws PassengerException {
+		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
+		Passenger upgradedPassenger = myPassenger.upgrade();
+		assertTrue(myPassenger.isConfirmed() == upgradedPassenger.isConfirmed());
+	}
+	
+	@Test
+	public void testUpgradeBothNotNew() throws PassengerException {
+		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
+		Passenger upgradedPassenger = myPassenger.upgrade();
+		assertTrue(myPassenger.isNew() == upgradedPassenger.isNew());
+	}
+	
+	@Test
+	public void testUpgradeBothNotQueued() throws PassengerException {
+		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
+		Passenger upgradedPassenger = myPassenger.upgrade();
+		assertTrue(myPassenger.isQueued() == upgradedPassenger.isQueued());
+	}
+
+	@Test
+	public void testUpgradeBothNotRefused() throws PassengerException {
+		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
+		Passenger upgradedPassenger = myPassenger.upgrade();
+		assertTrue(myPassenger.isRefused() == upgradedPassenger.isRefused());
+	}
+	
+	@Test
+	public void testUpgradeBothNotFlown() throws PassengerException {
+		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
+		Passenger upgradedPassenger = myPassenger.upgrade();
+		assertTrue(myPassenger.isFlown() == upgradedPassenger.isFlown());
+	}
 
 	// CANCEL SEAT TESTS
 	
@@ -459,7 +519,7 @@ public class FirstTests {
 	 */
 	@Test
 	public void testGetPassID() {
-		assertEquals("F:64", myPassenger.getPassID());
+		assertEquals("F:75", myPassenger.getPassID());
 	} //not sure where passID comes from or where it is set?
 
 	// IS CONFIRMED TESTS
