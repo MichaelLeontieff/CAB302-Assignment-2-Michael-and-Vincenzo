@@ -458,13 +458,26 @@ public class A380Tests {
 	// HAS PASSENGER TESTS
 	
 	@Test
-	public void HasPassengerTrueTest() {
-		fail("Not yet implemented");
+	public void HasPassengerTrueTest() throws AircraftException, PassengerException {
+		// create aircraft
+		generalTester = new A380(testFlightCode, testDepartTime, 1, 1, 1, 1 );
+		// create passenger in confirmed state
+		testPassenger = new First(testBookingTime, testDepartTime);	
+		// add passenger to single available seat of aircraft
+		generalTester.confirmBooking(testPassenger, 10);	
+		// has passenger
+		assertTrue(generalTester.hasPassenger(testPassenger));
 	}
 	
 	@Test
-	public void HasPassengerFalseTest() {
-		fail("Not yet implemented");
+	public void HasPassengerFalseTest() throws AircraftException, PassengerException {
+		// create aircraft
+		generalTester = new A380(testFlightCode, testDepartTime, 1, 1, 1, 1 );
+		// create passenger in confirmed state
+		testPassenger = new First(testBookingTime, testDepartTime);	
+		// do not add to aircraft
+		// has passenger
+		assertFalse(generalTester.hasPassenger(testPassenger));
 	}
 	
 	// SEATS AVAILABLE TESTS
