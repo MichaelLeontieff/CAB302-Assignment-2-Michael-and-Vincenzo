@@ -483,43 +483,84 @@ public class A380Tests {
 	// SEATS AVAILABLE TESTS
 	
 	@Test
-	public void SeatsAvailableTrueFirstTest() throws AircraftException {
-		fail("Not yet implemented");
+	public void SeatsAvailableTrueFirstTest() throws AircraftException, PassengerException {
+		// create aircraft
+		generalTester = new A380(testFlightCode, testDepartTime, 1, 1, 1, 1 );
+		// create first passenger
+		testPassenger = new First(testBookingTime, testDepartTime);	
+		// use passenger as parameter for checking seats
+		assertTrue(generalTester.seatsAvailable(testPassenger));
+		
 	}
 	
 	@Test
-	public void SeatsAvailableFalseFirstTest() {
-		fail("Not yet implemented");
+	public void SeatsAvailableFalseFirstTest() throws AircraftException, PassengerException {
+		// create empty aircraft
+		generalTester = new A380(testFlightCode, testDepartTime, 0, 0, 0, 0 );
+		// create first passenger
+		testPassenger = new First(testBookingTime, testDepartTime);	
+		// use passenger as parameter for checking seats
+		assertFalse(generalTester.seatsAvailable(testPassenger));
 	}
 	
 	@Test
-	public void SeatsAvailableTrueBusinessTest() throws AircraftException {
-		fail("Not yet implemented");
+	public void SeatsAvailableTrueBusinessTest() throws AircraftException, PassengerException {
+		// create aircraft
+		generalTester = new A380(testFlightCode, testDepartTime, 1, 1, 1, 1 );
+		// create first passenger
+		testPassenger = new Business(testBookingTime, testDepartTime);	
+		// use passenger as parameter for checking seats
+		assertTrue(generalTester.seatsAvailable(testPassenger));
 	}
 	
 	@Test
-	public void SeatsAvailableFalseBusinessTest() {
-		fail("Not yet implemented");
+	public void SeatsAvailableFalseBusinessTest() throws PassengerException, AircraftException {
+		// create empty aircraft
+		generalTester = new A380(testFlightCode, testDepartTime, 0, 0, 0, 0 );
+		// create first passenger
+		testPassenger = new Business(testBookingTime, testDepartTime);	
+		// use passenger as parameter for checking seats
+		assertFalse(generalTester.seatsAvailable(testPassenger));
 	}
 	
 	@Test
-	public void SeatsAvailableTruePremiumTest() throws AircraftException {
-		fail("Not yet implemented");
+	public void SeatsAvailableTruePremiumTest() throws AircraftException, PassengerException {
+		// create aircraft
+		generalTester = new A380(testFlightCode, testDepartTime, 1, 1, 1, 1 );
+		// create first passenger
+		testPassenger = new Premium(testBookingTime, testDepartTime);	
+		// use passenger as parameter for checking seats
+		assertTrue(generalTester.seatsAvailable(testPassenger));
 	}
 	
 	@Test
-	public void SeatsAvailableFalsePremiumTest() {
-		fail("Not yet implemented");
+	public void SeatsAvailableFalsePremiumTest() throws PassengerException, AircraftException {
+		// create empty aircraft
+		generalTester = new A380(testFlightCode, testDepartTime, 0, 0, 0, 0 );
+		// create first passenger
+		testPassenger = new Premium(testBookingTime, testDepartTime);	
+		// use passenger as parameter for checking seats
+		assertFalse(generalTester.seatsAvailable(testPassenger));
 	}
 	
 	@Test
-	public void SeatsAvailableTrueEconomyTest() throws AircraftException {
-		fail("Not yet implemented");
+	public void SeatsAvailableTrueEconomyTest() throws AircraftException, PassengerException {
+		// create aircraft
+		generalTester = new A380(testFlightCode, testDepartTime, 1, 1, 1, 1 );
+		// create first passenger
+		testPassenger = new Economy(testBookingTime, testDepartTime);	
+		// use passenger as parameter for checking seats
+		assertTrue(generalTester.seatsAvailable(testPassenger));
 	}
 	
 	@Test
-	public void SeatsAvailableFalseEconomyTest() {
-		fail("Not yet implemented");
+	public void SeatsAvailableFalseEconomyTest() throws AircraftException, PassengerException {
+		// create empty aircraft
+		generalTester = new A380(testFlightCode, testDepartTime, 0, 0, 0, 0 );
+		// create first passenger
+		testPassenger = new Economy(testBookingTime, testDepartTime);	
+		// use passenger as parameter for checking seats
+		assertFalse(generalTester.seatsAvailable(testPassenger));
 	}
 	
 	// UPGRADE BOOKING TESTS
