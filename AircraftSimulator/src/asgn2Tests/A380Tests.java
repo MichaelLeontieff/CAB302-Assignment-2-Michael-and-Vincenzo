@@ -483,12 +483,42 @@ public class A380Tests {
 	// SEATS AVAILABLE TESTS
 	
 	@Test
-	public void HasSeatsAvailableTrueTest() throws AircraftException {
+	public void SeatsAvailableTrueFirstTest() throws AircraftException {
 		fail("Not yet implemented");
 	}
 	
 	@Test
-	public void HasSeatsAvailableFalseTest() {
+	public void SeatsAvailableFalseFirstTest() {
+		fail("Not yet implemented");
+	}
+	
+	@Test
+	public void SeatsAvailableTrueBusinessTest() throws AircraftException {
+		fail("Not yet implemented");
+	}
+	
+	@Test
+	public void SeatsAvailableFalseBusinessTest() {
+		fail("Not yet implemented");
+	}
+	
+	@Test
+	public void SeatsAvailableTruePremiumTest() throws AircraftException {
+		fail("Not yet implemented");
+	}
+	
+	@Test
+	public void SeatsAvailableFalsePremiumTest() {
+		fail("Not yet implemented");
+	}
+	
+	@Test
+	public void SeatsAvailableTrueEconomyTest() throws AircraftException {
+		fail("Not yet implemented");
+	}
+	
+	@Test
+	public void SeatsAvailableFalseEconomyTest() {
 		fail("Not yet implemented");
 	}
 	
