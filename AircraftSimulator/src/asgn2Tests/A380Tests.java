@@ -566,13 +566,31 @@ public class A380Tests {
 	// UPGRADE BOOKING TESTS
 	
 	@Test
-	public void UpgradeBookingsFromEconomyFullTest() {
-		fail("Not yet implemented");
+	public void UpgradeBookingsFromEconomyNotFullTestCounter() throws AircraftException, PassengerException {
+		// create aircraft with upgrade space
+		generalTester = new A380(testFlightCode, testDepartTime, 1, 1, 0, 0 );
+		// create first passenger
+		testPassenger = new Economy(testBookingTime, testDepartTime);
+		// confirm booking
+		generalTester.confirmBooking(testPassenger, 10);	
+		// upgrade to Premium
+		generalTester.upgradeBookings();
+		// if successful number of Premium passengers should be one
+		assertEquals(1, generalTester.getNumPremium());
 	}
 	
 	@Test
-	public void UpgradeBookingsFromEconomyNotFullTest() {
-		fail("Not yet implemented");
+	public void UpgradeBookingsFromEconomyNotFullTestContainment() throws AircraftException, PassengerException {
+		// create aircraft with upgrade space
+		generalTester = new A380(testFlightCode, testDepartTime, 1, 1, 0, 0 );
+		// create first passenger
+		testPassenger = new Economy(testBookingTime, testDepartTime);
+		// confirm booking
+		generalTester.confirmBooking(testPassenger, 10);	
+		// upgrade to Premium
+		generalTester.upgradeBookings();
+		// if successful number of Premium passengers should be one
+		assertEquals(1, generalTester.getPassengers().contains(testPassenger));
 	}
 	
 	@Test
