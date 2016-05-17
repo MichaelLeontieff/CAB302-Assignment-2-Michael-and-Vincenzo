@@ -596,7 +596,63 @@ public class A380Tests {
 		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);		
 		// upgrade to Premium
 		generalTester.upgradeBookings();
-		// if successful number of Premium passengers should be one
+		// passenger should still remain in seating
+		assertEquals(1, generalTester.getPassengers().contains(testPassenger));
+	}
+	
+	@Test
+	public void UpgradeBookingsFromPremiumTestCounter() throws AircraftException, PassengerException {
+		// create aircraft with upgrade space
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 0, 1, 1, 0 );
+		// create first passenger
+		testPassenger = new Premium(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		// confirm booking
+		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);		
+		// upgrade to Premium
+		generalTester.upgradeBookings();
+		// if successful number of Business passengers should be one
+		assertEquals(1, generalTester.getNumBusiness());
+	}
+	
+	@Test
+	public void UpgradeBookingsFromPremiumTestContainment() throws AircraftException, PassengerException {
+		// create aircraft with upgrade space
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 0, 1, 1, 0 );
+		// create first passenger
+		testPassenger = new Premium(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		// confirm booking
+		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);		
+		// upgrade to Premium
+		generalTester.upgradeBookings();
+		// passenger should still remain in seating
+		assertEquals(1, generalTester.getPassengers().contains(testPassenger));
+	}
+	
+	@Test
+	public void UpgradeBookingsFromBusinessTestCounter() throws AircraftException, PassengerException {
+		// create aircraft with upgrade space
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 0, 0, 1, 1 );
+		// create first passenger
+		testPassenger = new Business(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		// confirm booking
+		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);		
+		// upgrade to Premium
+		generalTester.upgradeBookings();
+		// if successful number of Business passengers should be one
+		assertEquals(1, generalTester.getNumFirst());
+	}
+	
+	@Test
+	public void UpgradeBookingsFromBusinessTestContainment() throws AircraftException, PassengerException {
+		// create aircraft with upgrade space
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 0, 0, 1, 1 );
+		// create first passenger
+		testPassenger = new Business(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		// confirm booking
+		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);		
+		// upgrade to Premium
+		generalTester.upgradeBookings();
+		// passenger should still remain in seating
 		assertEquals(1, generalTester.getPassengers().contains(testPassenger));
 	}
 	
