@@ -657,7 +657,7 @@ public class A380Tests {
 		// upgrade to Premium
 		generalTester.upgradeBookings();
 		// passenger should still remain in seating
-		assertEquals(1, generalTester.getPassengers().contains(testPassenger));
+		assertEquals(true, generalTester.getPassengers().contains(testPassenger));
 	}
 	
 	@Test
@@ -685,7 +685,7 @@ public class A380Tests {
 		// upgrade to Premium
 		generalTester.upgradeBookings();
 		// passenger should still remain in seating
-		assertEquals(1, generalTester.getPassengers().contains(testPassenger));
+		assertEquals(true, generalTester.getPassengers().contains(testPassenger));
 	}
 	
 	@Test
