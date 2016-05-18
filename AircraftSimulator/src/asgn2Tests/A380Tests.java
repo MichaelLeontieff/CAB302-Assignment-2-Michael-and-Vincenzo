@@ -379,19 +379,79 @@ public class A380Tests {
 	// GET BOOKINGS TESTS
 	
 	@Test 
-	public void GetBookingsTest() throws AircraftException, PassengerException {
+	public void GetBookingsTestNumEconomy() throws AircraftException, PassengerException {
 		// create aircraft
-		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 1, 1 );		
-		Bookings comparison = new Bookings(1, 0, 0, 1, 2, 2);
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 0, 0, 0, 1 );		
+		// create passenger
+		Passenger EconomyBookingTest = new Economy(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		generalTester.confirmBooking(EconomyBookingTest, TEST_CONFIRM_TIME);
+		assertEquals(1, generalTester.getBookings().getNumEconomy());
+	}
+	
+	@Test 
+	public void GetBookingsTestNumPremium() throws AircraftException, PassengerException {
+		// create aircraft
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 0, 0, 1, 0 );		
+		// create passenger
+		Passenger PremiumBookingTest = new Premium(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		generalTester.confirmBooking(PremiumBookingTest, TEST_CONFIRM_TIME);
+		assertEquals(1, generalTester.getBookings().getNumPremium());
+	}
+	
+	@Test 
+	public void GetBookingsTestNumBusiness() throws AircraftException, PassengerException {
+		// create aircraft
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 0, 1, 0, 0 );		
+		// create passenger
+		Passenger BusinessBookingTest = new Business(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		generalTester.confirmBooking(BusinessBookingTest, TEST_CONFIRM_TIME);
+		assertEquals(1, generalTester.getBookings().getNumBusiness());
+	}
+	
+	@Test 
+	public void GetBookingsTestNumFirst() throws AircraftException, PassengerException {
+		// create aircraft
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 0, 0, 0 );		
+		// create passenger
+		Passenger FirstBookingTest = new First(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		generalTester.confirmBooking(FirstBookingTest, TEST_CONFIRM_TIME);
+		assertEquals(1, generalTester.getBookings().getNumFirst());
+	}
+	
+	@Test 
+	public void GetBookingsTestNumAvailable() throws AircraftException, PassengerException {
+		// create aircraft
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 2, 1 );		
 		// create passengers
 		Passenger FirstBookingTest = new First(TEST_BOOKING_TIME, TEST_DEPART_TIME);
 		Passenger EconomyBookingTest = new Economy(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		Passenger PremiumBookingTest = new Premium(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		Passenger BusinessBookingTest = new Business(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		// add to flight
 		generalTester.confirmBooking(FirstBookingTest, TEST_CONFIRM_TIME);
 		generalTester.confirmBooking(EconomyBookingTest, TEST_CONFIRM_TIME);
-		String comparator = comparison.toString();
-		String comparatorTwo = generalTester.getBookings().toString();
-		assertEquals(comparator, comparatorTwo);
-	// TODO fix issue of comparing memory references instead of actual value
+		generalTester.confirmBooking(PremiumBookingTest, TEST_CONFIRM_TIME);
+		generalTester.confirmBooking(BusinessBookingTest, TEST_CONFIRM_TIME);
+		// test
+		assertEquals(1, generalTester.getBookings().getAvailable());
+	}
+	
+	@Test 
+	public void GetBookingsTestNumTotal() throws AircraftException, PassengerException {
+		// create aircraft
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 1, 1 );		
+		// create passengers
+		Passenger FirstBookingTest = new First(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		Passenger EconomyBookingTest = new Economy(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		Passenger PremiumBookingTest = new Premium(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		Passenger BusinessBookingTest = new Business(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		// add to flight
+		generalTester.confirmBooking(FirstBookingTest, TEST_CONFIRM_TIME);
+		generalTester.confirmBooking(EconomyBookingTest, TEST_CONFIRM_TIME);
+		generalTester.confirmBooking(PremiumBookingTest, TEST_CONFIRM_TIME);
+		generalTester.confirmBooking(BusinessBookingTest, TEST_CONFIRM_TIME);
+		// test
+		assertEquals(4, generalTester.getBookings().getTotal());
 	}
 	
 	// GET NUM BUSINESS TESTS
