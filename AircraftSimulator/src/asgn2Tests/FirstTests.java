@@ -15,7 +15,7 @@ import asgn2Passengers.Passenger;
 import asgn2Passengers.PassengerException;
 
 /**
- * This class represents a unit test class for the First class as part of the
+ * This class represents a JUnit test class for the First class as part of the
  * AircraftSimulator Project.
  * 
  * @author Vincenzo Iandolo - n9172912
@@ -36,6 +36,8 @@ public class FirstTests {
 	
 	// Declare test objects
 	private First myPassenger;
+	private First testPassenger;
+	private Passenger upgradedPassenger;
 
 	/**
 	 * @throws PassengerException
@@ -54,22 +56,22 @@ public class FirstTests {
 	 */
 	@Test (expected = PassengerException.class)
 	public void testFirstBookingTimeLessThanZero() throws PassengerException {
-		First testPassenger = new First(-1, TEST_DEPARTURE_TIME);
+		testPassenger = new First(-1, TEST_DEPARTURE_TIME);
 	}
 	
 	@Test (expected = PassengerException.class)
 	public void testFirstBookingEqualToZero() throws PassengerException {
-		First testPassenger = new First(TEST_BOOKING_TIME, 0);
+		testPassenger = new First(TEST_BOOKING_TIME, 0);
 	}
 	
 	@Test (expected = PassengerException.class)
 	public void testFirstDepartureTimeLessThanZero() throws PassengerException {
-		First testPassenger = new First(TEST_BOOKING_TIME, -1);
+		testPassenger = new First(TEST_BOOKING_TIME, -1);
 	}
 	
 	@Test (expected = PassengerException.class)
 	public void testFirstBookingDepartureTimeLessThanBookingTime() throws PassengerException {
-		First testPassenger = new First(5, 3);
+		testPassenger = new First(5, 3);
 	}
 	
 	// NO SEATS MESSAGE TESTS
@@ -93,7 +95,7 @@ public class FirstTests {
 		// Set passenger to a confirmed state as upgrade will only get called on a passenger in a seat
 		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
 		// Create new passenger instance which is an upgrade of the original passenger
-		Passenger upgradedPassenger = myPassenger.upgrade();
+		upgradedPassenger = myPassenger.upgrade();
 		// Check if matching Booking Times
 		assertTrue(myPassenger.getBookingTime() == upgradedPassenger.getBookingTime());
 	}
@@ -103,7 +105,7 @@ public class FirstTests {
 		// Set passenger to a confirmed state
 		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
 		// Create new passenger instance which is an upgrade of the original passenger
-		Passenger upgradedPassenger = myPassenger.upgrade();
+		upgradedPassenger = myPassenger.upgrade();
 		// Check if matching Departure Times
 		assertTrue(myPassenger.getDepartureTime() == upgradedPassenger.getDepartureTime());
 	}
@@ -113,7 +115,7 @@ public class FirstTests {
 		// Set passenger to a confirmed state
 		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
 		// Create new passenger instance which is an upgrade of the original passenger
-		Passenger upgradedPassenger = myPassenger.upgrade();
+		upgradedPassenger = myPassenger.upgrade();
 		// Check if matching Confirmation Times
 		assertTrue(myPassenger.getConfirmationTime() == upgradedPassenger.getConfirmationTime());
 	}
@@ -123,7 +125,7 @@ public class FirstTests {
 		// Set passenger to a confirmed state
 		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
 		// Create new passenger instance which is an upgrade of the original passenger
-		Passenger upgradedPassenger = myPassenger.upgrade();
+		upgradedPassenger = myPassenger.upgrade();
 		// Check if the passID's do not match
 		assertTrue(myPassenger.getPassID() != upgradedPassenger.getPassID());
 	} //if a first is upgraded, does their passID change?
@@ -133,7 +135,7 @@ public class FirstTests {
 		// Set passenger to a confirmed state
 		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
 		// Create new passenger instance which is an upgrade of the original passenger
-		Passenger upgradedPassenger = myPassenger.upgrade();
+		upgradedPassenger = myPassenger.upgrade();
 		// Check if both passenger instances are in confirmed states
 		assertTrue(myPassenger.isConfirmed() == upgradedPassenger.isConfirmed());
 	}
@@ -143,7 +145,7 @@ public class FirstTests {
 		// Set passenger to a confirmed state
 		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
 		// Create new passenger instance which is an upgrade of the original passenger
-		Passenger upgradedPassenger = myPassenger.upgrade();
+		upgradedPassenger = myPassenger.upgrade();
 		// Check if both passenger instances are not in new states 
 		assertTrue(myPassenger.isNew() == upgradedPassenger.isNew());
 	}
@@ -153,7 +155,7 @@ public class FirstTests {
 		// Set passenger to a confirmed state
 		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
 		// Create new passenger instance which is an upgrade of the original passenger
-		Passenger upgradedPassenger = myPassenger.upgrade();
+		upgradedPassenger = myPassenger.upgrade();
 		// Check if both passenger instances are not in queued states
 		assertTrue(myPassenger.isQueued() == upgradedPassenger.isQueued());
 	}
@@ -163,7 +165,7 @@ public class FirstTests {
 		// Set passenger to a confirmed state
 		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
 		// Create new passenger instance which is an upgrade of the original passenger
-		Passenger upgradedPassenger = myPassenger.upgrade();
+		upgradedPassenger = myPassenger.upgrade();
 		// Check if both passengers are not in refused states
 		assertTrue(myPassenger.isRefused() == upgradedPassenger.isRefused());
 	}
@@ -173,7 +175,7 @@ public class FirstTests {
 		// Set passenger to a confirmed state
 		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
 		// Create new passenger instance which is an upgrade of the original passenger
-		Passenger upgradedPassenger = myPassenger.upgrade();
+		upgradedPassenger = myPassenger.upgrade();
 		// Check if both passengers are not in flown states
 		assertTrue(myPassenger.isFlown() == upgradedPassenger.isFlown());
 	}

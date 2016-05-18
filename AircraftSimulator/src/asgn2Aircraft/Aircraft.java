@@ -361,32 +361,24 @@ public abstract class Aircraft {
 	 * where possible to Premium.  
 	 */
 	public void upgradeBookings() { //not sure if this works
-		for (Passenger p : this.seats) {
-			if (p.getPassID().contains("J:")) {
-				if (this.numFirst < this.firstCapacity) {
-					Passenger upgrade = p.upgrade();
-					this.seats.remove(p);
-					this.seats.add(upgrade);
-					numBusiness--;
-					numFirst++;
-				}
-			}
-			else if (p.getPassID().contains("P:")) {
-				if (this.numBusiness < this.businessCapacity) {
-					Passenger upgrade = p.upgrade();
-					this.seats.remove(p);
-					this.seats.add(upgrade);
-					numPremium--;
-					numBusiness++;
-				}
-			}
-			else if (p.getPassID().contains("Y:")) {
-				if (this.numPremium < this.premiumCapacity) {
-					Passenger upgrade = p.upgrade();
-					this.seats.remove(p);
-					this.seats.add(upgrade);
-					numEconomy--;
-					numPremium++;
+		for (int i = 0; i < 3; i++) {
+			for (Passenger p : this.seats) {
+				if (((i == 0) && (p instanceof Business) && (numFirst < firstCapacity)) ||
+						((i == 1) && (p instanceof Premium) && (numBusiness < businessCapacity)) ||
+						(( i == 2) && (p instanceof Economy) && (numPremium < premiumCapacity))) {
+					p.upgrade();
+					if (i == 0) {
+						numBusiness--;
+						numFirst++;
+					}
+					else if (i == 1) {
+						numPremium--;
+						numBusiness++;
+					}
+					else if (i == 2) {
+						numEconomy--;
+						numPremium++;
+					}
 				}
 			}
 		}
