@@ -635,7 +635,7 @@ public class A380Tests {
 	@Test
 	public void UpgradeBookingsFromEconomyTestCounter() throws AircraftException, PassengerException {
 		// create aircraft with upgrade space
-		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 0, 0 );
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 0, 0, 1, 1 );
 		// create first passenger
 		testPassenger = new Economy(TEST_BOOKING_TIME, TEST_DEPART_TIME);
 		// confirm booking
@@ -649,7 +649,7 @@ public class A380Tests {
 	@Test
 	public void UpgradeBookingsFromEconomyTestContainment() throws AircraftException, PassengerException {
 		// create aircraft with upgrade space
-		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 0, 0 );
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 0, 0, 1, 1 );
 		// create first passenger
 		testPassenger = new Economy(TEST_BOOKING_TIME, TEST_DEPART_TIME);
 		// confirm booking
@@ -691,7 +691,7 @@ public class A380Tests {
 	@Test
 	public void UpgradeBookingsFromBusinessTestCounter() throws AircraftException, PassengerException {
 		// create aircraft with upgrade space
-		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 0, 0, 1, 1 );
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 0, 0 );
 		// create first passenger
 		testPassenger = new Business(TEST_BOOKING_TIME, TEST_DEPART_TIME);
 		// confirm booking
@@ -705,7 +705,7 @@ public class A380Tests {
 	@Test
 	public void UpgradeBookingsFromBusinessTestContainment() throws AircraftException, PassengerException {
 		// create aircraft with upgrade space
-		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 0, 0, 1, 1 );
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 0, 0 );
 		// create first passenger
 		testPassenger = new Business(TEST_BOOKING_TIME, TEST_DEPART_TIME);
 		// confirm booking
