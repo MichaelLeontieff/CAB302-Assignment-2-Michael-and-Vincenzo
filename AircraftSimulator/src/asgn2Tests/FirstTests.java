@@ -55,23 +55,43 @@ public class FirstTests {
 	 * @throws PassengerException
 	 */
 	@Test (expected = PassengerException.class)
-	public void testFirstBookingTimeLessThanZero() throws PassengerException {
+	public void testFirstBookingTimeLessThanZeroBoundaryCase() throws PassengerException {
 		testPassenger = new First(-1, TEST_DEPARTURE_TIME);
 	}
 	
 	@Test (expected = PassengerException.class)
-	public void testFirstBookingEqualToZero() throws PassengerException {
+	public void testFirstBookingTimeLessThanZero() throws PassengerException {
+		testPassenger = new First(-5, TEST_DEPARTURE_TIME);
+	}
+	
+	@Test (expected = PassengerException.class)
+	public void testFirstDepartureTimeEqualToZero() throws PassengerException {
 		testPassenger = new First(TEST_BOOKING_TIME, 0);
 	}
 	
 	@Test (expected = PassengerException.class)
-	public void testFirstDepartureTimeLessThanZero() throws PassengerException {
+	public void testFirstDepartureTimeLessThanZeroBoundaryCase() throws PassengerException {
 		testPassenger = new First(TEST_BOOKING_TIME, -1);
+	}
+	
+	@Test (expected = PassengerException.class)
+	public void testFirstDepartureTimeLessThanZero() throws PassengerException {
+		testPassenger = new First(TEST_BOOKING_TIME, -7);
 	}
 	
 	@Test (expected = PassengerException.class)
 	public void testFirstBookingDepartureTimeLessThanBookingTime() throws PassengerException {
 		testPassenger = new First(5, 3);
+	}
+	
+	@Test (expected = PassengerException.class)
+	public void testFirstBookingDepartureTimeLessThanBookingTimeLessThanZero() throws PassengerException {
+		testPassenger = new First(TEST_BOOKING_TIME, -1);
+	}
+	
+	@Test (expected = PassengerException.class)
+	public void testFirstBookingDepartureTimeLessThanBookingTimeZeroDepartureTime() throws PassengerException {
+		testPassenger = new First(TEST_BOOKING_TIME, 0);
 	}
 	
 	// NO SEATS MESSAGE TESTS
@@ -194,6 +214,36 @@ public class FirstTests {
 		myPassenger.cancelSeat(TEST_CANCELLATION_TIME);
 		// Check condition
 		assertTrue(myPassenger.isNew());
+	}
+	
+	@Test
+	public void testCancelSeatIsQueuedStateAfterCancellingSeat() throws PassengerException {
+		// Set passenger to a confirmed state
+		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
+		// Cancel the passenger's seat
+		myPassenger.cancelSeat(TEST_CANCELLATION_TIME);
+		// Check condition
+		assertFalse(myPassenger.isQueued());
+	}
+	
+	@Test
+	public void testCancelSeatIsRefusedStateAfterCancellingSeat() throws PassengerException {
+		// Set passenger to a confirmed state
+		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
+		// Cancel the passenger's seat
+		myPassenger.cancelSeat(TEST_CANCELLATION_TIME);
+		// Check condition
+		assertFalse(myPassenger.isRefused());
+	}
+	
+	@Test
+	public void testCancelSeatIsFlownStateAfterCancellingSeat() throws PassengerException {
+		// Set passenger to a confirmed state
+		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
+		// Cancel the passenger's seat
+		myPassenger.cancelSeat(TEST_CANCELLATION_TIME);
+		// Check condition
+		assertFalse(myPassenger.isFlown());
 	}
 	
 	@Test
@@ -331,6 +381,30 @@ public class FirstTests {
 	}
 	
 	@Test
+	public void testConfirmSeatIsRefusedAfterConfirmingSeat() throws PassengerException {
+		// Set passenger to a confirmed state
+		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
+		// Check condition
+		assertFalse(myPassenger.isRefused());
+	}
+	
+	@Test
+	public void testConfirmSeatIsFlownAfterConfirmingSeat() throws PassengerException {
+		// Set passenger to a confirmed state
+		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
+		// Check condition
+		assertFalse(myPassenger.isFlown());
+	}
+	
+	@Test
+	public void testConfirmSeatIsNewAfterConfirmingSeat() throws PassengerException {
+		// Set passenger to a confirmed state
+		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
+		// Check condition
+		assertFalse(myPassenger.isNew());
+	}
+	
+	@Test
 	public void testConfirmSeatAfterCancellingSeat() throws PassengerException {
 		// Set passenger to a confirmed state
 		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
@@ -407,6 +481,36 @@ public class FirstTests {
 		myPassenger.flyPassenger(TEST_DEPARTURE_TIME);
 		// Check condition
 		assertFalse(myPassenger.isConfirmed());
+	}
+	
+	@Test
+	public void testFlyPassengerIsNew() throws PassengerException {
+		// Set passenger to a confirmed state
+		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
+		// Set passenger to a flown state
+		myPassenger.flyPassenger(TEST_DEPARTURE_TIME);
+		// Check condition
+		assertFalse(myPassenger.isNew());
+	}
+	
+	@Test
+	public void testFlyPassengerIsQueued() throws PassengerException {
+		// Set passenger to a confirmed state
+		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
+		// Set passenger to a flown state
+		myPassenger.flyPassenger(TEST_DEPARTURE_TIME);
+		// Check condition
+		assertFalse(myPassenger.isQueued());
+	}
+	
+	@Test
+	public void testFlyPassengerIsRefused() throws PassengerException {
+		// Set passenger to a confirmed state
+		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
+		// Set passenger to a flown state
+		myPassenger.flyPassenger(TEST_DEPARTURE_TIME);
+		// Check condition
+		assertFalse(myPassenger.isRefused());
 	}
 	
 	@Test (expected = PassengerException.class)
@@ -575,7 +679,7 @@ public class FirstTests {
 	 */
 	@Test
 	public void testGetPassID() {
-		assertEquals("F:78", myPassenger.getPassID());
+		assertEquals("F:94", myPassenger.getPassID());
 	} //not sure where passID comes from or where it is set?
 
 	// IS CONFIRMED TESTS
@@ -769,6 +873,38 @@ public class FirstTests {
 	}
 	
 	@Test
+	public void testQueuePassengerIsConfirmedAfterBeingQueued() throws PassengerException {
+		// Set passenger to a queued state
+		myPassenger.queuePassenger(TEST_QUEUE_TIME, TEST_DEPARTURE_TIME);
+		// Check condition
+		assertFalse(myPassenger.isConfirmed());
+	}
+	
+	@Test
+	public void testQueuePassengerIsNewAfterBeingQueued() throws PassengerException {
+		// Set passenger to a queued state
+		myPassenger.queuePassenger(TEST_QUEUE_TIME, TEST_DEPARTURE_TIME);
+		// Check condition
+		assertFalse(myPassenger.isNew());
+	}
+	
+	@Test
+	public void testQueuePassengerIsRefusedAfterBeingQueued() throws PassengerException {
+		// Set passenger to a queued state
+		myPassenger.queuePassenger(TEST_QUEUE_TIME, TEST_DEPARTURE_TIME);
+		// Check condition
+		assertFalse(myPassenger.isRefused());
+	}
+	
+	@Test
+	public void testQueuePassengerIsFlownAfterBeingQueued() throws PassengerException {
+		// Set passenger to a queued state
+		myPassenger.queuePassenger(TEST_QUEUE_TIME, TEST_DEPARTURE_TIME);
+		// Check condition
+		assertFalse(myPassenger.isFlown());
+	}
+	
+	@Test
 	public void testQueuePassengerIsQueuedAfterBeingConfirmed() throws PassengerException {
 		// Set passenger to a queued state
 		myPassenger.queuePassenger(TEST_QUEUE_TIME, TEST_DEPARTURE_TIME);
@@ -872,6 +1008,38 @@ public class FirstTests {
 		myPassenger.refusePassenger(TEST_REFUSAL_TIME);
 		// Check condition
 		assertTrue(myPassenger.isRefused());
+	}
+	
+	@Test
+	public void testRefusePassengerIsConfirmedAfterBeingConfirmed() throws PassengerException {
+		// Set passenger to a refused state
+		myPassenger.refusePassenger(TEST_REFUSAL_TIME);
+		// Check condition
+		assertFalse(myPassenger.isConfirmed());
+	}
+	
+	@Test
+	public void testRefusePassengerIsQueuedAfterBeingConfirmed() throws PassengerException {
+		// Set passenger to a refused state
+		myPassenger.refusePassenger(TEST_REFUSAL_TIME);
+		// Check condition
+		assertFalse(myPassenger.isQueued());
+	}
+	
+	@Test
+	public void testRefusePassengerIsNewAfterBeingConfirmed() throws PassengerException {
+		// Set passenger to a refused state
+		myPassenger.refusePassenger(TEST_REFUSAL_TIME);
+		// Check condition
+		assertFalse(myPassenger.isNew());
+	}
+	
+	@Test
+	public void testRefusePassengerIsFlownAfterBeingConfirmed() throws PassengerException {
+		// Set passenger to a refused state
+		myPassenger.refusePassenger(TEST_REFUSAL_TIME);
+		// Check condition
+		assertFalse(myPassenger.isFlown());
 	}
 	
 	@Test
