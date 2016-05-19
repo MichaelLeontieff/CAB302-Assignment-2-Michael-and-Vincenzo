@@ -42,13 +42,19 @@ public class PremiumTests {
 		// Creates a test passenger and sets parameters
 		myPassenger = new Premium(TEST_BOOKING_TIME, TEST_DEPARTURE_TIME);
 	}
+	
+	// CONSTRUCTOR TESTS
+	
+
+
+	// NO SEATS MESSAGE TESTS
 
 	/**
 	 * Test method for {@link asgn2Passengers.Premium#noSeatsMsg()}.
 	 */
 	@Test
 	public void testNoSeatsMsg() {
-		fail("Not yet implemented");
+		assertEquals("No seats available in Premium", myPassenger.noSeatsMsg());
 	}
 
 	/**
@@ -56,22 +62,6 @@ public class PremiumTests {
 	 */
 	@Test
 	public void testUpgrade() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for {@link asgn2Passengers.Premium#Premium(int, int)}.
-	 */
-	@Test
-	public void testPremiumIntInt() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for {@link asgn2Passengers.Premium#Premium()}.
-	 */
-	@Test
-	public void testPremium() {
 		fail("Not yet implemented");
 	}
 
