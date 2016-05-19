@@ -80,17 +80,17 @@ public class FirstTests {
 	}
 	
 	@Test (expected = PassengerException.class)
-	public void testFirstBookingDepartureTimeLessThanBookingTime() throws PassengerException {
+	public void testFirstDepartureTimeLessThanBookingTime() throws PassengerException {
 		testPassenger = new First(5, 3);
 	}
 	
 	@Test (expected = PassengerException.class)
-	public void testFirstBookingDepartureTimeLessThanBookingTimeLessThanZero() throws PassengerException {
+	public void testFirstDepartureTimeLessThanBookingTimeLessThanZero() throws PassengerException {
 		testPassenger = new First(TEST_BOOKING_TIME, -1);
 	}
 	
 	@Test (expected = PassengerException.class)
-	public void testFirstBookingDepartureTimeLessThanBookingTimeZeroDepartureTime() throws PassengerException {
+	public void testFirstDepartureTimeLessThanBookingTimeZeroDepartureTime() throws PassengerException {
 		testPassenger = new First(TEST_BOOKING_TIME, 0);
 	}
 	

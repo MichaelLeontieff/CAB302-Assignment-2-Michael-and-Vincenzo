@@ -65,27 +65,27 @@ public class BusinessTests {
 	}
 	
 	@Test (expected = PassengerException.class)
-	public void testBusinessDepartureTimeTimeLessThanZeroBoundaryCase() throws PassengerException {
+	public void testBusinessDepartureTimeLessThanZeroBoundaryCase() throws PassengerException {
 		testPassenger = new Business(TEST_BOOKING_TIME, -1);
 	}
 	
 	@Test (expected = PassengerException.class)
-	public void testFirstDepartureTimeLessThanZero() throws PassengerException {
+	public void testBusinessDepartureTimeLessThanZero() throws PassengerException {
 		testPassenger = new Business(TEST_BOOKING_TIME, -10);
 	}
 	
 	@Test (expected = PassengerException.class)
-	public void testBusinessDepartureTimeTimeLessThanBookingTime() throws PassengerException {
+	public void testBusinessDepartureTimeLessThanBookingTime() throws PassengerException {
 		testPassenger = new Business(TEST_BOOKING_TIME, 2);
 	}
 	
 	@Test (expected = PassengerException.class)
-	public void testFirstBookingDepartureTimeLessThanBookingTimeLessThanZero() throws PassengerException {
+	public void testBusinessDepartureTimeLessThanBookingTimeLessThanZero() throws PassengerException {
 		testPassenger = new Business(TEST_BOOKING_TIME, -1);
 	}
 	
 	@Test (expected = PassengerException.class)
-	public void testFirstBookingDepartureTimeLessThanBookingTimeZeroDepartureTime() throws PassengerException {
+	public void testBusinessDepartureTimeLessThanBookingTimeZeroDepartureTime() throws PassengerException {
 		testPassenger = new Business(TEST_BOOKING_TIME, 0);
 	}
 	

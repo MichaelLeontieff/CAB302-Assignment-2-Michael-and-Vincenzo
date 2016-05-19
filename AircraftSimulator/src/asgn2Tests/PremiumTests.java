@@ -45,7 +45,48 @@ public class PremiumTests {
 	
 	// CONSTRUCTOR TESTS
 	
-
+	/**
+	 * Test method for {@link asgn2Passengers.Premium#Premium()}.
+	 */
+	@Test (expected = PassengerException.class)
+	public void testPremiumBookingTimeLessThanZeroBoundaryCase() throws PassengerException {
+		testPassenger = new Premium(-1, TEST_DEPARTURE_TIME);
+	}
+	
+	@Test (expected = PassengerException.class)
+	public void testPremiumBookingTimeLessThanZero() throws PassengerException {
+		testPassenger = new Premium(-10, TEST_DEPARTURE_TIME);
+	}
+	
+	@Test (expected = PassengerException.class)
+	public void testPremiumDepartureTimeEqualToZero() throws PassengerException {
+		testPassenger = new Premium(TEST_BOOKING_TIME, 0);
+	}
+	
+	@Test (expected = PassengerException.class)
+	public void testPremiumDepartureTimeLessThanZeroBoundaryCase() throws PassengerException {
+		testPassenger = new Premium(TEST_BOOKING_TIME, -1);
+	}
+	
+	@Test (expected = PassengerException.class)
+	public void testPremiumDepartureTimeLessThanZero() throws PassengerException {
+		testPassenger = new Premium(TEST_BOOKING_TIME, -5);
+	}
+	
+	@Test (expected = PassengerException.class)
+	public void testPremiumDepartureTimeLessThanBookingTime() throws PassengerException {
+		testPassenger = new Premium(TEST_BOOKING_TIME, 1);
+	}
+	
+	@Test (expected = PassengerException.class)
+	public void testPremiumDepartureTimeLessThanBookingTimeLessThanZero() throws PassengerException {
+		testPassenger = new Premium(TEST_BOOKING_TIME, -1);
+	}
+	
+	@Test (expected = PassengerException.class)
+	public void testPremiumDepartureTimeLessThanBookingTimeZeroDepartureTime() throws PassengerException {
+		testPassenger = new Premium(TEST_BOOKING_TIME, 0);
+	}
 
 	// NO SEATS MESSAGE TESTS
 
