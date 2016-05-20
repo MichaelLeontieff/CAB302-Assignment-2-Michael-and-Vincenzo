@@ -480,6 +480,7 @@ public abstract class Passenger {
 
 	/*
 	 * Check boundaries of parameter in regards to zero
+	 * and throw exception
 	 */
 	private void checkInvalidTimeParameter(int givenTime, String valueName, boolean inclusive) throws PassengerException {
 		if (inclusive) {
@@ -492,7 +493,10 @@ public abstract class Passenger {
 			}
 		}
 	}
-	
+	/*
+	 * Private helper method to compare two parameters to see if the first is less than the other
+	 * and throw exception
+	 */
 	private void checkBoundsTime(int lessThanTime, int greaterThanTime, String preceed) throws PassengerException {
 		if (lessThanTime < greaterThanTime) {
 			throw new PassengerException(preceed + " don't conform to range requirements");
