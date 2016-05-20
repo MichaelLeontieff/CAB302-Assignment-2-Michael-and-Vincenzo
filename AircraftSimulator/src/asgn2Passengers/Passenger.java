@@ -477,12 +477,14 @@ public abstract class Passenger {
 	
 	//Various private helper methods to check arguments and throw exceptions
 	
-	// TODO refactor code to eliminate repetition through private helper methods
-	
+
+	/*
+	 * Check boundaries of parameter in regards to zero
+	 */
 	private void checkInvalidTimeParameter(int givenTime, String valueName, boolean inclusive) throws PassengerException {
 		if (inclusive) {
 			if (givenTime <= 0) {
-				throw new PassengerException(valueName + " less than 0");
+				throw new PassengerException(valueName + " less than or equal to 0");
 			}
 		} else {
 			if (givenTime < 0) {
