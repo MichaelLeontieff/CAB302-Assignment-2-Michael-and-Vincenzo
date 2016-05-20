@@ -47,10 +47,46 @@ public class EconomyTests {
 	
 	/**
 	 * Test method for {@link asgn2Passengers.Economy#Economy(int, int)}.
+	 * @throws PassengerException 
 	 */
-	@Test
-	public void testEconomy() {
-		fail("Not yet implemented");
+	@Test (expected = PassengerException.class)
+	public void testEconomyBookingTimeLessThanZeroBoundaryCase() throws PassengerException {
+		testPassenger = new Economy(-1, TEST_DEPARTURE_TIME);
+	}
+	
+	@Test (expected = PassengerException.class)
+	public void testEconomyBookingTimeLessThanZero() throws PassengerException {
+		testPassenger = new Economy(-7, TEST_DEPARTURE_TIME);
+	}
+	
+	@Test (expected = PassengerException.class)
+	public void testEconomyDepatureTimeEqualToZero() throws PassengerException {
+		testPassenger = new Economy(TEST_BOOKING_TIME, 0);
+	}
+	
+	@Test (expected = PassengerException.class)
+	public void testEconomyDepartureTimeLessThanZeroBoundaryCase() throws PassengerException {
+		testPassenger = new Economy(TEST_BOOKING_TIME, -1);
+	}
+	
+	@Test (expected = PassengerException.class)
+	public void testEconomyDepartureTimeLessThanZero() throws PassengerException {
+		testPassenger = new Economy(TEST_BOOKING_TIME, -5);
+	}
+	
+	@Test (expected = PassengerException.class)
+	public void testEconomyDepartureTimeLessThanBookingTime() throws PassengerException {
+		testPassenger = new Economy(TEST_BOOKING_TIME, 1);
+	}
+	
+	@Test (expected = PassengerException.class)
+	public void testEconomyDepartureTimeLessThanBookingTimeLessThanZero() throws PassengerException {
+		testPassenger = new Economy(TEST_BOOKING_TIME, -1);
+	}
+	
+	@Test (expected = PassengerException.class)
+	public void testEconomyDepartureTimeLessThanBookingTimeZeroDepartureTime() throws PassengerException {
+		testPassenger = new Economy(TEST_BOOKING_TIME, 0);
 	}
 
 	// NO SEATS MESSAGE TESTS
