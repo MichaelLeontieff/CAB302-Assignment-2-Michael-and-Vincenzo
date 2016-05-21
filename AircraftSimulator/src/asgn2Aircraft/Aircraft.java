@@ -367,10 +367,10 @@ public abstract class Aircraft {
 						((i == 1) && (p instanceof Premium) && (numBusiness < businessCapacity)) ||
 						(( i == 2) && (p instanceof Economy) && (numPremium < premiumCapacity))) {
 					//add something here to add and remove passengers
-					Passenger upgrade = p.upgrade();
-					this.seats.remove(p);
-					this.seats.add(upgrade);
-					//p.upgrade();
+					//Passenger upgrade = p.upgrade();
+					//this.seats.remove(p);
+					//this.seats.add(upgrade);
+					p.upgrade();
 					if (i == 0) {
 						numBusiness--;
 						numFirst++;
