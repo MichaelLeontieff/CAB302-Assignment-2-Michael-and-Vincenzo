@@ -50,6 +50,12 @@ public class PremiumTests {
 	/**
 	 * Test method for {@link asgn2Passengers.Premium#Premium()}.
 	 */
+	@Test
+	public void testPremiumValidParametersExceptionTest() throws PassengerException {
+		testPassenger = new Premium(TEST_BOOKING_TIME, TEST_DEPARTURE_TIME);
+		assertNotNull(testPassenger);
+	}
+	
 	@Test (expected = PassengerException.class)
 	public void testPremiumBookingTimeLessThanZeroBoundaryCase() throws PassengerException {
 		testPassenger = new Premium(-1, TEST_DEPARTURE_TIME);

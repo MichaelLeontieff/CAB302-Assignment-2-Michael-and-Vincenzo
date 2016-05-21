@@ -54,6 +54,12 @@ public class FirstTests {
 	 * 
 	 * @throws PassengerException
 	 */
+	@Test
+	public void testFirstValidParametersExceptionTest() throws PassengerException {
+		testPassenger = new First(TEST_BOOKING_TIME, TEST_DEPARTURE_TIME);
+		assertNotNull(testPassenger);
+	}
+	
 	@Test(expected = PassengerException.class)
 	public void testFirstBookingTimeLessThanZeroBoundaryCase() throws PassengerException {
 		testPassenger = new First(-1, TEST_DEPARTURE_TIME);

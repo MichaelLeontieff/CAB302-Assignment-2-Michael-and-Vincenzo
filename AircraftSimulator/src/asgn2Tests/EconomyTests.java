@@ -10,6 +10,8 @@ package asgn2Tests;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
+
+import asgn2Passengers.Business;
 import asgn2Passengers.Economy;
 import asgn2Passengers.Passenger;
 import asgn2Passengers.PassengerException;
@@ -51,6 +53,12 @@ public class EconomyTests {
 	 * Test method for {@link asgn2Passengers.Economy#Economy(int, int)}.
 	 * @throws PassengerException 
 	 */
+	@Test
+	public void testEconomyValidParametersExceptionTest() throws PassengerException {
+		testPassenger = new Economy(TEST_BOOKING_TIME, TEST_DEPARTURE_TIME);
+		assertNotNull(testPassenger);
+	}
+	
 	@Test (expected = PassengerException.class)
 	public void testEconomyBookingTimeLessThanZeroBoundaryCase() throws PassengerException {
 		testPassenger = new Economy(-1, TEST_DEPARTURE_TIME);

@@ -51,6 +51,12 @@ public class BusinessTests {
 	 * Test method for {@link asgn2Passengers.Business#Business()}.
 	 * @throws PassengerException
 	 */
+	@Test
+	public void testBusinessValidParametersExceptionTest() throws PassengerException {
+		testPassenger = new Business(TEST_BOOKING_TIME, TEST_DEPARTURE_TIME);
+		assertNotNull(testPassenger);
+	}
+	
 	@Test (expected = PassengerException.class)
 	public void testBusinessBookingTimeLessThanZeroBoundaryCase() throws PassengerException {
 		testPassenger = new Business(-1, TEST_DEPARTURE_TIME);
