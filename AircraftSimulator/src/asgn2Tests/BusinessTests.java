@@ -11,6 +11,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import asgn2Passengers.Business;
+import asgn2Passengers.First;
 import asgn2Passengers.Passenger;
 import asgn2Passengers.PassengerException;
 
@@ -28,6 +29,7 @@ public class BusinessTests {
 	private static final int TEST_BOOKING_TIME = 5;
 	private static final int TEST_DEPARTURE_TIME = 20;
 	private static final int TEST_CONFIRMATION_TIME = 10;
+	private static final int TEST_QUEUE_TIME = 7;
 
 	// Declare test objects 
 	private Business myPassenger;
@@ -134,6 +136,78 @@ public class BusinessTests {
 		// Check if matching Confirmation Times
 		assertTrue(myPassenger.getConfirmationTime() == upgradedPassenger.getConfirmationTime());
 	}
+	
+	@Test
+	public void testUpgradeEnterQueueTime() throws PassengerException {
+		// Set passenger to a queued state
+		myPassenger.queuePassenger(TEST_QUEUE_TIME, TEST_DEPARTURE_TIME);
+		// Set passenger to a confirmed state
+		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
+		// Create new passenger instance which is an upgrade of the original passenger
+		upgradedPassenger = myPassenger.upgrade();
+		// Check if matching enter queue times
+		assertTrue(myPassenger.getEnterQueueTime() == upgradedPassenger.getEnterQueueTime());
+	}
+	
+	@Test
+	public void testUpgradeEnterQueueTimeWhenNeverQueued() throws PassengerException {
+		// Set passenger to a confirmed state
+		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
+		// Create new passenger instance which is an upgrade of the original passenger
+		upgradedPassenger = myPassenger.upgrade();
+		// Check if matching enter queue times
+		assertTrue(myPassenger.getEnterQueueTime() == upgradedPassenger.getEnterQueueTime());
+	}
+	
+	@Test
+	public void testUpgradeExitQueueTimeAfterConfirmingSeat() throws PassengerException {
+		// Set passenger to a queued state
+		myPassenger.queuePassenger(TEST_QUEUE_TIME, TEST_DEPARTURE_TIME);
+		// Set passenger to a confirmed state
+		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
+		// Create new passenger instance which is an upgrade of the original passenger
+		upgradedPassenger = myPassenger.upgrade();
+		// Check if matching exit queue times
+		assertTrue(myPassenger.getExitQueueTime() == upgradedPassenger.getExitQueueTime());
+	}
+
+	@Test
+	public void testUpgradeExitQueueWhenNeverQueued() throws PassengerException {
+		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
+		// Create new passenger instance which is an upgrade of the original passenger
+		upgradedPassenger = myPassenger.upgrade();
+		// Check if matching exit queue times
+		assertTrue(myPassenger.getExitQueueTime() == upgradedPassenger.getExitQueueTime());
+	}
+	
+	public void testUpgradeWasConfirmed() throws PassengerException {
+		// Set passenger to a confirmed state
+		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
+		// Create new passenger instance which is an upgrade of the original passenger
+		upgradedPassenger = myPassenger.upgrade();
+		// Check if both was confirmed
+		assertTrue(myPassenger.wasConfirmed() == upgradedPassenger.wasConfirmed());
+	}
+	
+	public void testUpgradeWasQueued() throws PassengerException {
+		// Set passenger to a queued state
+		myPassenger.queuePassenger(TEST_QUEUE_TIME, TEST_DEPARTURE_TIME);
+		// Set passenger to a confirmed state
+		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
+		// Create new passenger instance which is an upgrade of the original passenger
+		upgradedPassenger = myPassenger.upgrade();
+		// Check if both was queued
+		assertTrue(myPassenger.wasQueued() == upgradedPassenger.wasQueued());
+	}
+
+	public void testUpgradeWasQueuedAfterNeverBeingQueued() throws PassengerException {
+		// Set passenger to a confirmed state
+		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
+		// Create new passenger instance which is an upgrade of the original passenger
+		upgradedPassenger = myPassenger.upgrade();
+		// Check if both weren't queued
+		assertTrue(myPassenger.wasQueued() == upgradedPassenger.wasQueued());
+	}
 		
 	@Test
 	public void testUpgradeBothConfirmed() throws PassengerException {
@@ -151,7 +225,7 @@ public class BusinessTests {
 		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
 		// Create new passenger instance which is an upgrade of the original passenger
 		upgradedPassenger = myPassenger.upgrade();
-		// Check if both passenger instances are in confirmed states
+		// Check if both passengers are not in queued states
 		assertTrue(myPassenger.isQueued() == upgradedPassenger.isQueued());
 	}
 	
@@ -161,7 +235,7 @@ public class BusinessTests {
 		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
 		// Create new passenger instance which is an upgrade of the original passenger
 		upgradedPassenger = myPassenger.upgrade();
-		// Check if both passenger instances are in confirmed states
+		// Check if both passengers are not in new states
 		assertTrue(myPassenger.isNew() == upgradedPassenger.isNew());
 	}
 	
@@ -171,7 +245,7 @@ public class BusinessTests {
 		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
 		// Create new passenger instance which is an upgrade of the original passenger
 		upgradedPassenger = myPassenger.upgrade();
-		// Check if both passenger instances are in confirmed states
+		// Check if both passengers are not in refused states
 		assertTrue(myPassenger.isRefused() == upgradedPassenger.isRefused());
 	}
 	
@@ -181,21 +255,30 @@ public class BusinessTests {
 		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
 		// Create new passenger instance which is an upgrade of the original passenger
 		upgradedPassenger = myPassenger.upgrade();
-		// Check if both passenger instances are in confirmed states
+		// Check if both passengers are not in flown states
 		assertTrue(myPassenger.isFlown() == upgradedPassenger.isFlown());
 	}
 	
-/*	@Test
-	public void testUpgradeBothNotFlown() throws PassengerException {
+	@Test
+	public void testUpgradeBusinessClassToFirstClass() throws PassengerException {
 		// Set passenger to a confirmed state
 		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
 		// Create new passenger instance which is an upgrade of the original passenger
 		upgradedPassenger = myPassenger.upgrade();
-		// Check if both passenger instances are in confirmed states
-		assertEquals(false, myPassenger.isFlown());
-		assertEquals(false, upgradedPassenger.isFlown());
-	} Another way of testing, or have, (assertEquals(false, myPassenger.isFlown() && upgradedPassenger.isFlown())
-*/
+		// Check if upgraded passenger changes to an instance of First
+		assertTrue(upgradedPassenger instanceof First);
+	}
+	
+	@Test
+	public void testUpgradeBusinessClassUnchangedForOriginalPassenger() throws PassengerException {
+		// Set passenger to a confirmed state
+		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
+		// Create new passenger instance which is an upgrade of the original passenger
+		upgradedPassenger = myPassenger.upgrade();
+		// Check if original passenger remains an instance of Business
+		assertTrue(myPassenger instanceof Business);
+	}
+	
 	/*@Test
 	public void testUpgradePassID() throws PassengerException {
 		// Set passenger to a confirmed state
@@ -206,4 +289,14 @@ public class BusinessTests {
 		assertTrue(myPassenger.getPassID() != upgradedPassenger.getPassID());
 	} //if a first is upgraded, does their passID change? */
 	
+	/*	@Test
+	public void testUpgradeBothNotQueued() throws PassengerException {
+		// Set passenger to a confirmed state
+		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
+		// Create new passenger instance which is an upgrade of the original passenger
+		upgradedPassenger = myPassenger.upgrade();
+		// Check if both passenger instances are in confirmed states
+		assertTrue(myPassenger.isQueued() == upgradedPassenger.isQueued());
+		assertEquals(false, myPassenger.isQueued() && upgradedPassenger.isQueued())
+	} */	
 }
