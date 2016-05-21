@@ -54,6 +54,10 @@ public class A380Tests {
 	private Aircraft getTestNumPassClass;
 	private Passenger testPassenger;
 	
+	private Passenger testPassengerTwo;
+	private Passenger testPassengerThree;
+	private Passenger testPassengerFour;
+	
 	private Passenger FirstPassenger;
 	private Passenger BusinessPassenger;
 	private Passenger PremEconPassenger;
@@ -82,6 +86,7 @@ public class A380Tests {
 	@Test
 	public void ValidParametersExceptionTest() throws AircraftException {
 		exceptionTestObject = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME);
+		assertNotNull(exceptionTestObject);
 	}
 
 	@Test (expected = AircraftException.class)  
@@ -120,6 +125,146 @@ public class A380Tests {
 	}
 	
 	// CANCEL BOOKING TESTS
+	
+	@Test
+	public void CancelBookingTestCheckBusinessNumberOfPassengersDecrementCount() throws PassengerException, AircraftException {
+		// create aircraft
+		cancelBookingTest = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 1, 1 );		
+		// create business passenger in confirmed state
+		testPassenger = new Business(TEST_BOOKING_TIME, TEST_DEPART_TIME);				
+		// add passenger to aircraft
+		cancelBookingTest.confirmBooking(testPassenger, TEST_CONFIRM_TIME);						
+		// cancel booking
+		cancelBookingTest.cancelBooking(testPassenger, TEST_CANCELLATION_TIME);
+		// check condition
+		assertTrue(cancelBookingTest.getNumPassengers() == 0);
+	}
+
+	@Test
+	public void CancelBookingTestCheckPremiumNumberOfPassengersDecrementCount() throws PassengerException, AircraftException {
+		// create aircraft
+		cancelBookingTest = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 1, 1 );		
+		// create premium passenger in confirmed state
+		testPassenger = new Premium(TEST_BOOKING_TIME, TEST_DEPART_TIME);				
+		// add passenger to aircraft
+		cancelBookingTest.confirmBooking(testPassenger, TEST_CONFIRM_TIME);						
+		// cancel booking
+		cancelBookingTest.cancelBooking(testPassenger, TEST_CANCELLATION_TIME);
+		// check condition
+		assertTrue(cancelBookingTest.getNumPassengers() == 0);
+	}
+
+	@Test
+	public void CancelBookingTestCheckEconomyNumberOfPassengersDecrementCount() throws PassengerException, AircraftException {
+		// create aircraft
+		cancelBookingTest = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 1, 1 );		
+		// create economy passenger in confirmed state
+		testPassenger = new Economy(TEST_BOOKING_TIME, TEST_DEPART_TIME);				
+		// add passenger to aircraft
+		cancelBookingTest.confirmBooking(testPassenger, TEST_CONFIRM_TIME);						
+		// cancel booking
+		cancelBookingTest.cancelBooking(testPassenger, TEST_CANCELLATION_TIME);
+		// check condition
+		assertTrue(cancelBookingTest.getNumPassengers() == 0);
+	}
+
+	@Test
+	public void CancelBookingTestCheckPassengerIsNewState() throws PassengerException, AircraftException {
+		// create aircraft
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 1, 1 );
+		// create passenger in confirmed state
+		testPassenger = new First(TEST_BOOKING_TIME, TEST_DEPART_TIME);		
+		// add passenger to aircraft
+		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);
+		// cancel booking
+		generalTester.cancelBooking(testPassenger, TEST_CANCELLATION_TIME);				
+		// check condition
+		assertTrue(testPassenger.isNew());
+	}
+
+	@Test
+	public void CancelBookingTestCheckPassengerIsConfirmedState() throws PassengerException, AircraftException {
+		// create aircraft
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 1, 1 );
+		// create passenger in confirmed state
+		testPassenger = new First(TEST_BOOKING_TIME, TEST_DEPART_TIME);		
+		// add passenger to aircraft
+		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);
+		// cancel booking
+		generalTester.cancelBooking(testPassenger, TEST_CANCELLATION_TIME);				
+		// check condition
+		assertFalse(testPassenger.isConfirmed());
+	}
+
+	@Test
+	public void CancelBookingTestCheckPassengerIsQueuedState() throws PassengerException, AircraftException {
+		// create aircraft
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 1, 1 );
+		// create passenger in confirmed state
+		testPassenger = new First(TEST_BOOKING_TIME, TEST_DEPART_TIME);		
+		// add passenger to aircraft
+		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);
+		// cancel booking
+		generalTester.cancelBooking(testPassenger, TEST_CANCELLATION_TIME);				
+		// check condition
+		assertFalse(testPassenger.isQueued());
+	}
+
+	@Test
+	public void CancelBookingTestCheckPassengerIsRefusedState() throws PassengerException, AircraftException {
+		// create aircraft
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 1, 1 );
+		// create passenger in confirmed state
+		testPassenger = new First(TEST_BOOKING_TIME, TEST_DEPART_TIME);		
+		// add passenger to aircraft
+		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);
+		// cancel booking
+		generalTester.cancelBooking(testPassenger, TEST_CANCELLATION_TIME);				
+		// check condition
+		assertFalse(testPassenger.isRefused());
+	}
+
+	@Test
+	public void CancelBookingTestCheckPassengerIsFlownState() throws PassengerException, AircraftException {
+		// create aircraft
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 1, 1 );
+		// create passenger in confirmed state
+		testPassenger = new First(TEST_BOOKING_TIME, TEST_DEPART_TIME);		
+		// add passenger to aircraft
+		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);
+		// cancel booking
+		generalTester.cancelBooking(testPassenger, TEST_CANCELLATION_TIME);				
+		// check condition
+		assertFalse(testPassenger.isFlown());
+	}
+
+	@Test
+	public void CancelBookingTestCheckPassengerWasConfirmedState() throws PassengerException, AircraftException {
+		// create aircraft
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 1, 1 );
+		// create passenger in confirmed state
+		testPassenger = new First(TEST_BOOKING_TIME, TEST_DEPART_TIME);		
+		// add passenger to aircraft
+		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);
+		// cancel booking
+		generalTester.cancelBooking(testPassenger, TEST_CANCELLATION_TIME);				
+		// check condition
+		assertTrue(testPassenger.wasConfirmed());
+	}
+
+	@Test
+	public void CancelBookingTestCheckPassengerWasQueuedState() throws PassengerException, AircraftException {
+		// create aircraft
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 1, 1 );
+		// create passenger in confirmed state
+		testPassenger = new First(TEST_BOOKING_TIME, TEST_DEPART_TIME);		
+		// add passenger to aircraft
+		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);
+		// cancel booking
+		generalTester.cancelBooking(testPassenger, TEST_CANCELLATION_TIME);				
+		// check condition
+		assertFalse(testPassenger.wasQueued());
+	}
 	
 	@Test
 	public void CancelBookingTestCheckPassengerDecrementCount() throws PassengerException, AircraftException {
@@ -304,6 +449,126 @@ public class A380Tests {
 		// expect exception
 	}
 	
+	@Test
+	public void ConfirmBookingTestCheckBusinessNumberOfPassengersCount() throws PassengerException, AircraftException {
+		// create aircraft
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 1, 1 );
+		// create passenger in confirmed state
+		testPassenger = new Business(TEST_BOOKING_TIME, TEST_DEPART_TIME);		
+		// add passenger to aircraft
+		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);				
+		// check condition
+		assertTrue(generalTester.getNumPassengers() == 1);
+	}
+
+	@Test
+	public void ConfirmBookingTestCheckPremiumNumberOfPassengersCount() throws PassengerException, AircraftException {
+		// create aircraft
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 1, 1 );
+		// create passenger in confirmed state
+		testPassenger = new Premium(TEST_BOOKING_TIME, TEST_DEPART_TIME);		
+		// add passenger to aircraft
+		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);				
+		// check condition
+		assertTrue(generalTester.getNumPassengers() == 1);
+	}
+
+	@Test
+	public void ConfirmBookingTestCheckEconomyNumberOfPassengersCount() throws PassengerException, AircraftException {
+		// create aircraft
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 1, 1 );
+		// create passenger in confirmed state
+		testPassenger = new Economy(TEST_BOOKING_TIME, TEST_DEPART_TIME);		
+		// add passenger to aircraft
+		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);				
+		// check condition
+		assertTrue(generalTester.getNumPassengers() == 1);
+	}
+
+	@Test
+	public void ConfirmBookingTestCheckPassengerIsConfirmedState() throws PassengerException, AircraftException {
+		// create aircraft
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 1, 1 );
+		// create passenger in confirmed state
+		testPassenger = new First(TEST_BOOKING_TIME, TEST_DEPART_TIME);		
+		// add passenger to aircraft
+		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);				
+		// check condition
+		assertTrue(testPassenger.isConfirmed());
+	}
+
+	@Test
+	public void ConfirmBookingTestCheckPassengerIsQueuedState() throws PassengerException, AircraftException {
+		// create aircraft
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 1, 1 );
+		// create passenger in confirmed state
+		testPassenger = new First(TEST_BOOKING_TIME, TEST_DEPART_TIME);		
+		// add passenger to aircraft
+		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);				
+		// check condition
+		assertFalse(testPassenger.isQueued());
+	}
+
+	@Test
+	public void ConfirmBookingTestCheckPassengerIsNewState() throws PassengerException, AircraftException {
+		// create aircraft
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 1, 1 );
+		// create passenger in confirmed state
+		testPassenger = new First(TEST_BOOKING_TIME, TEST_DEPART_TIME);		
+		// add passenger to aircraft
+		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);				
+		// check condition
+		assertFalse(testPassenger.isNew());
+	}
+	
+	@Test
+	public void ConfirmBookingTestCheckPassengerIsRefusedState() throws PassengerException, AircraftException {
+		// create aircraft
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 1, 1 );
+		// create passenger in confirmed state
+		testPassenger = new First(TEST_BOOKING_TIME, TEST_DEPART_TIME);		
+		// add passenger to aircraft
+		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);				
+		// check condition
+		assertFalse(testPassenger.isRefused());
+	}
+
+	@Test
+	public void ConfirmBookingTestCheckPassengerIsFlownState() throws PassengerException, AircraftException {
+		// create aircraft
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 1, 1 );
+		// create passenger in confirmed state
+		testPassenger = new First(TEST_BOOKING_TIME, TEST_DEPART_TIME);		
+		// add passenger to aircraft
+		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);				
+		// check condition
+		assertFalse(testPassenger.isFlown());
+	}
+
+	@Test
+	public void ConfirmBookingTestCheckPassengerWasConfirmedState() throws PassengerException, AircraftException {
+		// create aircraft
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 1, 1 );
+		// create passenger in confirmed state
+		testPassenger = new First(TEST_BOOKING_TIME, TEST_DEPART_TIME);		
+		// add passenger to aircraft
+		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);				
+		// check condition
+		assertTrue(testPassenger.wasConfirmed());
+	}
+
+	@Test
+	public void ConfirmBookingTestCheckPassengerWasQueuedState() throws PassengerException, AircraftException {
+		// create aircraft
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 1, 1 );
+		// create passenger in confirmed state
+		testPassenger = new First(TEST_BOOKING_TIME, TEST_DEPART_TIME);		
+		// add passenger to aircraft
+		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);				
+		// check condition
+		assertFalse(testPassenger.wasQueued());
+	}
+	
 	// FLIGHT EMPTY TESTS
 	
 	@Test
@@ -321,6 +586,74 @@ public class A380Tests {
 		testPassenger = new First(TEST_BOOKING_TIME, TEST_DEPART_TIME);			
 		// add passenger to aircraft
 		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);		
+		// check condition
+		assertFalse(generalTester.flightEmpty());
+	}
+	
+	@Test
+	public void FlightEmptyNotEmptyTestUsingBusinessClassPassenger() throws AircraftException, PassengerException {
+		// create aircraft
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 1, 1 );			
+		// create passenger in confirmed state
+		testPassenger = new Business(TEST_BOOKING_TIME, TEST_DEPART_TIME);			
+		// add passenger to aircraft
+		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);		
+		// check condition
+		assertFalse(generalTester.flightEmpty());
+	}
+
+	@Test
+	public void FlightEmptyNotEmptyTestUsingPremiumClassPassenger() throws AircraftException, PassengerException {
+		// create aircraft
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 1, 1 );			
+		// create passenger in confirmed state
+		testPassenger = new Premium(TEST_BOOKING_TIME, TEST_DEPART_TIME);			
+		// add passenger to aircraft
+		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);		
+		// check condition
+		assertFalse(generalTester.flightEmpty());
+	}
+
+	@Test
+	public void FlightEmptyNotEmptyTestUsingEconomyClassPassenger() throws AircraftException, PassengerException {
+		// create aircraft
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 1, 1 );			
+		// create passenger in confirmed state
+		testPassenger = new Economy(TEST_BOOKING_TIME, TEST_DEPART_TIME);			
+		// add passenger to aircraft
+		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);		
+		// check condition
+		assertFalse(generalTester.flightEmpty());
+	}
+
+	@Test
+	public void FlightEmptyNotEmptyTestUsingMultiplePassengers() throws AircraftException, PassengerException {
+		// create aircraft
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 1, 1 );			
+		// create passenger in confirmed state
+		testPassenger = new Economy(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		testPassengerTwo = new Business(TEST_BOOKING_TIME, TEST_DEPART_TIME);			
+		// add passenger to aircraft
+		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);
+		generalTester.confirmBooking(testPassengerTwo, TEST_CONFIRM_TIME);		
+		// check condition
+		assertFalse(generalTester.flightEmpty());
+	}
+
+	@Test
+	public void FlightEmptyNotEmptyTestUsingMultiplePassengersOfEachClass() throws AircraftException, PassengerException {
+		// create aircraft
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 1, 1 );			
+		// create passengers in confirmed states
+		testPassenger = new Economy(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		testPassengerTwo = new Premium(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		testPassengerThree = new Business(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		testPassengerFour = new First(TEST_BOOKING_TIME, TEST_DEPART_TIME);			
+		// add passenger to aircraft
+		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);
+		generalTester.confirmBooking(testPassengerTwo, TEST_CONFIRM_TIME);
+		generalTester.confirmBooking(testPassengerThree, TEST_CONFIRM_TIME);
+		generalTester.confirmBooking(testPassengerFour, TEST_CONFIRM_TIME);		
 		// check condition
 		assertFalse(generalTester.flightEmpty());
 	}
@@ -344,6 +677,58 @@ public class A380Tests {
 		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);		
 		// check condition
 		assertTrue(generalTester.flightFull());
+	}
+	
+	@Test
+	public void FlightFullAlmostFullTest() throws AircraftException, PassengerException {
+		// create aircraft with single available seat
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 1, 1 );
+		// create passenger in confirmed state
+		testPassenger = new First(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		testPassengerTwo = new Business(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		testPassengerThree = new Premium(TEST_BOOKING_TIME, TEST_DEPART_TIME);	
+		// add passenger to single available seat of aircraft
+		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);
+		generalTester.confirmBooking(testPassengerTwo, TEST_CONFIRM_TIME);	
+		generalTester.confirmBooking(testPassengerThree, TEST_CONFIRM_TIME);		
+		// check condition
+		assertFalse(generalTester.flightFull());
+	}
+
+	@Test
+	public void FlightFullFullTestUsingEachClassOfPassenger() throws AircraftException, PassengerException {
+		// create aircraft with single available seat
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 1, 1 );
+		// create passenger in confirmed state
+		testPassenger = new First(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		testPassengerTwo = new Business(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		testPassengerThree = new Premium(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		testPassengerFour = new Economy(TEST_BOOKING_TIME, TEST_DEPART_TIME);	
+		// add passenger to single available seat of aircraft
+		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);
+		generalTester.confirmBooking(testPassengerTwo, TEST_CONFIRM_TIME);
+		generalTester.confirmBooking(testPassengerThree, TEST_CONFIRM_TIME);
+		generalTester.confirmBooking(testPassengerFour, TEST_CONFIRM_TIME);		
+		// check condition
+		assertTrue(generalTester.flightFull());
+	}
+
+	@Test
+	public void FlightFullNotFullTestUsingEachClassOfPassenger() throws AircraftException, PassengerException {
+		// create aircraft with single available seat
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 2, 3 );
+		// create passenger in confirmed state
+		testPassenger = new First(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		testPassengerTwo = new Business(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		testPassengerThree = new Premium(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		testPassengerFour = new Economy(TEST_BOOKING_TIME, TEST_DEPART_TIME);	
+		// add passenger to single available seat of aircraft
+		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);
+		generalTester.confirmBooking(testPassengerTwo, TEST_CONFIRM_TIME);
+		generalTester.confirmBooking(testPassengerThree, TEST_CONFIRM_TIME);
+		generalTester.confirmBooking(testPassengerFour, TEST_CONFIRM_TIME);		
+		// check condition
+		assertFalse(generalTester.flightFull());
 	}
 	
 	
@@ -374,6 +759,58 @@ public class A380Tests {
 		generalTester.flyPassengers(TEST_DEPART_TIME);		
 		// fetch first (and only) passenger in passenger list and check it's state
 		assertTrue(generalTester.getPassengers().isEmpty());
+	}
+	
+	public void FlyPassengersCorrectStateChangeIsNewTest() throws AircraftException, PassengerException {
+		// create aircraft
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 1, 1 );		
+		// create passenger in confirmed state
+		testPassenger = new First(TEST_BOOKING_TIME, TEST_DEPART_TIME);			
+		// add passenger to aircraft
+		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);			
+		// fly passengers
+		generalTester.flyPassengers(TEST_DEPART_TIME);		
+		// fetch first (and only) passenger in passenger list and check it's state
+		assertFalse(generalTester.getPassengers().get(0).isNew());
+	}
+
+	public void FlyPassengersCorrectStateChangeIsConfirmedTest() throws AircraftException, PassengerException {
+		// create aircraft
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 1, 1 );		
+		// create passenger in confirmed state
+		testPassenger = new First(TEST_BOOKING_TIME, TEST_DEPART_TIME);			
+		// add passenger to aircraft
+		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);			
+		// fly passengers
+		generalTester.flyPassengers(TEST_DEPART_TIME);	
+		// fetch first (and only) passenger in passenger list and check it's state
+		assertFalse(generalTester.getPassengers().get(0).isConfirmed());
+	}
+
+	public void FlyPassengersCorrectStateChangeIsQueuedTest() throws AircraftException, PassengerException {
+		// create aircraft
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 1, 1 );		
+		// create passenger in confirmed state
+		testPassenger = new First(TEST_BOOKING_TIME, TEST_DEPART_TIME);			
+		// add passenger to aircraft
+		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);			
+		// fly passengers
+		generalTester.flyPassengers(TEST_DEPART_TIME);	
+		// fetch first (and only) passenger in passenger list and check it's state
+		assertFalse(generalTester.getPassengers().get(0).isQueued());
+	}
+
+	public void FlyPassengersCorrectStateChangeIsRefusedTest() throws AircraftException, PassengerException {
+		// create aircraft
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 1, 1 );		
+		// create passenger in confirmed state
+		testPassenger = new First(TEST_BOOKING_TIME, TEST_DEPART_TIME);			
+		// add passenger to aircraft
+		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);			
+		// fly passengers
+		generalTester.flyPassengers(TEST_DEPART_TIME);	
+		// fetch first (and only) passenger in passenger list and check it's state
+		assertFalse(generalTester.getPassengers().get(0).isRefused());
 	}
 	
 	// GET BOOKINGS TESTS
@@ -454,6 +891,42 @@ public class A380Tests {
 		assertEquals(4, generalTester.getBookings().getTotal());
 	}
 	
+	@Test 
+	public void GetBookingsTestNumAvailableMultipleSeatsAvailable() throws AircraftException, PassengerException {
+		// create aircraft
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 2, 2, 2, 3 );		
+		// create passengers
+		Passenger FirstBookingTest = new First(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		Passenger EconomyBookingTest = new Economy(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		Passenger PremiumBookingTest = new Premium(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		Passenger BusinessBookingTest = new Business(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		// add to flight
+		generalTester.confirmBooking(FirstBookingTest, TEST_CONFIRM_TIME);
+		generalTester.confirmBooking(EconomyBookingTest, TEST_CONFIRM_TIME);
+		generalTester.confirmBooking(PremiumBookingTest, TEST_CONFIRM_TIME);
+		generalTester.confirmBooking(BusinessBookingTest, TEST_CONFIRM_TIME);
+		// test
+		assertEquals(5, generalTester.getBookings().getAvailable());
+	}
+
+	@Test 
+	public void GetBookingsTestNumTotalWithSeatsRemaining() throws AircraftException, PassengerException {
+		// create aircraft
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 1, 2 );		
+		// create passengers
+		Passenger FirstBookingTest = new First(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		Passenger EconomyBookingTest = new Economy(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		Passenger PremiumBookingTest = new Premium(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		Passenger BusinessBookingTest = new Business(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		// add to flight
+		generalTester.confirmBooking(FirstBookingTest, TEST_CONFIRM_TIME);
+		generalTester.confirmBooking(EconomyBookingTest, TEST_CONFIRM_TIME);
+		generalTester.confirmBooking(PremiumBookingTest, TEST_CONFIRM_TIME);
+		generalTester.confirmBooking(BusinessBookingTest, TEST_CONFIRM_TIME);
+		// test
+		assertEquals(4, generalTester.getBookings().getTotal());
+	}
+	
 	// GET NUM BUSINESS TESTS
 	
 	@Test
@@ -480,6 +953,30 @@ public class A380Tests {
 	@Test
 	public void GetNumPassengersTest() {
 		assertEquals(GET_TEST_NUM_PASS_PASSENGER_COUNT, getTestNumPassClass.getNumPassengers());
+	}
+	
+	@Test
+	public void GetPassengersTestMultiplePassengers() throws AircraftException, PassengerException {
+		List<Passenger> seats = new ArrayList<Passenger>();
+		// create aircraft
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 1, 1 );
+		// create passenger in confirmed state
+		testPassenger = new First(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		testPassengerTwo = new Business(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		testPassengerThree = new Premium(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		testPassengerFour = new Economy(TEST_BOOKING_TIME, TEST_DEPART_TIME);	
+		// add passengers to available seats of aircraft
+		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);
+		generalTester.confirmBooking(testPassengerTwo, TEST_CONFIRM_TIME);
+		generalTester.confirmBooking(testPassengerThree, TEST_CONFIRM_TIME);
+		generalTester.confirmBooking(testPassengerFour, TEST_CONFIRM_TIME);		
+		// add passengers to comparison list
+		seats.add(testPassenger);
+		seats.add(testPassengerTwo);
+		seats.add(testPassengerThree);
+		seats.add(testPassengerFour);
+		// check condition
+		assertEquals(seats.toString(), generalTester.getPassengers().toString());
 	}
 	
 	// GET NUM PREMIUM TESTS
@@ -629,6 +1126,102 @@ public class A380Tests {
 		assertFalse(generalTester.seatsAvailable(testPassenger));
 	}
 	
+	@Test
+	public void SeatsAvailableSeatFullFirstTest() throws AircraftException, PassengerException {
+		// create aircraft
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 1, 1 );
+		// create first passenger
+		testPassenger = new First(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		// add passenger to the flight
+		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);	
+		// use passenger as parameter for checking seats
+		assertFalse(generalTester.seatsAvailable(testPassenger));	
+	}
+
+	@Test
+	public void SeatsAvailableVacantSeatsFirstTest() throws AircraftException, PassengerException {
+		// create aircraft
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 2, 1, 1, 1 );
+		// create first passenger
+		testPassenger = new First(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		// add passenger to the flight
+		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);	
+		// use passenger as parameter for checking seats
+		assertTrue(generalTester.seatsAvailable(testPassenger));	
+	}
+
+	@Test
+	public void SeatsAvailableSeatFullBusinessTest() throws AircraftException, PassengerException {
+		// create aircraft
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 1, 1 );
+		// create first passenger
+		testPassenger = new Business(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		// add passenger to the flight
+		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);	
+		// use passenger as parameter for checking seats
+		assertFalse(generalTester.seatsAvailable(testPassenger));	
+	}
+
+	@Test
+	public void SeatsAvailableVacantSeatsBusinessTest() throws AircraftException, PassengerException {
+		// create aircraft
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 2, 1, 1 );
+		// create first passenger
+		testPassenger = new Business(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		// add passenger to the flight
+		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);	
+		// use passenger as parameter for checking seats
+		assertTrue(generalTester.seatsAvailable(testPassenger));	
+	}
+
+	@Test
+	public void SeatsAvailableSeatFullPremiumTest() throws AircraftException, PassengerException {
+		// create aircraft
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 1, 1 );
+		// create first passenger
+		testPassenger = new Premium(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		// add passenger to the flight
+		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);	
+		// use passenger as parameter for checking seats
+		assertFalse(generalTester.seatsAvailable(testPassenger));	
+	}
+
+	@Test
+	public void SeatsAvailableVacantSeatsPremiumTest() throws AircraftException, PassengerException {
+		// create aircraft
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 2, 1 );
+		// create first passenger
+		testPassenger = new Premium(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		// add passenger to the flight
+		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);	
+		// use passenger as parameter for checking seats
+		assertTrue(generalTester.seatsAvailable(testPassenger));	
+	}
+
+	@Test
+	public void SeatsAvailableSeatFullEconomyTest() throws AircraftException, PassengerException {
+		// create aircraft
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 1, 1 );
+		// create first passenger
+		testPassenger = new Economy(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		// add passenger to the flight
+		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);	
+		// use passenger as parameter for checking seats
+		assertFalse(generalTester.seatsAvailable(testPassenger));	
+	}
+
+	@Test
+	public void SeatsAvailableVacantSeatsEconomyTest() throws AircraftException, PassengerException {
+		// create aircraft
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 1, 2 );
+		// create first passenger
+		testPassenger = new Economy(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		// add passenger to the flight
+		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);	
+		// use passenger as parameter for checking seats
+		assertTrue(generalTester.seatsAvailable(testPassenger));	
+	}
+	
 	// UPGRADE BOOKING TESTS
 	// these tests may need revising, the following two will be mirrored for Premium and Business
 	
@@ -714,5 +1307,131 @@ public class A380Tests {
 		generalTester.upgradeBookings();
 		// passenger should still remain in seating
 		assertTrue(generalTester.getPassengers().contains(testPassenger));
+	}
+	
+	@Test
+	public void UpgradeBookingsFromEconomyTestEconomyCounter() throws AircraftException, PassengerException {
+		// create aircraft with upgrade space
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 0, 0, 1, 1 );
+		// create first passenger
+		testPassenger = new Economy(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		// confirm booking
+		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);		
+		// upgrade to Premium
+		generalTester.upgradeBookings();
+		// if successful number of Economy passengers should be zero
+		assertEquals(0, generalTester.getNumEconomy());
+	}
+
+	@Test
+	public void UpgradeBookingsFromEconomyTestCheckContainmentAndInstanceType() throws AircraftException, PassengerException {
+		// create aircraft with upgrade space
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 0, 0, 1, 1 );
+		// create economy passenger
+		testPassenger = new Business(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		// confirm booking
+		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);		
+		// upgrade to Premium
+		generalTester.upgradeBookings();
+		// passenger should be of a Premium instance
+		assertTrue(generalTester.getPassengers().get(0) instanceof Premium);
+	}
+
+	@Test
+	public void UpgradeBookingsFromPremiumTestPremiumCounter() throws AircraftException, PassengerException {
+		// create aircraft with upgrade space
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 0, 1, 1, 0 );
+		// create premium passenger
+		testPassenger = new Premium(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		// confirm booking
+		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);		
+		// upgrade to Premium
+		generalTester.upgradeBookings();
+		// if successful number of Premium passengers should be zero
+		assertEquals(0, generalTester.getNumPremium());
+	}
+
+	@Test
+	public void UpgradeBookingsFromPremiumTestContainmentAndInstanceType() throws AircraftException, PassengerException {
+		// create aircraft with upgrade space
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 0, 1, 1, 0 );
+		// create premium passenger
+		testPassenger = new Premium(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		// confirm booking
+		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);		
+		// upgrade to Business 
+		generalTester.upgradeBookings();
+		// passenger should be of a Business instance
+		assertTrue(generalTester.getPassengers().get(0) instanceof Business);
+	}
+
+	@Test
+	public void UpgradeBookingsFromBusinessTestBusinessCounter() throws AircraftException, PassengerException {
+		// create aircraft with upgrade space
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 0, 0 );
+		// create business passenger
+		testPassenger = new Business(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		// confirm booking
+		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);		
+		// upgrade to First
+		generalTester.upgradeBookings();
+		// if successful number of Business passengers should be zero
+		assertEquals(0, generalTester.getNumBusiness());
+	}
+
+	@Test
+	public void UpgradeBookingsFromBusinessTestContainmentAndInstanceType() throws AircraftException, PassengerException {
+		// create aircraft with upgrade space
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 0, 0 );
+		// create first passenger
+		testPassenger = new Business(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		// confirm booking
+		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);		
+		// upgrade to First
+		generalTester.upgradeBookings();
+		// passenger should be of a First instance
+		assertTrue(generalTester.getPassengers().get(0) instanceof First);
+	}
+
+	@Test
+	public void UpgradeBookingsFromFirstTestFirstCounter() throws AircraftException, PassengerException {
+		// create aircraft with upgrade space
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 0, 0 );
+		// create business passenger
+		testPassenger = new First(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		// confirm booking
+		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);		
+		// upgrade to First
+		generalTester.upgradeBookings();
+		// if successful number of First passengers should remain as one
+		assertEquals(1, generalTester.getNumFirst());
+	}
+
+	@Test
+	public void UpgradeBookingsFromFirstTestContainment() throws AircraftException, PassengerException {
+		// create aircraft with upgrade space
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 0, 0 );
+		// create first passenger
+		testPassenger = new First(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		// confirm booking
+		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);		
+		// upgrade to First
+		generalTester.upgradeBookings();
+		// passenger should still remain in seating
+		assertTrue(generalTester.getPassengers().contains(testPassenger));
+	}
+
+	@Test
+	public void UpgradeBookingsFromFirstTestContainmentAndInstanceType() throws AircraftException, PassengerException {
+		// create aircraft with upgrade space
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 0, 0 );
+		// create first passenger
+		testPassenger = new First(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		// confirm booking
+		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);		
+		// upgrade to First
+		generalTester.upgradeBookings();
+		// passenger should remain as a First instance
+		assertTrue(generalTester.getPassengers().get(0) instanceof First);
 	}
 }
