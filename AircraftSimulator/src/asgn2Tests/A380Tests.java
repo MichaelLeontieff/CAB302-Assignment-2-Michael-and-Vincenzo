@@ -1328,7 +1328,7 @@ public class A380Tests {
 		// create aircraft with upgrade space
 		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 0, 0, 1, 1 );
 		// create economy passenger
-		testPassenger = new Business(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		testPassenger = new Economy(TEST_BOOKING_TIME, TEST_DEPART_TIME);
 		// confirm booking
 		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);		
 		// upgrade to Premium
