@@ -10,6 +10,7 @@ import java.awt.BorderLayout;
 import java.awt.HeadlessException;
 
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
 /**
  * @author hogan
@@ -20,8 +21,8 @@ public class GUISimulator extends JFrame implements Runnable {
 	/*
 	 * Constants that define window dimensions
 	 */
-	public static final int WINDOW_WIDTH = 300;
-	public static final int WINDOW_HEIGHT = 200;
+	public static final int WINDOW_WIDTH = 800;
+	public static final int WINDOW_HEIGHT = 600;
 	
 	/**
 	 * @param arg0
@@ -37,7 +38,6 @@ public class GUISimulator extends JFrame implements Runnable {
 	 */
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 		createGUI();
 
 	}
@@ -47,13 +47,16 @@ public class GUISimulator extends JFrame implements Runnable {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+	    JFrame.setDefaultLookAndFeelDecorated(true);
+        SwingUtilities.invokeLater(new GUISimulator("GUI Simulator"));
 
 	}
 	
 	private void createGUI() {
-		setSize(WIDTH, HEIGHT);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    setLayout(new BorderLayout());
+		setVisible(true);
 	}
 
 }
