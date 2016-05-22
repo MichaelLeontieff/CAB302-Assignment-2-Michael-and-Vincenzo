@@ -12,6 +12,8 @@ import java.awt.HeadlessException;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import java.awt.Color;
@@ -43,6 +45,12 @@ public class GUISimulator extends JFrame implements Runnable {
 	 */
 	private JLabel lblSimulation;
 	private JLabel lblRNGSeed;
+	private JLabel lblDailyMean;
+	private JLabel lblQueueSize;
+	private JLabel lblCancellation;
+	
+	private JTextField txtRNGInput;
+	
 	
 	/*
 	 * Panel Elements for Simulation Panel
@@ -146,6 +154,12 @@ public class GUISimulator extends JFrame implements Runnable {
 	   
 	    // Sub Headings
 	    lblRNGSeed = new JLabel("RNG Seed");
+	    lblDailyMean = new JLabel("Daily Mean");
+	    lblQueueSize = new JLabel("Queue Size");
+	    lblCancellation = new JLabel("Cancellation");
+	    
+	    // widgets
+	    txtRNGInput = new JTextField();
 	    
 	    constraints.anchor = GridBagConstraints.CENTER;
 	    constraints.weightx = 100;
@@ -153,7 +167,14 @@ public class GUISimulator extends JFrame implements Runnable {
 	    constraints.gridwidth = 2;
 	    
 	    addToPanel(pnlSimulation, lblSimulation, constraints, 0, 0, 2, 1);
-	    addToPanel(pnlSimulation, lblRNGSeed, constraints, 0, 2, 2, 1);
+	   
+	    addToPanel(pnlSimulation, lblRNGSeed, constraints, 0, 1, 2, 1);
+	    addToPanel(pnlSimulation, lblDailyMean, constraints, 0, 2, 2, 1);
+	    addToPanel(pnlSimulation, lblQueueSize, constraints, 0, 3, 2, 1);
+	    addToPanel(pnlSimulation, lblCancellation, constraints, 0, 4, 2, 1);
+	    
+	    
+	    //addToPanel(pnlSimulation, txtRNGInput, constraints, 1, 2, 10, 1);
 	}
 	
 	private void layoutFareClassesPanel() {
