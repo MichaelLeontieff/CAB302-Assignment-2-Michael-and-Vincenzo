@@ -78,7 +78,7 @@ public class GUISimulator extends JFrame implements Runnable {
 	/*
 	 * Border definintion for panels
 	 */
-	private Border blackLine;
+	private Border borderLowered;
 	
 	/*
 	 * Panel Elements for FareClasses Panel
@@ -156,22 +156,22 @@ public class GUISimulator extends JFrame implements Runnable {
 	    setConstraintsTxtField();
 	    
 	    // instantiate panel characteristics 
-	    blackLine = BorderFactory.createLineBorder(Color.black);
+	    borderLowered = BorderFactory.createLoweredBevelBorder();
 		
 		// instantiate panels
 		pnlSimulation = createPanel(Color.LIGHT_GRAY);
-		pnlSimulation.setBorder(blackLine);
+		pnlSimulation.setBorder(borderLowered);
 		pnlSimulation.add(Box.createRigidArea(new Dimension(20,20)));
 		
 		pnlFareClasses = createPanel(Color.LIGHT_GRAY);
-		pnlFareClasses.setBorder(blackLine);
+		pnlFareClasses.setBorder(borderLowered);
 		
 		pnlExecution = createPanel(Color.LIGHT_GRAY);
-		pnlExecution.setBorder(blackLine);
+		pnlExecution.setBorder(borderLowered);
 		
-		pnlLoggingOutput = createPanel(Color.LIGHT_GRAY);
-		pnlLoggingOutput.setOpaque(false);
-		pnlLoggingOutput.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
+		pnlLoggingOutput = createPanel(Color.WHITE);
+		//pnlLoggingOutput.setOpaque(false);
+		pnlLoggingOutput.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
 		
 		pnlUserInput = createPanel(Color.RED);
 		pnlUserInput.setOpaque(false);
@@ -231,7 +231,7 @@ public class GUISimulator extends JFrame implements Runnable {
 	    lblSubHeadingConstraints.weightx = 100;
 	    lblSubHeadingConstraints.weighty = 100;
 	    lblSubHeadingConstraints.gridwidth = 2;
-	    lblSubHeadingConstraints.insets = new Insets(5, 5, 5, 5);
+	    lblSubHeadingConstraints.insets = new Insets(0, 10, 0, 10);
 	}
 	
 	private void setConstraintsTxtField() {
@@ -348,6 +348,8 @@ public class GUISimulator extends JFrame implements Runnable {
 	    
 	    btnRunSimulation = new JButton("Run Simulation");
 	    btnShowGraphTwo = new JButton("Show Graph Two");
+	    btnRunSimulation.setPreferredSize(new Dimension(200, 40));
+	    btnShowGraphTwo.setPreferredSize(new Dimension(200, 40));
 	    
 	    addToPanel(pnlExecution, lblExecution, lblHeadingConstraints, 0, 0, 1, 5); 
 	    addToPanel(pnlExecution, btnRunSimulation, lblHeadingConstraints, 0, 5, 1, 5); 
