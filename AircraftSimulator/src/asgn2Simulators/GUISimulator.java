@@ -8,6 +8,7 @@ package asgn2Simulators;
 
 import java.awt.BorderLayout;
 import java.awt.HeadlessException;
+import java.awt.Insets;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -50,8 +51,14 @@ public class GUISimulator extends JFrame implements Runnable {
 	private JPanel pnlSimulation;
 	private JPanel pnlFareClasses;
 	private JPanel pnlExecution;
+	private JPanel pnlLoggingOutput;
+	private JPanel pnlUserInput;
 	
 	private JPanel pnlSpacer;
+	/*
+	 * Elements for logging
+	 */
+	private JTextArea txtLoggingOutput;
 	
 	/*
 	 * Panel Elements for Simulation Panel
@@ -135,8 +142,9 @@ public class GUISimulator extends JFrame implements Runnable {
 	private void createGUI() {
 		// set general GUI parameters
 		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+		setResizable(false);
 	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    setLayout(new GridBagLayout());
+	    setLayout(new BorderLayout());
 		
 	    lblHeadingConstraints = new GridBagConstraints(); 
 	    lblSubHeadingConstraints = new GridBagConstraints(); 
@@ -161,26 +169,39 @@ public class GUISimulator extends JFrame implements Runnable {
 		pnlExecution = createPanel(Color.LIGHT_GRAY);
 		pnlExecution.setBorder(blackLine);
 		
-		//pnlSpacer = createPanel(Color.BLACK);
+		pnlLoggingOutput = createPanel(Color.LIGHT_GRAY);
+		pnlLoggingOutput.setOpaque(false);
+		pnlLoggingOutput.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
 		
+		pnlUserInput = createPanel(Color.RED);
+		pnlUserInput.setOpaque(false);
 		
 		// instantiate elements
-		layoutSimulationPanel();
-		layoutFareClassesPanel();
-		layoutExecutionPanel();
-		
-
+		layoutLoggingPanel();
+		userInputFieldsPanel();
 		
 		// add panels
-		this.getContentPane().add(pnlSimulation, gridBagConstraints(0, 0, 2, 1, 50));
-		//this.getContentPane().add(pnlSpacer, gridBagConstraints(2, 0, 2, 1, 30));
-		this.getContentPane().add(pnlFareClasses, gridBagConstraints(4, 0, 2, 1, 30));
+		this.getContentPane().add(pnlLoggingOutput,BorderLayout.NORTH);
+		this.getContentPane().add(pnlUserInput, BorderLayout.SOUTH);
 		
-		this.getContentPane().add(pnlExecution, gridBagConstraints(6, 0, 2, 1, 50));
 		
 		
 		repaint();
 		setVisible(true);
+	}
+	
+	private void userInputFieldsPanel() {
+		GridBagLayout layout = new GridBagLayout();
+		pnlUserInput.setLayout(layout);
+		
+		layoutSimulationPanel();
+		layoutFareClassesPanel();
+		layoutExecutionPanel();
+		
+		pnlUserInput.add(pnlSimulation, gridBagConstraints(0, 1, 2, 1, 50));
+		pnlUserInput.add(pnlFareClasses, gridBagConstraints(5, 1, 2, 1, 30));
+		pnlUserInput.add(pnlExecution, gridBagConstraints(10, 1, 2, 1, 50));
+		
 	}
 	
 	private GridBagConstraints gridBagConstraints(int x, int y, int w, int h, int paddingx) {
@@ -190,7 +211,10 @@ public class GUISimulator extends JFrame implements Runnable {
 		constraints.gridwidth = w;
 		constraints.gridheight = h;
 		constraints.ipadx = paddingx;
+		constraints.ipady = 10;
 		constraints.weightx = 0.1;
+		constraints.weighty = 100;
+		constraints.insets = new Insets(10, 10, 10, 10);
 		constraints.anchor = GridBagConstraints.NORTH;
 		return constraints;
 	}
@@ -207,6 +231,7 @@ public class GUISimulator extends JFrame implements Runnable {
 	    lblSubHeadingConstraints.weightx = 100;
 	    lblSubHeadingConstraints.weighty = 100;
 	    lblSubHeadingConstraints.gridwidth = 2;
+	    lblSubHeadingConstraints.insets = new Insets(5, 5, 5, 5);
 	}
 	
 	private void setConstraintsTxtField() {
@@ -231,6 +256,15 @@ public class GUISimulator extends JFrame implements Runnable {
 	      constraints.gridheight = h;
 	      jp.add(c, constraints);
 	   }
+	
+	private void layoutLoggingPanel() {
+		GridBagLayout layout = new GridBagLayout();
+		pnlLoggingOutput.setLayout(layout);
+		
+		txtLoggingOutput = new JTextArea(25, 60);
+		
+		pnlLoggingOutput.add(txtLoggingOutput);
+	}
 	
 	private void layoutSimulationPanel() {
 		GridBagLayout layout = new GridBagLayout();
