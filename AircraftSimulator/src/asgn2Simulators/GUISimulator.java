@@ -9,12 +9,14 @@ package asgn2Simulators;
 import java.awt.BorderLayout;
 import java.awt.HeadlessException;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import javax.swing.border.Border;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -61,6 +63,10 @@ public class GUISimulator extends JFrame implements Runnable {
 	private JTextField txtQueueSize;
 	private JTextField txtCancellation;
 	
+	/*
+	 * Border definintion for panels
+	 */
+	private Border blackline;
 	
 	/*
 	 * Panel Elements for Simulation Panel
@@ -71,6 +77,14 @@ public class GUISimulator extends JFrame implements Runnable {
 	 * Panel Elements for Simulation Panel
 	 */
 	private JLabel lblExecution;
+	
+	/*
+	 * Constraints that govern positioning of element types
+	 */
+	private GridBagConstraints lblHeadingConstraints;
+	private GridBagConstraints lblSubHeadingConstraints;
+	private GridBagConstraints txtConstraints;
+	
 	
 	/**
 	 * @param arg0
@@ -106,11 +120,24 @@ public class GUISimulator extends JFrame implements Runnable {
 	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    setLayout(new GridBagLayout());
 		
+	    lblHeadingConstraints = new GridBagConstraints(); 
+	    lblSubHeadingConstraints = new GridBagConstraints(); 
+	    txtConstraints = new GridBagConstraints();
+	    
+	    // set constraints
+	    setConstraintsLblHeading();
+	    setConstraintsLblSubHeading();
+	    setConstraintsTxtField();
+	    
+	    // instantiate panel characteristics 
+	    blackline = BorderFactory.createLineBorder(Color.black);
 		
 		// instantiate panels
-		pnlSimulation = createPanel(Color.BLUE);
-		pnlFareClasses = createPanel(Color.GREEN);
-		pnlExecution = createPanel(Color.RED);
+		pnlSimulation = createPanel(Color.GRAY);
+		pnlSimulation.setBorder(blackline);
+		pnlFareClasses = createPanel(Color.GRAY);
+		pnlFareClasses.setBorder(blackline);
+		pnlExecution = createPanel(Color.GRAY);
 		
 		// instantiate elements
 		layoutSimulationPanel();
@@ -139,6 +166,29 @@ public class GUISimulator extends JFrame implements Runnable {
 		return constraints;
 	}
 	
+	private void setConstraintsLblHeading() {
+	    lblHeadingConstraints.anchor = GridBagConstraints.CENTER;
+	    lblHeadingConstraints.weightx = 100;
+	    lblHeadingConstraints.weighty = 100;
+	    lblHeadingConstraints.gridwidth = 2;
+	}
+	
+	private void setConstraintsLblSubHeading() {
+	    lblSubHeadingConstraints.anchor = GridBagConstraints.WEST;
+	    lblSubHeadingConstraints.weightx = 100;
+	    lblSubHeadingConstraints.weighty = 100;
+	    lblSubHeadingConstraints.gridwidth = 2;
+	}
+	
+	private void setConstraintsTxtField() {
+	    txtConstraints.anchor = GridBagConstraints.EAST;
+	    txtConstraints.weightx = 100;
+	    txtConstraints.weighty = 100;
+	    txtConstraints.gridwidth = 2;
+	}
+	
+	
+	
 	private JPanel createPanel(Color c) {
 		JPanel jp = new JPanel();
 		jp.setBackground(c);
@@ -156,9 +206,6 @@ public class GUISimulator extends JFrame implements Runnable {
 	private void layoutSimulationPanel() {
 		GridBagLayout layout = new GridBagLayout();
 		pnlSimulation.setLayout(layout);
-		
-	    GridBagConstraints lblConstraints = new GridBagConstraints(); 
-	    GridBagConstraints txtConstraints = new GridBagConstraints();
 	    
 	    // Title Label
 	    lblSimulation = new JLabel("Simulation");
@@ -170,32 +217,20 @@ public class GUISimulator extends JFrame implements Runnable {
 	    lblQueueSize = new JLabel("Queue Size");
 	    lblCancellation = new JLabel("Cancellation");
 	    
-	    // widgets
+	    // text field widgets
 	    txtRNGInput = new JTextField("", 6);
 	    txtDailyMean = new JTextField("", 6);
 	    txtQueueSize = new JTextField("", 6);
 	    txtCancellation = new JTextField("", 6);
 	    
-	    //lbl constraints
-	    lblConstraints.anchor = GridBagConstraints.WEST;
-	    lblConstraints.weightx = 100;
-	    lblConstraints.weighty = 100;
-	    lblConstraints.gridwidth = 2;
-	    
-	    //txt constraints
-	    txtConstraints.anchor = GridBagConstraints.EAST;
-	    txtConstraints.weightx = 100;
-	    txtConstraints.weighty = 100;
-	    txtConstraints.gridwidth = 2;
-	    
 	    // title
-	    addToPanel(pnlSimulation, lblSimulation, lblConstraints, 0, 0, 4, 1);
+	    addToPanel(pnlSimulation, lblSimulation, lblHeadingConstraints, 0, 0, 4, 1);
 	   
 	    // sub headings
-	    addToPanel(pnlSimulation, lblRNGSeed, lblConstraints, 0, 1, 2, 1);
-	    addToPanel(pnlSimulation, lblDailyMean, lblConstraints, 0, 2, 2, 1);
-	    addToPanel(pnlSimulation, lblQueueSize, lblConstraints, 0, 3, 2, 1);
-	    addToPanel(pnlSimulation, lblCancellation, lblConstraints, 0, 4, 2, 1);
+	    addToPanel(pnlSimulation, lblRNGSeed, lblSubHeadingConstraints, 0, 1, 2, 1);
+	    addToPanel(pnlSimulation, lblDailyMean, lblSubHeadingConstraints, 0, 2, 2, 1);
+	    addToPanel(pnlSimulation, lblQueueSize, lblSubHeadingConstraints, 0, 3, 2, 1);
+	    addToPanel(pnlSimulation, lblCancellation, lblSubHeadingConstraints, 0, 4, 2, 1);
 	    
 	    // input fields  
 	    addToPanel(pnlSimulation, txtRNGInput, txtConstraints, 0, 1, 1, 1);
@@ -207,19 +242,13 @@ public class GUISimulator extends JFrame implements Runnable {
 	private void layoutFareClassesPanel() {
 		GridBagLayout layout = new GridBagLayout();
 		pnlFareClasses.setLayout(layout);
-		
-	    GridBagConstraints constraints = new GridBagConstraints(); 
 	    
 	    // title label
 	    lblFareClasses = new JLabel("Fare Classes");
 	    lblFareClasses.setFont(headingFont);
 	    
-	    constraints.anchor = GridBagConstraints.CENTER;
-	    constraints.weightx = 100;
-	    constraints.weighty = 100;
-	    constraints.gridwidth = 2;
 	    
-	    addToPanel(pnlFareClasses, lblFareClasses, constraints, 2, 2, 1, 5);   
+	    addToPanel(pnlFareClasses, lblFareClasses, lblHeadingConstraints, 2, 2, 1, 5);   
 	}
 	
 	private void layoutExecutionPanel() {
