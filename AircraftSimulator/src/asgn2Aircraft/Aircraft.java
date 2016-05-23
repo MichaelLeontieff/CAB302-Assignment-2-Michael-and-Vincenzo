@@ -361,6 +361,8 @@ public abstract class Aircraft {
 	 * where possible to Premium.  
 	 */
 	public void upgradeBookings() { //not sure if this works
+		//ArrayList<Passenger> toRemove = new ArrayList<Passenger>();
+		//ArrayList<Passenger> toAdd = new ArrayList<Passenger>();
 		for (int i = 0; i < 3; i++) {
 			for (Passenger p : this.seats) {
 				if (((i == 0) && (p instanceof Business) && (numFirst < firstCapacity)) ||
@@ -370,6 +372,8 @@ public abstract class Aircraft {
 					//Passenger upgrade = p.upgrade();
 					//this.seats.remove(p);
 					//this.seats.add(upgrade);
+					//toRemove.add(p);
+					//toAdd.add(upgrade);
 					p.upgrade();
 					if (i == 0) {
 						numBusiness--;
@@ -385,6 +389,8 @@ public abstract class Aircraft {
 					}
 				}
 			}
+			//this.seats.removeAll(toRemove);
+			//this.seats.addAll(toAdd);
 		}
 	}
 
