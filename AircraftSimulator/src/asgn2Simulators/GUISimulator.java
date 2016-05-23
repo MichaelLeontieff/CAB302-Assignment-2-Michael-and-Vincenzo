@@ -48,6 +48,8 @@ public class GUISimulator extends JFrame implements Runnable {
 	private JPanel pnlFareClasses;
 	private JPanel pnlExecution;
 	
+	private JPanel pnlSpacer;
+	
 	/*
 	 * Panel Elements for Simulation Panel
 	 */
@@ -69,12 +71,22 @@ public class GUISimulator extends JFrame implements Runnable {
 	private Border blackline;
 	
 	/*
-	 * Panel Elements for Simulation Panel
+	 * Panel Elements for FareClasses Panel
 	 */
 	private JLabel lblFareClasses;
 	
+	private JLabel lblFirst;
+	private JLabel lblBusiness;
+	private JLabel lblPremium;
+	private JLabel lblEconomy;
+	
+	private JTextField txtFirst;
+	private JTextField txtBusiness;
+	private JTextField txtPremium;
+	private JTextField txtEconomy;
+	
 	/*
-	 * Panel Elements for Simulation Panel
+	 * Panel Elements for Execution Panel
 	 */
 	private JLabel lblExecution;
 	
@@ -139,16 +151,20 @@ public class GUISimulator extends JFrame implements Runnable {
 		pnlFareClasses.setBorder(blackline);
 		pnlExecution = createPanel(Color.GRAY);
 		
+		pnlSpacer = createPanel(Color.GRAY);
+		
 		// instantiate elements
 		layoutSimulationPanel();
-		//layoutFareClassesPanel();
+		layoutFareClassesPanel();
 		//layoutExecutionPanel();
 		
 
 		
 		// add panels
 		this.getContentPane().add(pnlSimulation, gridBagConstraints(0, 0, 2, 1, 50));
-		//this.getContentPane().add(pnlFareClasses, gridBagConstraints(3, 0, 2, 1, 50));
+		this.getContentPane().add(pnlSpacer, gridBagConstraints(2, 0, 2, 1, 30));
+		this.getContentPane().add(pnlFareClasses, gridBagConstraints(4, 0, 2, 1, 30));
+		
 		//this.getContentPane().add(pnlExecution, gridBagConstraints(6, 0, 2, 1, 50));
 		
 		
@@ -247,8 +263,33 @@ public class GUISimulator extends JFrame implements Runnable {
 	    lblFareClasses = new JLabel("Fare Classes");
 	    lblFareClasses.setFont(headingFont);
 	    
+	    // Sub Headings
+	    lblFirst = new JLabel("First");
+	    lblBusiness = new JLabel("Business");
+	    lblPremium = new JLabel("Premium");
+	    lblEconomy = new JLabel("Economy");
 	    
-	    addToPanel(pnlFareClasses, lblFareClasses, lblHeadingConstraints, 2, 2, 1, 5);   
+	    // text field widgets
+	    txtFirst = new JTextField("", 6);
+	    txtBusiness = new JTextField("", 6);
+	    txtPremium = new JTextField("", 6);
+	    txtEconomy = new JTextField("", 6);
+	    
+	    addToPanel(pnlFareClasses, lblFareClasses, lblHeadingConstraints, 0, 0, 4, 1); 
+	    
+	    // sub headings
+	    addToPanel(pnlFareClasses, lblFirst, lblSubHeadingConstraints, 0, 1, 2, 1);
+	    addToPanel(pnlFareClasses, lblBusiness, lblSubHeadingConstraints, 0, 2, 2, 1);
+	    addToPanel(pnlFareClasses, lblPremium, lblSubHeadingConstraints, 0, 3, 2, 1);
+	    addToPanel(pnlFareClasses, lblEconomy, lblSubHeadingConstraints, 0, 4, 2, 1);
+	    
+	    // input fields  
+	    addToPanel(pnlFareClasses, txtFirst, txtConstraints, 0, 1, 1, 1);
+	    addToPanel(pnlFareClasses, txtBusiness, txtConstraints, 0, 2, 1, 1);
+	    addToPanel(pnlFareClasses, txtPremium, txtConstraints, 0, 3, 1, 1);
+	    addToPanel(pnlFareClasses, txtEconomy, txtConstraints, 0, 4, 1, 1);
+	    
+	    
 	}
 	
 	private void layoutExecutionPanel() {
