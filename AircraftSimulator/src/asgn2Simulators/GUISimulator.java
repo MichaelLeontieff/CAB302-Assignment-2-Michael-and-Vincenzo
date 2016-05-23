@@ -10,6 +10,8 @@ import java.awt.BorderLayout;
 import java.awt.HeadlessException;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -20,6 +22,7 @@ import javax.swing.border.Border;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -68,7 +71,7 @@ public class GUISimulator extends JFrame implements Runnable {
 	/*
 	 * Border definintion for panels
 	 */
-	private Border blackline;
+	private Border blackLine;
 	
 	/*
 	 * Panel Elements for FareClasses Panel
@@ -89,6 +92,9 @@ public class GUISimulator extends JFrame implements Runnable {
 	 * Panel Elements for Execution Panel
 	 */
 	private JLabel lblExecution;
+	
+	private JButton btnRunSimulation;
+	private JButton btnShowGraphTwo;
 	
 	/*
 	 * Constraints that govern positioning of element types
@@ -142,30 +148,35 @@ public class GUISimulator extends JFrame implements Runnable {
 	    setConstraintsTxtField();
 	    
 	    // instantiate panel characteristics 
-	    blackline = BorderFactory.createLineBorder(Color.black);
+	    blackLine = BorderFactory.createLineBorder(Color.black);
 		
 		// instantiate panels
-		pnlSimulation = createPanel(Color.GRAY);
-		pnlSimulation.setBorder(blackline);
-		pnlFareClasses = createPanel(Color.GRAY);
-		pnlFareClasses.setBorder(blackline);
-		pnlExecution = createPanel(Color.GRAY);
+		pnlSimulation = createPanel(Color.LIGHT_GRAY);
+		pnlSimulation.setBorder(blackLine);
+		pnlSimulation.add(Box.createRigidArea(new Dimension(20,20)));
 		
-		pnlSpacer = createPanel(Color.GRAY);
+		pnlFareClasses = createPanel(Color.LIGHT_GRAY);
+		pnlFareClasses.setBorder(blackLine);
+		
+		pnlExecution = createPanel(Color.LIGHT_GRAY);
+		pnlExecution.setBorder(blackLine);
+		
+		//pnlSpacer = createPanel(Color.BLACK);
+		
 		
 		// instantiate elements
 		layoutSimulationPanel();
 		layoutFareClassesPanel();
-		//layoutExecutionPanel();
+		layoutExecutionPanel();
 		
 
 		
 		// add panels
 		this.getContentPane().add(pnlSimulation, gridBagConstraints(0, 0, 2, 1, 50));
-		this.getContentPane().add(pnlSpacer, gridBagConstraints(2, 0, 2, 1, 30));
+		//this.getContentPane().add(pnlSpacer, gridBagConstraints(2, 0, 2, 1, 30));
 		this.getContentPane().add(pnlFareClasses, gridBagConstraints(4, 0, 2, 1, 30));
 		
-		//this.getContentPane().add(pnlExecution, gridBagConstraints(6, 0, 2, 1, 50));
+		this.getContentPane().add(pnlExecution, gridBagConstraints(6, 0, 2, 1, 50));
 		
 		
 		repaint();
@@ -179,6 +190,8 @@ public class GUISimulator extends JFrame implements Runnable {
 		constraints.gridwidth = w;
 		constraints.gridheight = h;
 		constraints.ipadx = paddingx;
+		constraints.weightx = 0.1;
+		constraints.anchor = GridBagConstraints.NORTH;
 		return constraints;
 	}
 	
@@ -295,18 +308,16 @@ public class GUISimulator extends JFrame implements Runnable {
 	private void layoutExecutionPanel() {
 		GridBagLayout layout = new GridBagLayout();
 		pnlExecution.setLayout(layout);
-		
-	    GridBagConstraints constraints = new GridBagConstraints(); 
 	    
 	    lblExecution = new JLabel("Execution");
 	    lblExecution.setFont(headingFont);
 	    
-	    constraints.anchor = GridBagConstraints.CENTER;
-	    constraints.weightx = 100;
-	    constraints.weighty = 100;
-	    constraints.gridwidth = 2;
+	    btnRunSimulation = new JButton("Run Simulation");
+	    btnShowGraphTwo = new JButton("Show Graph Two");
 	    
-	    addToPanel(pnlExecution, lblExecution, constraints, 3, 2, 1, 5);   
+	    addToPanel(pnlExecution, lblExecution, lblHeadingConstraints, 0, 0, 1, 5); 
+	    addToPanel(pnlExecution, btnRunSimulation, lblHeadingConstraints, 0, 5, 1, 5); 
+	    addToPanel(pnlExecution, btnShowGraphTwo, lblHeadingConstraints, 0, 10, 1, 5); 
 	}
 
 }
