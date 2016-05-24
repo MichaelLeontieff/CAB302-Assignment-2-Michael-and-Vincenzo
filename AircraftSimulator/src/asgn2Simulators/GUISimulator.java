@@ -41,7 +41,7 @@ public class GUISimulator extends JFrame implements Runnable {
 	private static final int WINDOW_HEIGHT = 600;
 	
 	/*
-	 * Heaading Fonts
+	 * Heading Fonts
 	 */
 	private Font headingFont = new Font("Arial", Font.BOLD, 24);
 	
@@ -76,7 +76,7 @@ public class GUISimulator extends JFrame implements Runnable {
 	private JTextField txtCancellation;
 	
 	/*
-	 * Border definintion for panels
+	 * Border definition for panels
 	 */
 	private Border borderLowered;
 	
@@ -126,7 +126,6 @@ public class GUISimulator extends JFrame implements Runnable {
 	@Override
 	public void run() {
 		createGUI();
-
 	}
 
 	/**
@@ -136,7 +135,6 @@ public class GUISimulator extends JFrame implements Runnable {
 		// TODO Auto-generated method stub
 	    JFrame.setDefaultLookAndFeelDecorated(true);
         SwingUtilities.invokeLater(new GUISimulator("GUI Simulator"));
-
 	}
 	
 	private void createGUI() {
@@ -239,8 +237,6 @@ public class GUISimulator extends JFrame implements Runnable {
 	    txtConstraints.gridwidth = 2;
 	}
 	
-	
-	
 	private JPanel createPanel(Color c) {
 		JPanel jp = new JPanel();
 		jp.setBackground(c);
@@ -332,9 +328,7 @@ public class GUISimulator extends JFrame implements Runnable {
 	    addToPanel(pnlFareClasses, txtFirst, txtConstraints, 0, 1, 1, 1);
 	    addToPanel(pnlFareClasses, txtBusiness, txtConstraints, 0, 2, 1, 1);
 	    addToPanel(pnlFareClasses, txtPremium, txtConstraints, 0, 3, 1, 1);
-	    addToPanel(pnlFareClasses, txtEconomy, txtConstraints, 0, 4, 1, 1);
-	    
-	    
+	    addToPanel(pnlFareClasses, txtEconomy, txtConstraints, 0, 4, 1, 1); 
 	}
 	
 	private void layoutExecutionPanel() {
