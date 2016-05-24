@@ -161,7 +161,6 @@ public class GUISimulator extends JFrame implements Runnable {
 		// instantiate panels
 		pnlSimulation = createPanel(Color.LIGHT_GRAY);
 		pnlSimulation.setBorder(borderLowered);
-		pnlSimulation.add(Box.createRigidArea(new Dimension(20,20)));
 		
 		pnlFareClasses = createPanel(Color.LIGHT_GRAY);
 		pnlFareClasses.setBorder(borderLowered);
@@ -170,7 +169,6 @@ public class GUISimulator extends JFrame implements Runnable {
 		pnlExecution.setBorder(borderLowered);
 		
 		pnlLoggingOutput = createPanel(Color.WHITE);
-		//pnlLoggingOutput.setOpaque(false);
 		pnlLoggingOutput.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
 		
 		pnlUserInput = createPanel(Color.RED);
@@ -281,10 +279,10 @@ public class GUISimulator extends JFrame implements Runnable {
 	    lblCancellation = new JLabel("Cancellation");
 	    
 	    // text field widgets
-	    txtRNGInput = new JTextField("", 6);
-	    txtDailyMean = new JTextField("", 6);
-	    txtQueueSize = new JTextField("", 6);
-	    txtCancellation = new JTextField("", 6);
+	    txtRNGInput = new JTextField(Integer.toString(Constants.DEFAULT_SEED), 6);
+	    txtDailyMean = new JTextField(Double.toString(Constants.DEFAULT_DAILY_BOOKING_MEAN), 6);
+	    txtQueueSize = new JTextField(Integer.toString(Constants.DEFAULT_MAX_QUEUE_SIZE), 6);
+	    txtCancellation = new JTextField(Integer.toString(Constants.CANCELLATION_PERIOD), 6);
 	    
 	    // title
 	    addToPanel(pnlSimulation, lblSimulation, lblHeadingConstraints, 0, 0, 4, 1);
@@ -317,10 +315,10 @@ public class GUISimulator extends JFrame implements Runnable {
 	    lblEconomy = new JLabel("Economy");
 	    
 	    // text field widgets
-	    txtFirst = new JTextField("", 6);
-	    txtBusiness = new JTextField("", 6);
-	    txtPremium = new JTextField("", 6);
-	    txtEconomy = new JTextField("", 6);
+	    txtFirst = new JTextField(Double.toString(Constants.DEFAULT_FIRST_PROB), 6);
+	    txtBusiness = new JTextField(Double.toString(Constants.DEFAULT_BUSINESS_PROB), 6);
+	    txtPremium = new JTextField(Double.toString(Constants.DEFAULT_PREMIUM_PROB), 6);
+	    txtEconomy = new JTextField(Double.toString(Constants.DEFAULT_ECONOMY_PROB), 6);
 	    
 	    addToPanel(pnlFareClasses, lblFareClasses, lblHeadingConstraints, 0, 0, 4, 1); 
 	    
