@@ -9,6 +9,8 @@ package asgn2Simulators;
 import java.awt.BorderLayout;
 import java.awt.HeadlessException;
 import java.awt.Insets;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -16,6 +18,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
@@ -38,12 +41,16 @@ public class GUISimulator extends JFrame implements Runnable {
 	 * Constants that define window dimensions
 	 */
 	private static final int WINDOW_WIDTH = 800;
-	private static final int WINDOW_HEIGHT = 600;
+	private static final int WINDOW_HEIGHT = 650;
 	
 	/*
-	 * Heaading Fonts
+	 * tabbed pane
 	 */
-	private Font headingFont = new Font("Arial", Font.BOLD, 24);
+	private JTabbedPane tabbedPane;
+	/*
+	 * Heading Fonts
+	 */
+	private Font headingFont;
 	
 	/*
 	 * JFrame Panel Declarations which will house elements of GUI
@@ -53,6 +60,8 @@ public class GUISimulator extends JFrame implements Runnable {
 	private JPanel pnlExecution;
 	private JPanel pnlLoggingOutput;
 	private JPanel pnlUserInput;
+	private JPanel pnlChartOne;
+	private JPanel pnlChartTwo;
 	
 	private JPanel pnlSpacer;
 	/*
@@ -76,7 +85,7 @@ public class GUISimulator extends JFrame implements Runnable {
 	private JTextField txtCancellation;
 	
 	/*
-	 * Border definintion for panels
+	 * Border definition for panels
 	 */
 	private Border borderLowered;
 	
@@ -126,7 +135,6 @@ public class GUISimulator extends JFrame implements Runnable {
 	@Override
 	public void run() {
 		createGUI();
-
 	}
 
 	/**
@@ -136,8 +144,79 @@ public class GUISimulator extends JFrame implements Runnable {
 		// TODO Auto-generated method stub
 	    JFrame.setDefaultLookAndFeelDecorated(true);
         SwingUtilities.invokeLater(new GUISimulator("GUI Simulator"));
-
 	}
+	
+	/*
+	 * Program entry point. Selects GUI or CLI from command line arg 
+	 * options. 
+	 * 
+	 */
+	/*public static void main(String[] args) {  	
+		boolean voteGUI=processArguments(args); 
+		ElectionManager em = null;
+		try {
+			// Main Processing Loop
+			em = new ElectionManager();
+			em.getElectionsFromFile(ElectionManager.ElectionFile);
+		
+			//GUI or not GUI 
+			if (voteGUI) {
+				SwingUtilities.invokeLater(new VotingWizard(em));
+			} else {
+				for (Election elec : em.getElectionList()) {
+					em.setElection(elec);
+					System.out.println(em.manageCount());
+				}
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			System.exit(-1);
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.exit(-1);
+		} catch (ElectionException e) {
+			e.printStackTrace();
+			System.exit(-1);
+		} catch (NumbersException e) {
+			e.printStackTrace();
+			System.exit(-1);
+		}
+	} */
+	
+	/*public static void main(String[] args) {
+		final int NUM_ARGS = 9; 
+		Simulator s = null; 
+		Log l = null; 
+		
+		try {
+			switch (args.length) {
+				case NUM_ARGS: {
+					s = createSimulatorUsingArgs(args); 
+					break;
+				}
+				case 0: {
+					s = new Simulator(); 
+					break;
+				}
+				default: {
+					printErrorAndExit(); 
+				}
+			}
+			l = new Log();
+		} catch (SimulationException | IOException e1) {
+			e1.printStackTrace();
+			System.exit(-1);
+		}
+	
+		//Run the simulation 
+		SimulationRunner sr = new SimulationRunner(s,l);
+		try {
+			sr.runSimulation();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.exit(-1);
+		} 
+	}*/
 	
 	private void createGUI() {
 		// set general GUI parameters
@@ -145,6 +224,8 @@ public class GUISimulator extends JFrame implements Runnable {
 		setResizable(false);
 	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    setLayout(new BorderLayout());
+	    tabbedPane = new JTabbedPane();
+	    headingFont = new Font("Arial", Font.BOLD, 24);
 		
 	    lblHeadingConstraints = new GridBagConstraints(); 
 	    lblSubHeadingConstraints = new GridBagConstraints(); 
@@ -171,15 +252,20 @@ public class GUISimulator extends JFrame implements Runnable {
 		pnlLoggingOutput = createPanel(Color.WHITE);
 		pnlLoggingOutput.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
 		
+		pnlChartOne = createPanel(Color.WHITE);
+		pnlChartTwo = createPanel(Color.WHITE);
+		
 		pnlUserInput = createPanel(Color.RED);
 		pnlUserInput.setOpaque(false);
 		
 		// instantiate elements
 		layoutLoggingPanel();
 		userInputFieldsPanel();
+		layoutFreechartOnePanel();
+		layoutFreechartTwoPanel();
 		
 		// add panels
-		this.getContentPane().add(pnlLoggingOutput,BorderLayout.NORTH);
+		this.getContentPane().add(tabbedPane,BorderLayout.NORTH);
 		this.getContentPane().add(pnlUserInput, BorderLayout.SOUTH);
 		
 		
@@ -239,8 +325,6 @@ public class GUISimulator extends JFrame implements Runnable {
 	    txtConstraints.gridwidth = 2;
 	}
 	
-	
-	
 	private JPanel createPanel(Color c) {
 		JPanel jp = new JPanel();
 		jp.setBackground(c);
@@ -262,6 +346,22 @@ public class GUISimulator extends JFrame implements Runnable {
 		txtLoggingOutput = new JTextArea(25, 60);
 		
 		pnlLoggingOutput.add(txtLoggingOutput);
+		
+		tabbedPane.addTab("Text Logging Output", pnlLoggingOutput);
+	}
+	
+	private void layoutFreechartOnePanel() {
+		GridBagLayout layout = new GridBagLayout();
+		pnlChartOne.setLayout(layout);
+		
+		tabbedPane.addTab("Chart One", pnlChartOne);
+	}
+	
+	private void layoutFreechartTwoPanel() {
+		GridBagLayout layout = new GridBagLayout();
+		pnlChartTwo.setLayout(layout);
+		
+		tabbedPane.addTab("Chart Two", pnlChartTwo);
 	}
 	
 	private void layoutSimulationPanel() {
@@ -332,9 +432,7 @@ public class GUISimulator extends JFrame implements Runnable {
 	    addToPanel(pnlFareClasses, txtFirst, txtConstraints, 0, 1, 1, 1);
 	    addToPanel(pnlFareClasses, txtBusiness, txtConstraints, 0, 2, 1, 1);
 	    addToPanel(pnlFareClasses, txtPremium, txtConstraints, 0, 3, 1, 1);
-	    addToPanel(pnlFareClasses, txtEconomy, txtConstraints, 0, 4, 1, 1);
-	    
-	    
+	    addToPanel(pnlFareClasses, txtEconomy, txtConstraints, 0, 4, 1, 1); 
 	}
 	
 	private void layoutExecutionPanel() {
