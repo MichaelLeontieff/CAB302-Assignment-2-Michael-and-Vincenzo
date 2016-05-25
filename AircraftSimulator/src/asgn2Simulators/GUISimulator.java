@@ -44,7 +44,11 @@ public class GUISimulator extends JFrame implements Runnable {
 	private static final int WINDOW_HEIGHT = 650;
 	
 	/*
+<<<<<<< HEAD
 	 * tabbed pane
+=======
+	 * Heading Fonts
+>>>>>>> 39cd3e7655d00ef9fbdba5f9a0f92537608f0b7b
 	 */
 	private JTabbedPane tabbedPane;
 	/*
@@ -151,72 +155,6 @@ public class GUISimulator extends JFrame implements Runnable {
 	 * options. 
 	 * 
 	 */
-	/*public static void main(String[] args) {  	
-		boolean voteGUI=processArguments(args); 
-		ElectionManager em = null;
-		try {
-			// Main Processing Loop
-			em = new ElectionManager();
-			em.getElectionsFromFile(ElectionManager.ElectionFile);
-		
-			//GUI or not GUI 
-			if (voteGUI) {
-				SwingUtilities.invokeLater(new VotingWizard(em));
-			} else {
-				for (Election elec : em.getElectionList()) {
-					em.setElection(elec);
-					System.out.println(em.manageCount());
-				}
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			System.exit(-1);
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.exit(-1);
-		} catch (ElectionException e) {
-			e.printStackTrace();
-			System.exit(-1);
-		} catch (NumbersException e) {
-			e.printStackTrace();
-			System.exit(-1);
-		}
-	} */
-	
-	/*public static void main(String[] args) {
-		final int NUM_ARGS = 9; 
-		Simulator s = null; 
-		Log l = null; 
-		
-		try {
-			switch (args.length) {
-				case NUM_ARGS: {
-					s = createSimulatorUsingArgs(args); 
-					break;
-				}
-				case 0: {
-					s = new Simulator(); 
-					break;
-				}
-				default: {
-					printErrorAndExit(); 
-				}
-			}
-			l = new Log();
-		} catch (SimulationException | IOException e1) {
-			e1.printStackTrace();
-			System.exit(-1);
-		}
-	
-		//Run the simulation 
-		SimulationRunner sr = new SimulationRunner(s,l);
-		try {
-			sr.runSimulation();
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.exit(-1);
-		} 
-	}*/
 	
 	private void createGUI() {
 		// set general GUI parameters
