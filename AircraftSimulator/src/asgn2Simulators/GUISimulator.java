@@ -9,6 +9,8 @@ package asgn2Simulators;
 import java.awt.BorderLayout;
 import java.awt.HeadlessException;
 import java.awt.Insets;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -20,6 +22,12 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
+
+import asgn1Election.Election;
+import asgn1Election.ElectionException;
+import asgn1Election.ElectionManager;
+import asgn1GUI.VotingWizard;
+import asgn1Util.NumbersException;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -136,6 +144,78 @@ public class GUISimulator extends JFrame implements Runnable {
 	    JFrame.setDefaultLookAndFeelDecorated(true);
         SwingUtilities.invokeLater(new GUISimulator("GUI Simulator"));
 	}
+	
+	/*
+	 * Program entry point. Selects GUI or CLI from command line arg 
+	 * options. 
+	 * 
+	 */
+	/*public static void main(String[] args) {  	
+		boolean voteGUI=processArguments(args); 
+		ElectionManager em = null;
+		try {
+			// Main Processing Loop
+			em = new ElectionManager();
+			em.getElectionsFromFile(ElectionManager.ElectionFile);
+		
+			//GUI or not GUI 
+			if (voteGUI) {
+				SwingUtilities.invokeLater(new VotingWizard(em));
+			} else {
+				for (Election elec : em.getElectionList()) {
+					em.setElection(elec);
+					System.out.println(em.manageCount());
+				}
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			System.exit(-1);
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.exit(-1);
+		} catch (ElectionException e) {
+			e.printStackTrace();
+			System.exit(-1);
+		} catch (NumbersException e) {
+			e.printStackTrace();
+			System.exit(-1);
+		}
+	} */
+	
+	/*public static void main(String[] args) {
+		final int NUM_ARGS = 9; 
+		Simulator s = null; 
+		Log l = null; 
+		
+		try {
+			switch (args.length) {
+				case NUM_ARGS: {
+					s = createSimulatorUsingArgs(args); 
+					break;
+				}
+				case 0: {
+					s = new Simulator(); 
+					break;
+				}
+				default: {
+					printErrorAndExit(); 
+				}
+			}
+			l = new Log();
+		} catch (SimulationException | IOException e1) {
+			e1.printStackTrace();
+			System.exit(-1);
+		}
+	
+		//Run the simulation 
+		SimulationRunner sr = new SimulationRunner(s,l);
+		try {
+			sr.runSimulation();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.exit(-1);
+		} 
+	}*/
 	
 	private void createGUI() {
 		// set general GUI parameters
