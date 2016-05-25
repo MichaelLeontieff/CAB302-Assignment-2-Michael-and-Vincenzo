@@ -360,7 +360,7 @@ public abstract class Aircraft {
 	 * by upgrades to First), and then finally, we do the same for Economy, upgrading 
 	 * where possible to Premium.  
 	 */
-	public void upgradeBookings() { //not sure if this works
+	public void upgradeBookings() { 
 		//ArrayList<Passenger> toRemove = new ArrayList<Passenger>();
 		//ArrayList<Passenger> toAdd = new ArrayList<Passenger>();
 		for (int i = 0; i < 3; i++) {

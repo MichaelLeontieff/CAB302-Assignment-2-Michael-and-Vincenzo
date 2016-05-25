@@ -149,11 +149,12 @@ public class Simulator {
 		double testValue = rng.nextDouble();
 		double busTest = this.firstProb+this.businessProb;
 		double premTest = busTest+this.premiumProb;
+		
 		if (testValue >= (1.0 - this.firstProb)) {
 			return new First(bookingTime,departureTime);
 		} else if (testValue >= (1.0 - busTest)) {
 			return new Business(bookingTime,departureTime); 
-		} else if (testValue >= premTest) {
+		} else if (testValue >= (1.0 - premTest)) {
 			return new Premium(bookingTime,departureTime); 
 		} else {
 			return new Economy(bookingTime,departureTime);
@@ -169,6 +170,29 @@ public class Simulator {
 		for (int time=0; time<=Constants.DURATION-Constants.FIRST_FLIGHT; time++) {
 			this.schedule.add(new Flights(time+Constants.FIRST_FLIGHT));
 		}
+	}
+	
+	/**
+	 * Method to clear queued and cancelled passengers at the end of the simulation. States changed 
+	 * to Refused and added to the refused collection. 
+	 *  
+	 * @param time <code>int</code> time operation performed. 
+	 * @throws PassengerException See {@link asgn2Passengers.Passenger#refusePassenger(int)}
+	 */
+	public void finaliseQueuedAndCancelledPassengers(int time) throws PassengerException {
+		for (Passenger p : this.queue) {
+			p.refusePassenger(time);
+			this.status += Log.setPassengerMsg(p,"Q","R");
+		}
+		this.refused.addAll(this.queue);
+		this.queue.clear();
+		
+		for (Passenger p : this.cancelled) {
+			p.refusePassenger(time);
+			this.status += Log.setPassengerMsg(p,"N","R");
+		}
+		this.refused.addAll(this.cancelled);
+		this.cancelled.clear();
 	}
 
 	/**
@@ -271,11 +295,11 @@ public class Simulator {
 	}
 
 	/**
-	 * @param time
-	 * @return
+	 * @param time <code>int</code> current time - presently unused
+	 * @return <code>String</code> with current status string and newline 
 	 */
 	public String getStatus(int time) {
-		return this.status;
+		return this.status + "\n";
 	}
 	
 	/**
@@ -555,7 +579,8 @@ public class Simulator {
 	public String toString() {
 		return "Simulator [meanDailyBookings=" + meanDailyBookings + ", sdDailyBookings=" + sdDailyBookings
 				+ ", seed=" + seed + ", firstProb=" + firstProb + ", businessProb="
-				+ businessProb + ", premiumProb=" + premiumProb + "]";
+				+ businessProb + ", premiumProb=" + premiumProb 
+				+ ", economyProb=" + economyProb +"]";
 	}
 	
 	/**
