@@ -36,6 +36,7 @@ public class FirstTests {
 	// Declare test objects
 	private First myPassenger;
 	private First testPassenger;
+	private First testPassengerTwo;
 	private Passenger upgradedPassenger;
 
 	/**
@@ -159,7 +160,7 @@ public class FirstTests {
 		// passenger
 		upgradedPassenger = myPassenger.upgrade();
 		// Check if the passID's match
-		assertTrue(myPassenger.getPassID().equals(upgradedPassenger.getPassID()));
+		assertTrue(myPassenger.getPassID() == (upgradedPassenger.getPassID()));
 	} 
 
 	@Test
@@ -792,9 +793,9 @@ public class FirstTests {
 	 * Test method for {@link asgn2Passengers.Passenger#getPassID()}.
 	 */
 	@Test
-	public void testGetPassID() {
-		assertEquals("F:99", myPassenger.getPassID());
-	} // not sure where passID comes from or where it is set?
+	public void testGetPassID() {	
+		assertEquals("F:101", myPassenger.getPassID());
+	} 
 
 	// IS CONFIRMED TESTS
 
