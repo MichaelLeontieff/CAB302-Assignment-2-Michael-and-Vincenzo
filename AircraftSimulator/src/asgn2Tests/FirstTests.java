@@ -158,9 +158,9 @@ public class FirstTests {
 		// Create new passenger instance which is an upgrade of the original
 		// passenger
 		upgradedPassenger = myPassenger.upgrade();
-		// Check if the passID's do not match
-		assertTrue(myPassenger.getPassID() != upgradedPassenger.getPassID());
-	} // if a first is upgraded, does their passID change?
+		// Check if the passID's match
+		assertTrue(myPassenger.getPassID().equals(upgradedPassenger.getPassID()));
+	} 
 
 	@Test
 	public void testUpgradeEnterQueueTime() throws PassengerException {

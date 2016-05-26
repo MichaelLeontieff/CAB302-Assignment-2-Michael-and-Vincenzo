@@ -281,7 +281,7 @@ public class PremiumTests {
 		assertTrue(myPassenger instanceof Premium);
 	}
 	
-	/*@Test
+	@Test
 	public void testUpgradePassID() throws PassengerException {
 		// Set passenger to a confirmed state
 		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
@@ -289,7 +289,7 @@ public class PremiumTests {
 		upgradedPassenger = myPassenger.upgrade();
 		// Check if the passID's do not match
 		assertTrue(myPassenger.getPassID() != upgradedPassenger.getPassID());
-	} //if a first is upgraded, does their passID change? */
+	} 
 	
 	/*	@Test
 	public void testUpgradeBothNotQueued() throws PassengerException {
