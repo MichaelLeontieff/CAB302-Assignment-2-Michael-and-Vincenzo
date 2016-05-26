@@ -9,6 +9,8 @@ package asgn2Simulators;
 import java.awt.BorderLayout;
 import java.awt.HeadlessException;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -36,21 +38,19 @@ import java.awt.GridBagLayout;
  *
  */
 @SuppressWarnings("serial")
-public class GUISimulator extends JFrame implements Runnable {
+public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	/*
 	 * Constants that define window dimensions
 	 */
 	private static final int WINDOW_WIDTH = 800;
 	private static final int WINDOW_HEIGHT = 650;
 	
-	/*
-<<<<<<< HEAD
-	 * tabbed pane
-=======
-	 * Heading Fonts
->>>>>>> 39cd3e7655d00ef9fbdba5f9a0f92537608f0b7b
+
+	/* tabbed pane
+	 * 
 	 */
 	private JTabbedPane tabbedPane;
+	
 	/*
 	 * Heading Fonts
 	 */
@@ -384,10 +384,17 @@ public class GUISimulator extends JFrame implements Runnable {
 	    btnShowGraphTwo = new JButton("Show Graph Two");
 	    btnRunSimulation.setPreferredSize(new Dimension(200, 40));
 	    btnShowGraphTwo.setPreferredSize(new Dimension(200, 40));
+	    btnShowGraphTwo.setEnabled(false);
 	    
 	    addToPanel(pnlExecution, lblExecution, lblHeadingConstraints, 0, 0, 1, 5); 
 	    addToPanel(pnlExecution, btnRunSimulation, lblHeadingConstraints, 0, 5, 1, 5); 
 	    addToPanel(pnlExecution, btnShowGraphTwo, lblHeadingConstraints, 0, 10, 1, 5); 
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
