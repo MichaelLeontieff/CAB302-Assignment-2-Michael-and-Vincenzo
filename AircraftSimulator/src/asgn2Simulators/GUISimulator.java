@@ -445,7 +445,8 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	 * Private method that outputs the finalise string
 	 */
 	private void finalise(Simulator sim) {
-		
+		txtLoggingOutput.append("End of Simulation\n");
+		txtLoggingOutput.append(sim.finalState());
 	}
 	
 	/*
