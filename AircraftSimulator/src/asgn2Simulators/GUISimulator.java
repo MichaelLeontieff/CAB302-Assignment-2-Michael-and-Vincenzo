@@ -393,8 +393,114 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub	
+	}
+	
+	/*
+	 * create simulator object with parameters
+	 */
+	private void createSimulation() {
+		// grab parameters for simulation, input will be sanitised 
+		// by the getters
+		// boolean to track valid fields
+		boolean validInput = true;
+		int seed = getSeed();
+	}
+	/*
+	 * Method that runs the simulation and calls output methods
+	 */
+	private void runSimulation() {
 		
+	}
+	
+	/*
+	 * Private method that outputs the initial entry
+	 */
+	private void initialEntry(Simulator sim) {
+		
+	}
+	
+	/*
+	 * Private method that outputs the flight entries
+	 */
+	private void logFlightEntries(int time, Simulator sim) {
+		
+	}
+	
+	/*
+	 * Private method that outputs the finalise string
+	 */
+	private void finalise(Simulator sim) {
+		
+	}
+	
+	/*
+	 * Numerous getters which fetch the content of the text fields and return it 
+	 * if it's acceptable for the simulation, if not then an error is raised.
+	 * 
+	 */
+	private int getSeed() {
+		return checkInteger(txtRNGInput.getText(), Constants.DEFAULT_SEED);
+	}
+	
+	private Double getDailyMean() {
+		return checkDouble(txtDailyMean.getText(), Constants.DEFAULT_DAILY_BOOKING_MEAN);
+	}
+	
+	private int getDailyQueueSize() {
+		return checkInteger(txtQueueSize.getText(), Constants.DEFAULT_MAX_QUEUE_SIZE);
+	}
+	
+	private int getCancellation() {
+		return checkInteger(txtCancellation.getText(), Constants.CANCELLATION_PERIOD);
+	}
+	
+	private Double getFirstProb() {
+		return checkDouble(txtFirst.getText(), Constants.DEFAULT_FIRST_PROB);
+	}
+	
+	private Double getBusinessProb() {
+		return checkDouble(txtFirst.getText(), Constants.DEFAULT_BUSINESS_PROB);
+	}
+	
+	private Double getPremiumProb() {
+		return checkDouble(txtFirst.getText(), Constants.DEFAULT_PREMIUM_PROB);
+	}
+	
+	private Double getEconomyProb() {
+		return checkDouble(txtFirst.getText(), Constants.DEFAULT_ECONOMY_PROB);
+	}
+	
+	/*
+	 * Helper method that parses the string to double and returns the constant if 
+	 * parse fails
+	 */
+	private Double checkDouble(String input, Double constant) {
+		double value;
+		
+		try {
+		  value = Double.parseDouble(input);
+		} catch(NumberFormatException e) {
+		 value = constant;
+		}
+		
+		return value;
+	}
+	
+	/*
+	 * Helper method that parses the string to int and returns the constant if 
+	 * parse fails
+	 */
+	private Integer checkInteger(String input, int constant) {
+		int value;
+		
+		try {
+		  value = Integer.parseInt(input);
+		} catch(NumberFormatException e) {
+		 value = constant;
+		}
+		
+		return value;
 	}
 
 }
