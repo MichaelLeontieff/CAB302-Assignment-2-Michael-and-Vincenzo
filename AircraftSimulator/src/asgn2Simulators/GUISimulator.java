@@ -20,11 +20,16 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
+
+import asgn2Aircraft.AircraftException;
+import asgn2Passengers.PassengerException;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -72,6 +77,7 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	 * Elements for logging
 	 */
 	private JTextArea txtLoggingOutput;
+	private JScrollPane scroll;
 	
 	/*
 	 * Panel Elements for Simulation Panel
@@ -123,6 +129,10 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	private GridBagConstraints lblSubHeadingConstraints;
 	private GridBagConstraints txtConstraints;
 	
+	/*
+	 * Simulator Object
+	 */
+	private Simulator sim;
 	
 	/**
 	 * @param arg0
@@ -284,7 +294,10 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 		txtLoggingOutput = new JTextArea(25, 60);
 		txtLoggingOutput.setEditable(false);
 		
-		pnlLoggingOutput.add(txtLoggingOutput);
+		scroll = new JScrollPane(txtLoggingOutput);
+		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		
+		pnlLoggingOutput.add(scroll);
 		
 		tabbedPane.addTab("Text Logging Output", pnlLoggingOutput);
 	}
@@ -382,9 +395,13 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	    lblExecution.setFont(headingFont);
 	    
 	    btnRunSimulation = new JButton("Run Simulation");
-	    btnShowGraphTwo = new JButton("Show Graph Two");
 	    btnRunSimulation.setPreferredSize(new Dimension(200, 40));
+	    btnRunSimulation.addActionListener(this);
+	    
+	    btnShowGraphTwo = new JButton("Show Graph Two");
 	    btnShowGraphTwo.setPreferredSize(new Dimension(200, 40));
+	    btnShowGraphTwo.addActionListener(this);    
+	    
 	    btnShowGraphTwo.setEnabled(false);
 	    
 	    addToPanel(pnlExecution, lblExecution, lblHeadingConstraints, 0, 0, 1, 5); 
@@ -393,8 +410,24 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub	
+	public void actionPerformed(ActionEvent e) {
+		Object src=e.getSource(); 	      
+			if (src== btnRunSimulation) {
+				System.out.println("reach here");
+				try {
+					createSimulation();
+					runSimulation();
+				} catch (AircraftException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (SimulationException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (PassengerException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
 	}
 	
 	/*
@@ -413,15 +446,40 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 		double premiumProb = getPremiumProb();
 		double economyProb = getEconomyProb();
 		
-		Simulator sim = new Simulator(seed,queueSize,dailyMean,Constants.DEFAULT_DAILY_BOOKING_SD,firstProb,businessProb,
+		sim = new Simulator(seed,queueSize,dailyMean,Constants.DEFAULT_DAILY_BOOKING_SD,firstProb,businessProb,
 				  premiumProb,economyProb,Constants.DEFAULT_CANCELLATION_PROB);	
 	}
 	/*
 	 * Method that runs the simulation and calls output methods
 	 */
-	private void runSimulation() {
+	private void runSimulation() throws AircraftException, SimulationException, PassengerException {
+		sim.createSchedule();
+		initialEntry(sim);
 		
+		// main simulation loop
+		for (int time=0; time<=Constants.DURATION; time++) {
+			this.sim.resetStatus(time); 
+			this.sim.rebookCancelledPassengers(time); 
+			this.sim.generateAndHandleBookings(time);
+			this.sim.processNewCancellations(time);
+			if (time >= Constants.FIRST_FLIGHT) {
+				this.sim.processUpgrades(time);
+				this.sim.processQueue(time);
+				this.sim.flyPassengers(time);
+				this.sim.updateTotalCounts(time); 
+				logFlightEntries(time, sim); // this
+			} else {
+				this.sim.processQueue(time);
+			}
+			//Log progress 
+			//this.log.logQREntries(time, sim);
+			//this.log.logEntry(time,this.sim);
+		}
+		this.sim.finaliseQueuedAndCancelledPassengers(Constants.DURATION); 
+		//this.log.logQREntries(Constants.DURATION, sim);
+		finalise(this.sim); // this
 	}
+	
 	
 	/*
 	 * Private method that outputs the initial entry
