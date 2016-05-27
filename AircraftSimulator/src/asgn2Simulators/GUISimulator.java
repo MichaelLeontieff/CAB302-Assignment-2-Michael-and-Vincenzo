@@ -399,12 +399,21 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	/*
 	 * create simulator object with parameters
 	 */
-	private void createSimulation() {
-		// grab parameters for simulation, input will be sanitised 
+	private void createSimulation() throws SimulationException {
+		// grab parameters for simulation, input will be sanitized 
 		// by the getters
-		// boolean to track valid fields
-		boolean validInput = true;
 		int seed = getSeed();
+		double dailyMean = getDailyMean();
+		int queueSize = getDailyQueueSize();
+		int cancellation = getCancellation();
+		
+		double firstProb = getFirstProb();
+		double businessProb = getBusinessProb();
+		double premiumProb = getPremiumProb();
+		double economyProb = getEconomyProb();
+		
+		Simulator sim = new Simulator(seed,queueSize,dailyMean,Constants.DEFAULT_DAILY_BOOKING_SD,firstProb,businessProb,
+				  premiumProb,economyProb,Constants.DEFAULT_CANCELLATION_PROB);	
 	}
 	/*
 	 * Method that runs the simulation and calls output methods
