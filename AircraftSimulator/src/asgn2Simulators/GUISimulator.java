@@ -436,8 +436,9 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	/*
 	 * Private method that outputs the flight entries
 	 */
-	private void logFlightEntries(int time, Simulator sim) {
-		
+	private void logFlightEntries(int time, Simulator sim) throws SimulationException {
+		Flights flights = sim.getFlights(time); 
+		txtLoggingOutput.append(flights.getStatus(time) + "\n");
 	}
 	
 	/*
