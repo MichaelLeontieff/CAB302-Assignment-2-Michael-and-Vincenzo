@@ -282,6 +282,7 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 		pnlLoggingOutput.setLayout(layout);
 		
 		txtLoggingOutput = new JTextArea(25, 60);
+		txtLoggingOutput.setEditable(false);
 		
 		pnlLoggingOutput.add(txtLoggingOutput);
 		
@@ -425,8 +426,11 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	/*
 	 * Private method that outputs the initial entry
 	 */
-	private void initialEntry(Simulator sim) {
-		
+	private void initialEntry(Simulator sim) throws SimulationException {
+		txtLoggingOutput.append("Start of Simulation\n");
+		txtLoggingOutput.append(sim.toString() + "\n");
+		String capacities = sim.getFlights(Constants.FIRST_FLIGHT).initialState();
+		txtLoggingOutput.append(capacities);
 	}
 	
 	/*
