@@ -152,13 +152,13 @@ public abstract class Aircraft {
 	 * @return <code>boolean</code> true if aircraft empty; false otherwise 
 	 */
 	public boolean flightEmpty() {
-		boolean empty = false;
+		/*boolean empty = false;
 	    if (this.getNumPassengers() == 0){
 			empty = true;
 		}
-		return empty;
+		return empty;*/
+		return this.seats.size() == 0;
 	}
-	//this.seats.size() == 0
 	
 	/**
 	 * Simple status showing whether aircraft is full
