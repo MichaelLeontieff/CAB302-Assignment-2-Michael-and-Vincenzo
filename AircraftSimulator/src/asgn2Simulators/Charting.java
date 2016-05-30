@@ -35,6 +35,13 @@ public class Charting {
 	private int total;
 	private int empty;
 	
+	private int economyPrev;
+	private int premiumPrev;
+	private int businessPrev;
+	private int firstPrev;
+	private int totalPrev;
+	private int emptyPrev;
+	
 	
 	public Charting() {
 		timeSeries = new TimeSeriesCollection(); 
@@ -81,27 +88,33 @@ public class Charting {
     }
     
     public void setEconomy(int economy) {
-    	this.economy = economy;
+    	economyPrev += this.economy;
+    	this.economy = economy - economyPrev;
     }
     
     public void setPremium(int premium) {
-    	this.premium = premium;
+    	premiumPrev += this.premium;
+    	this.premium = premium - premiumPrev;
     }
     
     public void setBusiness(int business) {
-    	this.business = business;
+    	businessPrev += this.business;
+    	this.business = business - businessPrev;
     }
     
     public void setFirst(int first) {
-    	this.first = first;
+    	firstPrev += this.first;
+    	this.first = first - firstPrev;
     }
     
     public void setTotal(int total) {
-    	this.total = total;
+    	totalPrev += this.total;
+    	this.total = total - totalPrev;
     }
     
     public void setEmpty(int empty) {
-    	this.empty = empty;
+    	emptyPrev += this.empty;
+    	this.empty = empty - emptyPrev;
     }
     
     public void compileTimeSeries() {

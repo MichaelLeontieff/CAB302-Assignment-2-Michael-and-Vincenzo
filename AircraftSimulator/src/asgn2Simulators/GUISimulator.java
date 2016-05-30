@@ -233,8 +233,8 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 		this.getContentPane().add(pnlUserInput, BorderLayout.SOUTH);
 		
 	    // disable chart tabs
-	    tabbedPane.setEnabledAt(1, false);
-	    tabbedPane.setEnabledAt(2, false);
+	    //tabbedPane.setEnabledAt(1, false);
+	    //tabbedPane.setEnabledAt(2, false);
 		
 		repaint();
 		setVisible(true);
@@ -509,8 +509,9 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 			bookingsChart.setPremium(sim.getTotalPremium());
 			bookingsChart.setFirst(sim.getTotalFirst());
 			bookingsChart.setBusiness(sim.getTotalBusiness());
-			bookingsChart.setTotal(sim.getTotalEconomy());
-			bookingsChart.setEmpty(getTotalBookings(sim));
+			bookingsChart.setTotal(getTotalBookings(sim));
+			// not sure where this data is sourced
+			//bookingsChart.setEmpty();
 
 			// add the metrics to the time series with timePoint association
 			bookingsChart.addToTimeSeries(timePoint);
