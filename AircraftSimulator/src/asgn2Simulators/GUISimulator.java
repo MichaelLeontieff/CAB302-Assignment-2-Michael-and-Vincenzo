@@ -66,6 +66,9 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	private static final int WINDOW_WIDTH = 800;
 	private static final int WINDOW_HEIGHT = 650;
 	
+	private static final int BOOKINGS_CHART = 1;
+	private static final int QUEUE_REFUSE_CHART = 2;
+	
 
 	/* tabbed pane
 	 * 
@@ -497,7 +500,9 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 		sim.createSchedule();
 		initialEntry(sim);
 		
-		Charting bookingsChart = new Charting();
+		Charting bookingsChart = new Charting(BOOKINGS_CHART);
+		Charting queuedRefusedChart = new Charting(QUEUE_REFUSE_CHART);
+		
 		Calendar cal = GregorianCalendar.getInstance();
 
 		// main simulation loop
@@ -529,15 +534,22 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 			bookingsChart.setTotal(getTotalBookings(sim));
 			// not sure where this data is sourced
 			//bookingsChart.setEmpty();
+			queuedRefusedChart.setRefused(sim.numRefused());
+			queuedRefusedChart.setQueued(sim.numInQueue());
+			
+			
 
 			// add the metrics to the time series with timePoint association
-			bookingsChart.addToTimeSeries(timePoint);
+			bookingsChart.addToTimeSeriesBookings(timePoint);
+			queuedRefusedChart.addToTimeSeriesQueuedRefused(timePoint);
 			
 		}
 		
-		bookingsChart.compileTimeSeries();
+		bookingsChart.compileTimeSeriesBookings();
+		queuedRefusedChart.compileTimeSeriesQueuedRefused();
 		
-		pnlChartOne.add(bookingsChart.createComponent());
+		pnlChartOne.add(bookingsChart.createComponentBookings());
+		pnlChartTwo.add(queuedRefusedChart.createComponentQueuedRefused());
 				
 		this.sim.finaliseQueuedAndCancelledPassengers(Constants.DURATION); 
 		finalise(this.sim);
