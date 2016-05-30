@@ -418,9 +418,17 @@ public abstract class Aircraft {
 	 * @param p Passenger seeking a confirmed seat
 	 * @return msg string failure reason 
 	 */
-	private String noSeatsAvailableMsg(Passenger p) {
-		String msg = "";
-		return msg + p.noSeatsMsg(); 
+	private String checkInvalidTimeMsg(int departureTime) {
+		return "";
+	}
+	
+	/** 
+	 * Helper method with error messages for failed bookings
+	 * @param p Passenger seeking a confirmed seat
+	 * @return msg string failure reason 
+	 */
+	private String checkNumPassengersMsg(int p) {
+		return "";
 	}
 	
 	/**
