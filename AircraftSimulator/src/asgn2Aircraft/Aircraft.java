@@ -410,6 +410,18 @@ public abstract class Aircraft {
 	//Various private helper methods to check arguments and throw exceptions, to increment 
 	//or decrement counts based on the class of the Passenger, and to get the number of seats 
 	//available in a particular class
+	
+	
+	//Used in the exception thrown when we can't confirm a passenger 
+	/** 
+	 * Helper method with error messages for failed bookings
+	 * @param p Passenger seeking a confirmed seat
+	 * @return msg string failure reason 
+	 */
+	private String noSeatsAvailableMsg(Passenger p) {
+		String msg = "";
+		return msg + p.noSeatsMsg(); 
+	}
 
 
 	//Used in the exception thrown when we can't confirm a passenger 
