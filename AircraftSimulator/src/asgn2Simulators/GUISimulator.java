@@ -324,73 +324,6 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 		tabbedPane.addTab("Chart One", pnlChartOne);
 	}
 	
-	/**
-     * Helper method to deliver the Chart - currently uses default colours and auto range 
-     * @param dataset TimeSeriesCollection for plotting 
-     * @returns chart to be added to panel 
-     */
-    private JFreeChart createChart(final XYDataset dataset) {
-        final JFreeChart result = ChartFactory.createTimeSeriesChart(
-            "Bookings Chart", "Days", "Passengers", dataset, true, true, false);
-        final XYPlot plot = result.getXYPlot();
-        ValueAxis domain = plot.getDomainAxis();
-        domain.setAutoRange(true);
-        ValueAxis range = plot.getRangeAxis();
-        range.setAutoRange(true);
-        return result;
-    }
-	
-	/**
-     * Private method creates the dataset. Lots of hack code in the 
-     * middle, but you should use the labelled code below  
-	 * @return collection of time series for the plot 
-	 */
-	private TimeSeriesCollection createTimeSeriesData(Simulator sim) {
-		TimeSeriesCollection tsc = new TimeSeriesCollection(); 
-		System.out.println(tsc);
-		TimeSeries bookTotal = new TimeSeries("Total Bookings");
-		TimeSeries econTotal = new TimeSeries("Economy"); 
-		TimeSeries busTotal = new TimeSeries("Business");
-		TimeSeries firstTotal = new TimeSeries("First"); 
-		TimeSeries premiumTotal = new TimeSeries("Premium"); 
-		
-		//Base time, data set up - the calendar is needed for the time points
-		Calendar cal = GregorianCalendar.getInstance();
-		
-		int economy = 0;
-		int business = 0; 
-		int first = 0;
-		int premium = 0;
-		
-		//Hack loop to make it interesting. Grows for half of it, then declines
-		for (int time = 0; time <= Constants.DURATION; time++) {
-			//These lines are important 
-			cal.set(2016,0,time,6,0);
-	        Date timePoint = cal.getTime();
-	        
-	        
-	        economy = sim.getTotalEconomy();
-	        business = sim.getTotalBusiness();
-	        premium = sim.getTotalPremium();
-	        first = sim.getTotalFirst();
-	        
-	        //This is important - steal it shamelessly 
-	        busTotal.add(new Day(timePoint),business);
-			econTotal.add(new Day(timePoint),economy);
-			firstTotal.add(new Day(timePoint),first);
-			premiumTotal.add(new Day(timePoint),premium);
-			bookTotal.add(new Day(timePoint),economy+business+first+premium);
-			
-		}
-		
-		//Collection
-		tsc.addSeries(firstTotal);
-		tsc.addSeries(premiumTotal);
-		tsc.addSeries(econTotal);
-		tsc.addSeries(busTotal);
-		return tsc; 
-	}
-	
 	private void layoutFreechartTwoPanel() {
 		GridBagLayout layout = new GridBagLayout();
 		pnlChartTwo.setLayout(layout);
@@ -540,29 +473,9 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 		sim.createSchedule();
 		initialEntry(sim);
 		
-		// freechart stuff
-		timeSeries = new TimeSeriesCollection(); 
-		TimeSeries econTotal = new TimeSeries("Economy"); 
-		TimeSeries busTotal = new TimeSeries("Business");
-		TimeSeries firstTotal = new TimeSeries("First"); 
-		TimeSeries premiumTotal = new TimeSeries("Premium"); 
-		TimeSeries totalTotal = new TimeSeries("Total Bookings"); 
-		TimeSeries seatsAvailTotal = new TimeSeries("Seats Available"); 
-		
-		//Base time, data set up - the calendar is needed for the time points
+		Charting bookingsChart = new Charting();
 		Calendar cal = GregorianCalendar.getInstance();
-		
-		int prevEcon = 0;
-		int economy = 0;
-		int prevFirst = 0;
-		int first = 0;
-		int prevBusiness = 0;
-		int business = 0; 
-		int prevPremium = 0;
-		int premium = 0;
-		int total = 0;
-		int seatsAvailable = 0;
-		
+
 		// main simulation loop
 		for (int time=0; time<=Constants.DURATION; time++) {
 			// freechart
@@ -578,49 +491,34 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 				this.sim.processQueue(time);
 				this.sim.flyPassengers(time);
 				this.sim.updateTotalCounts(time); 
-				logFlightEntries(time, sim); // this
+				logFlightEntries(time, sim);
 			} else {
 				this.sim.processQueue(time);
 			}
 			
-	        economy = sim.getTotalEconomy() - prevEcon;
-	        business = sim.getTotalBusiness() - prevBusiness;
-	        first = sim.getTotalFirst() - prevBusiness;
-	        premium = sim.getTotalPremium() - prevPremium;
-	        
-	        prevEcon = economy;
-	        prevBusiness = business;
-	        prevFirst = first;
-	        prevPremium = premium;
-	        
-	        total = economy + business + first + premium;
-	        seatsAvailable = sim.getTotalEmpty();
+			bookingsChart.setEconomy(sim.getTotalEconomy());
+			bookingsChart.setPremium(sim.getTotalPremium());
+			bookingsChart.setFirst(sim.getTotalFirst());
+			bookingsChart.setBusiness(sim.getTotalBusiness());
+			bookingsChart.setTotal(sim.getTotalEconomy());
+			bookingsChart.setEmpty(getTotalBookings(sim));
 
-			busTotal.add(new Day(timePoint),business);
-			econTotal.add(new Day(timePoint),economy);
-			firstTotal.add(new Day(timePoint),first);
-			premiumTotal.add(new Day(timePoint),premium);
-			totalTotal.add(new Day(timePoint),total);
-			seatsAvailTotal.add(new Day(timePoint),seatsAvailable);
+			// add the metrics to the time series with timePoint association
+			bookingsChart.addToTimeSeries(timePoint);
 			
 		}
 		
-		//Collection
-		timeSeries.addSeries(firstTotal);
-		timeSeries.addSeries(premiumTotal);
-		timeSeries.addSeries(econTotal);
-		timeSeries.addSeries(busTotal);
-		timeSeries.addSeries(totalTotal);
-		timeSeries.addSeries(seatsAvailTotal);
-				
-		pnlChartOne.add(new ChartPanel(createChart(timeSeries)));
+		bookingsChart.compileTimeSeries();
+		
+		pnlChartOne.add(bookingsChart.createComponent());
 				
 		this.sim.finaliseQueuedAndCancelledPassengers(Constants.DURATION); 
-		//this.log.logQREntries(Constants.DURATION, sim);
-		finalise(this.sim); // this
-		
-		
+		finalise(this.sim);
+	}
 	
+	private int getTotalBookings(Simulator sim) {
+		return sim.getTotalBusiness() + sim.getTotalEconomy() 
+		+ sim.getTotalFirst() + sim.getTotalPremium();
 	}
 	
 	
