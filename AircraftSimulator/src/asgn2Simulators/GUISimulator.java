@@ -233,8 +233,8 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 		this.getContentPane().add(pnlUserInput, BorderLayout.SOUTH);
 		
 	    // disable chart tabs
-	    //tabbedPane.setEnabledAt(1, false);
-	    //tabbedPane.setEnabledAt(2, false);
+	    tabbedPane.setEnabledAt(1, false);
+	    tabbedPane.setEnabledAt(2, false);
 		
 		repaint();
 		setVisible(true);
@@ -436,8 +436,7 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object src=e.getSource(); 	      
-			if (src== btnRunSimulation) {
-				System.out.println("reach here");
+			if (src == btnRunSimulation) {
 				try {
 					createSimulation();
 					runSimulation();
@@ -455,6 +454,19 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 					e1.printStackTrace();
 				}
 			}
+			
+			// enable graph buttons
+			btnShowBookingGraph.setEnabled(true);
+			btnShowQueueRefusedGraph.setEnabled(true);
+			
+			if (src == btnShowBookingGraph) {
+				tabbedPane.setSelectedIndex(1);
+			}
+			
+			if (src == btnShowQueueRefusedGraph) {
+				tabbedPane.setSelectedIndex(2);
+			}
+			
 	}
 	
 	/*
@@ -531,11 +543,17 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 		finalise(this.sim);
 	}
 	
+	/*
+	 * Private method to fetch the number of total bookings
+	 */
 	private int getTotalBookings(Simulator sim) {
 		return sim.getTotalBusiness() + sim.getTotalEconomy() 
 		+ sim.getTotalFirst() + sim.getTotalPremium();
 	}
 	
+	/*
+	 * Private method that outputs the summary of the simulator for that day
+	 */
 	public void logEntry(int time,Simulator sim) throws IOException, SimulationException {
 		boolean flying = (time >= Constants.FIRST_FLIGHT);
 		txtLoggingOutput.append(sim.getSummary(time, flying));
@@ -552,13 +570,6 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 		txtLoggingOutput.append(capacities);
 	}
 	
-	/*
-	 * Private method that outputs the flight entries
-	 */
-	private void logFlightEntries(int time, Simulator sim) throws SimulationException {
-		Flights flights = sim.getFlights(time); 
-		txtLoggingOutput.append(flights.getStatus(time) + "\n");
-	}
 	
 	/*
 	 * Private method that outputs the finalise string
