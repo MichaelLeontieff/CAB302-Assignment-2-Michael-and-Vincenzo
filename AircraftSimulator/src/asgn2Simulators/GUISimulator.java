@@ -450,6 +450,9 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 				} catch (PassengerException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
 			}
 	}
@@ -478,7 +481,7 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	/*
 	 * Method that runs the simulation and calls output methods
 	 */
-	private void runSimulation() throws AircraftException, SimulationException, PassengerException {
+	private void runSimulation() throws AircraftException, SimulationException, PassengerException, IOException {
 		sim.createSchedule();
 		initialEntry(sim);
 		
@@ -500,10 +503,12 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 				this.sim.processQueue(time);
 				this.sim.flyPassengers(time);
 				this.sim.updateTotalCounts(time); 
-				logFlightEntries(time, sim);
+				//logFlightEntries(time, sim);
 			} else {
 				this.sim.processQueue(time);
 			}
+			
+			logEntry(time, this.sim);
 			
 			bookingsChart.setEconomy(sim.getTotalEconomy());
 			bookingsChart.setPremium(sim.getTotalPremium());
@@ -529,6 +534,11 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	private int getTotalBookings(Simulator sim) {
 		return sim.getTotalBusiness() + sim.getTotalEconomy() 
 		+ sim.getTotalFirst() + sim.getTotalPremium();
+	}
+	
+	public void logEntry(int time,Simulator sim) throws IOException, SimulationException {
+		boolean flying = (time >= Constants.FIRST_FLIGHT);
+		txtLoggingOutput.append(sim.getSummary(time, flying));
 	}
 	
 	
