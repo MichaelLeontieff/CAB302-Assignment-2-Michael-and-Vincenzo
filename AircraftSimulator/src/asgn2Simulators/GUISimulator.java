@@ -135,7 +135,8 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	private JLabel lblExecution;
 	
 	private JButton btnRunSimulation;
-	private JButton btnShowGraphTwo;
+	private JButton btnShowBookingGraph;
+	private JButton btnShowQueueRefusedGraph;
 	
 	/*
 	 * Constraints that govern positioning of element types
@@ -231,7 +232,9 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 		this.getContentPane().add(tabbedPane,BorderLayout.NORTH);
 		this.getContentPane().add(pnlUserInput, BorderLayout.SOUTH);
 		
-		
+	    // disable chart tabs
+	    tabbedPane.setEnabledAt(1, false);
+	    tabbedPane.setEnabledAt(2, false);
 		
 		repaint();
 		setVisible(true);
@@ -410,18 +413,24 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	    lblExecution.setFont(headingFont);
 	    
 	    btnRunSimulation = new JButton("Run Simulation");
-	    btnRunSimulation.setPreferredSize(new Dimension(200, 40));
+	    btnRunSimulation.setPreferredSize(new Dimension(200, 35));
 	    btnRunSimulation.addActionListener(this);
 	    
-	    btnShowGraphTwo = new JButton("Show Graph Two");
-	    btnShowGraphTwo.setPreferredSize(new Dimension(200, 40));
-	    btnShowGraphTwo.addActionListener(this);    
+	    btnShowBookingGraph = new JButton("Show Bookings Graph");
+	    btnShowBookingGraph.setPreferredSize(new Dimension(200, 35));
+	    btnShowBookingGraph.addActionListener(this);    
 	    
-	    btnShowGraphTwo.setEnabled(false);
+	    btnShowQueueRefusedGraph = new JButton("Show Queue/Refused Graph");
+	    btnShowQueueRefusedGraph.setPreferredSize(new Dimension(200, 35));
+	    btnShowQueueRefusedGraph.addActionListener(this);    
+	    
+	    btnShowBookingGraph.setEnabled(false);
+	    btnShowQueueRefusedGraph.setEnabled(false);
 	    
 	    addToPanel(pnlExecution, lblExecution, lblHeadingConstraints, 0, 0, 1, 5); 
 	    addToPanel(pnlExecution, btnRunSimulation, lblHeadingConstraints, 0, 5, 1, 5); 
-	    addToPanel(pnlExecution, btnShowGraphTwo, lblHeadingConstraints, 0, 10, 1, 5); 
+	    addToPanel(pnlExecution, btnShowBookingGraph, lblHeadingConstraints, 0, 10, 1, 5);
+	    addToPanel(pnlExecution, btnShowQueueRefusedGraph, lblHeadingConstraints, 0, 15, 1, 5);
 	}
 
 	@Override
