@@ -158,6 +158,7 @@ public abstract class Aircraft {
 		}
 		return empty;
 	}
+	//this.seats.size() == 0
 	
 	/**
 	 * Simple status showing whether aircraft is full
@@ -165,11 +166,12 @@ public abstract class Aircraft {
 	 * @return <code>boolean</code> true if aircraft full; false otherwise 
 	 */
 	public boolean flightFull() {
-		boolean full = false;
+		/*boolean full = false;
 		if (this.getNumPassengers() == this.capacity) {
 			full = true;
 		}
-		return full;
+		return full;*/
+		return this.seats.size() == this.capacity;
 	}
 	
 	/**
@@ -259,6 +261,7 @@ public abstract class Aircraft {
 		}
 		return copyPassengers;
 	}
+	//return new ArrayList<Passenger>(this.seats);
 	
 	/**
 	 * Method used to provide the current status of the aircraft for logging. (Supplied) 
@@ -371,7 +374,7 @@ public abstract class Aircraft {
 					//add something here to add and remove passengers
 					//Passenger upgrade = p.upgrade();
 					//this.seats.remove(p);
-					//this.seats.add(upgrade);
+					//this.seats.add(p);
 					//toRemove.add(p);
 					//toAdd.add(upgrade);
 					p.upgrade();
