@@ -69,6 +69,7 @@ public abstract class Aircraft {
 	public Aircraft(String flightCode,int departureTime, int first, int business, int premium, int economy) throws AircraftException {
 		// Check for exceptions
 		checkInvalidNumPassengers(flightCode, departureTime, first, business, premium, economy);
+		
 		// Set each field
 		this.status = "";
 		this.flightCode = flightCode;
@@ -169,7 +170,8 @@ public abstract class Aircraft {
 	 * @throws PassengerException if <code>Passenger</code> is in incorrect state 
 	 * See {@link asgn2Passengers.Passenger#flyPassenger(int)}. 
 	 */
-	public void flyPassengers(int departureTime) throws PassengerException { 
+	public void flyPassengers(int departureTime) throws PassengerException {
+		
 		for (Passenger p : this.seats) {
 			p.flyPassenger(departureTime);
 		}
@@ -267,11 +269,6 @@ public abstract class Aircraft {
 	 * @return <code>boolean</code> true if isConfirmed(p); false otherwise 
 	 */
 	public boolean hasPassenger(Passenger p) {
-		/*boolean included = false;
-		if (p.isConfirmed()) {
-			included = true;
-		}
-		return included;*/
 		return p.isConfirmed();
 		//return this.seats.contains(p);
 	}
@@ -443,18 +440,38 @@ public abstract class Aircraft {
 		}
 	}
 	
+	/**
+	 * Helper method to check if seats are available in First class
+	 * 
+	 * @return boolean value depending on seats available in First class or not
+	 */
 	private boolean seatsAvailableFirst() {
 		return this.numFirst < this.firstCapacity;
 	}
 	
+	/**
+	 * Helper method to check if seats are available in Business class
+	 * 
+	 * @return boolean value depending on seats available in Business class or not
+	 */
 	private boolean seatsAvailableBusiness() {
 		return this.numBusiness < this.businessCapacity;
 	}
 	
+	/**
+	 * Helper method to check if seats are available in Premium class
+	 * 
+	 * @return boolean value depending on seats available in Premium class or not
+	 */
 	private boolean seatsAvailablePremium() {
 		return this.numPremium < this.premiumCapacity;
 	}
 	
+	/**
+	 * Helper method to check if seats are available in Economy class
+	 * 
+	 * @return boolean value depending on seats available in Economy class or not
+	 */
 	private boolean seatsAvailableEconomy() {
 		return this.numEconomy < this.economyCapacity;
 	}
