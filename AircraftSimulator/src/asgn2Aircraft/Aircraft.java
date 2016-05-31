@@ -35,6 +35,8 @@ import asgn2Simulators.Log;
  *
  */
 public abstract class Aircraft {
+	
+	private static final int EMPTY_SEATS = 0;
 
 	protected int firstCapacity;
 	protected int businessCapacity;
@@ -67,7 +69,6 @@ public abstract class Aircraft {
 	public Aircraft(String flightCode,int departureTime, int first, int business, int premium, int economy) throws AircraftException {
 		// Check for exceptions
 		checkInvalidNumPassengers(flightCode, departureTime, first, business, premium, economy);
-		
 		// Set each field
 		this.status = "";
 		this.flightCode = flightCode;
@@ -94,9 +95,7 @@ public abstract class Aircraft {
 	 */
 	public void cancelBooking(Passenger p,int cancellationTime) throws PassengerException, AircraftException {
 		// Some local exception checking
-		if (!hasPassenger(p)) {
-			throw new AircraftException("The passenger is not recorded in the aircraft seating");
-		}
+		checkIfPassengersInSeating(p);
 		// Transition method on the passenger
 		p.cancelSeat(cancellationTime);
 		// Update of status string for the aircraft
@@ -151,12 +150,7 @@ public abstract class Aircraft {
 	 * @return <code>boolean</code> true if aircraft empty; false otherwise 
 	 */
 	public boolean flightEmpty() {
-		/*boolean empty = false;
-	    if (this.getNumPassengers() == 0){
-			empty = true;
-		}
-		return empty;*/
-		return this.seats.size() == 0;
+		return this.seats.size() == EMPTY_SEATS;
 	}
 	
 	/**
@@ -165,11 +159,6 @@ public abstract class Aircraft {
 	 * @return <code>boolean</code> true if aircraft full; false otherwise 
 	 */
 	public boolean flightFull() {
-		/*boolean full = false;
-		if (this.getNumPassengers() == this.capacity) {
-			full = true;
-		}
-		return full;*/
 		return this.seats.size() == this.capacity;
 	}
 	
@@ -425,6 +414,12 @@ public abstract class Aircraft {
 	private void checkInvalidNumPassengers(String flightCode, int departureTime, int first, int business, int premium, int economy) throws AircraftException {
 		if (flightCode == null || departureTime <= 0 || first < 0 || business < 0 || premium < 0 || economy < 0) {
 			throw new AircraftException("Invalid entries in parameters");
+		}
+	}
+	
+	private void checkIfPassengersInSeating(Passenger p) throws AircraftException {
+		if (!hasPassenger(p)) {
+			throw new AircraftException("The passenger is not recorded in the aircraft seating");
 		}
 	}
 	
