@@ -297,28 +297,24 @@ public abstract class Aircraft {
 	 * @param p <code>Passenger</code> to be Confirmed
 	 * @return <code>boolean</code> true if seats in Class(p); false otherwise
 	 */
-	public boolean seatsAvailable(Passenger p) {	
+	public boolean seatsAvailable(Passenger p) {
+		// Initially set available to false
 		boolean available = false;
+		// Check if seats are available for each class
 		if (p instanceof First) { 
 			available = seatsAvailableFirst();
 		}
 		else if (p instanceof Business) {
-			if (this.numBusiness < this.businessCapacity) {
-				available = true;
-			}
+			available = seatsAvailableBusiness();
 		}
 		else if (p instanceof Premium) {
-			if (this.numPremium < this.premiumCapacity) {
-				available = true;
-			}
+			available = seatsAvailablePremium();
 		}
 		else if (p instanceof Economy) {
-			if (this.numEconomy < this.economyCapacity) {
-				available = true;
-			}
+			available = seatsAvailableEconomy();
 		}
 		return available;
-	}//refactor
+	}
 	
 	private boolean seatsAvailableFirst() {
 		return this.numFirst < this.firstCapacity;
