@@ -153,6 +153,11 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	 */
 	private Simulator sim;
 	private TimeSeriesCollection timeSeries;
+	
+	/*
+	 * Validation tracker
+	 */
+	private boolean isValidInput = true;
 	/**
 	 * @param arg0
 	 * @throws HeadlessException
@@ -440,9 +445,8 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		Object src=e.getSource(); 	      
 			if (src == btnRunSimulation) {
-				try {
+				try {			
 					createSimulation();
-					runSimulation();
 				} catch (AircraftException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -475,24 +479,34 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	/*
 	 * create simulator object with parameters
 	 */
-	private void createSimulation() throws SimulationException {
+	private void createSimulation() throws SimulationException, AircraftException, PassengerException, IOException {
+		// reset tracker
+		isValidInput = true;
+		
 		// grab parameters for simulation, input will be sanitized 
-		// by the getters
 		int seed = getSeed();
 		double dailyMean = getDailyMean();
 		int queueSize = getDailyQueueSize();
-		int cancellation = getCancellation();
+		double cancellation = getCancellation();
 		
 		double firstProb = getFirstProb();
 		double businessProb = getBusinessProb();
 		double premiumProb = getPremiumProb();
 		double economyProb = getEconomyProb();
 		
-		sim = new Simulator(seed,queueSize,dailyMean,Constants.DEFAULT_DAILY_BOOKING_SD,firstProb,businessProb,
-				  premiumProb,economyProb,Constants.DEFAULT_CANCELLATION_PROB);	
+		if (isValidInput) {
+			sim = new Simulator(seed,queueSize,dailyMean,Constants.DEFAULT_DAILY_BOOKING_SD,firstProb,businessProb,
+					  premiumProb,economyProb,cancellation);	
+			runSimulation();
+		} else {
+			txtLoggingOutput.append("Please fix errors before running simulation again!\n");
+		}
+		
+		
 		
 		
 	}
+
 	/*
 	 * Method that runs the simulation and calls output methods
 	 */
@@ -597,65 +611,73 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	 * 
 	 */
 	private int getSeed() {
-		return checkInteger(txtRNGInput.getText(), Constants.DEFAULT_SEED);
+		return checkInteger(txtRNGInput.getText(), "Seed");
 	}
 	
 	private Double getDailyMean() {
-		return checkDouble(txtDailyMean.getText(), Constants.DEFAULT_DAILY_BOOKING_MEAN);
+		return checkDouble(txtDailyMean.getText(), "Daily Mean");
 	}
 	
 	private int getDailyQueueSize() {
-		return checkInteger(txtQueueSize.getText(), Constants.DEFAULT_MAX_QUEUE_SIZE);
+		return checkInteger(txtQueueSize.getText(), "Daily Queue Size");
 	}
 	
-	private int getCancellation() {
-		return checkInteger(txtCancellation.getText(), Constants.CANCELLATION_PERIOD);
+	private Double getCancellation() {
+		return checkDouble(txtCancellation.getText(), "Cancellation Probability");
 	}
 	
 	private Double getFirstProb() {
-		return checkDouble(txtFirst.getText(), Constants.DEFAULT_FIRST_PROB);
+		return checkDouble(txtFirst.getText(), "First Class Probability");
 	}
 	
 	private Double getBusinessProb() {
-		return checkDouble(txtFirst.getText(), Constants.DEFAULT_BUSINESS_PROB);
+		return checkDouble(txtFirst.getText(), "Business Class Probability");
 	}
 	
 	private Double getPremiumProb() {
-		return checkDouble(txtFirst.getText(), Constants.DEFAULT_PREMIUM_PROB);
+		return checkDouble(txtFirst.getText(), "Premium Class Probability");
 	}
 	
 	private Double getEconomyProb() {
-		return checkDouble(txtFirst.getText(), Constants.DEFAULT_ECONOMY_PROB);
+		return checkDouble(txtFirst.getText(), "Economy Class Probability");
 	}
 	
 	/*
-	 * Helper method that parses the string to double and returns the constant if 
+	 * Helper method that parses the string to double and returns it or null if
 	 * parse fails
 	 */
-	private Double checkDouble(String input, Double constant) {
-		double value;
+	private Double checkDouble(String input, String name) {
+		double value = 0;
 		
 		try {
 		  value = Double.parseDouble(input);
 		} catch(NumberFormatException e) {
-		 value = constant;
+			txtLoggingOutput.append(name + " Could not be passed to Double\n");
+			isValidInput = false;
+		}
+		if (value < 0) {
+			txtLoggingOutput.append(name + " is less than zero\n");
 		}
 		return value;
 	}
 	
 	/*
-	 * Helper method that parses the string to int and returns the constant if 
+	 * Helper method that parses the string to double and returns it or null if
 	 * parse fails
 	 */
-	private Integer checkInteger(String input, int constant) {
-		int value;
+	private Integer checkInteger(String input, String name) {
+		int value = 0;
 		
 		try {
 		  value = Integer.parseInt(input);
 		} catch(NumberFormatException e) {
-		 value = constant;
+			txtLoggingOutput.append(name + " Could not be passed to Integer\n");
+			isValidInput = false;
 		}
-		
+		if (value < 0) {
+			txtLoggingOutput.append(name + " is less than zero\n");
+			isValidInput = false;
+		}
 		return value;
 	}
 
