@@ -14,6 +14,12 @@ import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.xy.XYDataset;
 
+/**
+ * This class comprises the main methods and functionality for the JFreeChart Charting 
+ * in use by the GUI Simulator Class
+ * @author michaelleontieff
+ *
+ */
 public class Charting {
 
 	private TimeSeriesCollection timeSeriesBookings;
@@ -55,7 +61,10 @@ public class Charting {
 	private static final int BOOKINGS_CHART = 1;
 	private static final int QUEUE_REFUSE_CHART = 2;
 	
-	
+	/**
+	 * Constructor to instantiate obejcts required for chart creation
+	 * @param chartType defines the type of chart to construct
+	 */
 	public Charting(int chartType) {
 		if (chartType == BOOKINGS_CHART) {
 			timeSeriesBookings = new TimeSeriesCollection(); 
@@ -75,7 +84,7 @@ public class Charting {
 	}
 	
 	/**
-     * Helper method to deliver the Chart - currently uses default colours and auto range 
+     * Helper method to deliver the Chart for Bookings- currently uses default colours and auto range 
      * @param dataset TimeSeriesCollection for plotting 
      * @returns chart to be added to panel 
      */
@@ -90,6 +99,11 @@ public class Charting {
         return result;
     }
     
+ 	/**
+      * Helper method to deliver the Chart for Queue Refused Passengers - currently uses default colours and auto range 
+      * @param dataset TimeSeriesCollection for plotting 
+      * @returns chart to be added to panel 
+      */
      private JFreeChart createChartQueuedRefused(final XYDataset dataset) {
          final JFreeChart result = ChartFactory.createTimeSeriesChart(
              "Queued and Refused Chart", "Days", "Passengers", dataset, true, true, false);
@@ -99,12 +113,20 @@ public class Charting {
          ValueAxis range = plot.getRangeAxis();
          range.setAutoRange(true);
          return result;
-     }
+    }
      
+    /**
+     * Create Bookings Chart 
+     * @return chart panel for adding into tabbed pane
+     */
     public ChartPanel createComponentBookings() {
     	return new ChartPanel(createChartBookings(timeSeriesBookings));
     }
     
+    /**
+     * Create Queued Refused Chart 
+     * @return chart panel for adding into tabbed pane
+     */
     public ChartPanel createComponentQueuedRefused() {
     	return new ChartPanel(createChartQueuedRefused(timeSeriesQueuedRefused));
     }
@@ -113,6 +135,10 @@ public class Charting {
     	return timePoint;
     }
     
+    /**
+     * Method to add the time series to the Bookings Collection
+     * @param timePoint current timepoint in simulation
+     */
     public void addToTimeSeriesBookings(Date timePoint) {
     	busTotal.add(new Day(timePoint),business);
 		econTotal.add(new Day(timePoint),economy);
@@ -122,50 +148,89 @@ public class Charting {
 		seatsAvailTotal.add(new Day(timePoint),empty);
     }
     
+    /**
+     * Method to add the time series to the Queued Refused Collection
+     * @param timePoint current timepoint in simulation
+     */
     public void addToTimeSeriesQueuedRefused(Date timePoint) {
     	refusedTotal.add(new Day(timePoint),refused);
 		queuedTotal.add(new Day(timePoint),queued);
     }
     
+    /**
+     * Method to calculate and set the economy value through calculating the daily bookings from a cumulative input
+     * @param economy total number of bookings
+     */
     public void setEconomy(int economy) {
     	economyPrev += this.economy;
     	this.economy = economy - economyPrev;
     }
     
+    /**
+     * Method to calculate and set the premium value through calculating the daily bookings from a cumulative input
+     * @param premium total number of bookings
+     */
     public void setPremium(int premium) {
     	premiumPrev += this.premium;
     	this.premium = premium - premiumPrev;
     }
     
+    /**
+     * Method to calculate and set the business value through calculating the daily bookings from a cumulative input
+     * @param business total number of bookings
+     */
     public void setBusiness(int business) {
     	businessPrev += this.business;
     	this.business = business - businessPrev;
     }
     
+    /**
+     * Method to calculate and set the first value through calculating the daily bookings from a cumulative input
+     * @param first total number of bookings
+     */
     public void setFirst(int first) {
     	firstPrev += this.first;
     	this.first = first - firstPrev;
     }
     
+    /**
+     * Method to calculate and set the total value through calculating the daily bookings from a cumulative input
+     * @param total total number of bookings
+     */
     public void setTotal(int total) {
     	totalPrev += this.total;
     	this.total = total - totalPrev;
     }
     
+    /**
+     * Method to calculate and set the empty value through calculating the daily bookings from a cumulative input
+     * @param empty total number of bookings
+     */
     public void setEmpty(int empty) {
     	emptyPrev += this.empty;
     	this.empty = empty - emptyPrev;
     }
     
+    /**
+     * Method to calculate and set the refused value through calculating the daily bookings from a cumulative input
+     * @param refused total number of bookings
+     */
     public void setRefused(int refused) {
     	refusedPrev += this.refused;
     	this.refused = refused - refusedPrev;
     }
     
+    /**
+     * Method to set the Queued value through parameter input
+     * @param queued current number of queued passengers
+     */
     public void setQueued(int queued) {
     	this.queued = queued;
     }
     
+    /**
+     * Method to compile the time series for the bookings chart into a single collection
+     */
     public void compileTimeSeriesBookings() {
     	timeSeriesBookings.addSeries(firstTotal);
     	timeSeriesBookings.addSeries(premiumTotal);
@@ -175,6 +240,9 @@ public class Charting {
     	timeSeriesBookings.addSeries(seatsAvailTotal);
     }
     
+    /**
+     * Method to compile the time series for the queued refused chart into a single collection
+     */
     public void compileTimeSeriesQueuedRefused() {
     	timeSeriesQueuedRefused.addSeries(refusedTotal);
     	timeSeriesQueuedRefused.addSeries(queuedTotal);
