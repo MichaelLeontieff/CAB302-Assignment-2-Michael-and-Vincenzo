@@ -300,9 +300,7 @@ public abstract class Aircraft {
 	public boolean seatsAvailable(Passenger p) {	
 		boolean available = false;
 		if (p instanceof First) { 
-			if (this.numFirst < this.firstCapacity) {
-				available = true;
-			}
+			available = seatsAvailableFirst();
 		}
 		else if (p instanceof Business) {
 			if (this.numBusiness < this.businessCapacity) {
@@ -321,6 +319,22 @@ public abstract class Aircraft {
 		}
 		return available;
 	}//refactor
+	
+	private boolean seatsAvailableFirst() {
+		return this.numFirst < this.firstCapacity;
+	}
+	
+	private boolean seatsAvailableBusiness() {
+		return this.numBusiness < this.businessCapacity;
+	}
+	
+	private boolean seatsAvailablePremium() {
+		return this.numPremium < this.premiumCapacity;
+	}
+	
+	private boolean seatsAvailableEconomy() {
+		return this.numEconomy < this.economyCapacity;
+	}
 
 	/* 
 	 * (non-Javadoc) (Supplied) 
@@ -335,7 +349,6 @@ public abstract class Aircraft {
 				+ " Y: " + numEconomy 
 			    + "]";
 	}
-
 
 	/**
 	 * Method to upgrade Passengers to try to fill the aircraft seating. 
@@ -357,7 +370,7 @@ public abstract class Aircraft {
 					//add something here to add and remove passengers
 					//Passenger upgrade = p.upgrade();
 					//this.seats.remove(p);
-					//this.seats.add(p);
+					//this.seats.add(upgrade);
 					//toRemove.add(p);
 					//toAdd.add(upgrade);
 					p.upgrade();
