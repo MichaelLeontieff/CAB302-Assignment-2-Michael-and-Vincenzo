@@ -267,11 +267,13 @@ public abstract class Aircraft {
 	 * @return <code>boolean</code> true if isConfirmed(p); false otherwise 
 	 */
 	public boolean hasPassenger(Passenger p) {
-		boolean included = false;
+		/*boolean included = false;
 		if (p.isConfirmed()) {
 			included = true;
 		}
-		return included;
+		return included;*/
+		return p.isConfirmed();
+		//return this.seats.contains(p);
 	}
 	
 
@@ -318,7 +320,7 @@ public abstract class Aircraft {
 			}
 		}
 		return available;
-	}
+	}//refactor
 
 	/* 
 	 * (non-Javadoc) (Supplied) 
@@ -420,25 +422,6 @@ public abstract class Aircraft {
 		if (!seatsAvailable(p)) {
 			throw new AircraftException(noSeatsAvailableMsg(p));
 		}
-	}
-	
-	//Used in the exception thrown when we can't confirm a passenger 
-	/** 
-	 * Helper method with error messages for failed bookings
-	 * @param p Passenger seeking a confirmed seat
-	 * @return msg string failure reason 
-	 */
-	private String checkInvalidTimeMsg(int departureTime) {
-		return "";
-	}
-	
-	/** 
-	 * Helper method with error messages for failed bookings
-	 * @param p Passenger seeking a confirmed seat
-	 * @return msg string failure reason 
-	 */
-	private String checkNumPassengersMsg(int p) {
-		return "";
 	}
 	
 	/**
