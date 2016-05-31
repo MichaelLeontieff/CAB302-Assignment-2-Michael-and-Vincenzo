@@ -216,8 +216,7 @@ public class Charting {
      * @param refused total number of bookings
      */
     public void setRefused(int refused) {
-    	refusedPrev += this.refused;
-    	this.refused = refused - refusedPrev;
+    	this.refused = refused;
     }
     
     /**
