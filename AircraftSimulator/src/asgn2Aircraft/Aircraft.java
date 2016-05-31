@@ -170,8 +170,7 @@ public abstract class Aircraft {
 	 * @throws PassengerException if <code>Passenger</code> is in incorrect state 
 	 * See {@link asgn2Passengers.Passenger#flyPassenger(int)}. 
 	 */
-	public void flyPassengers(int departureTime) throws PassengerException {
-		
+	public void flyPassengers(int departureTime) throws PassengerException {	
 		for (Passenger p : this.seats) {
 			p.flyPassenger(departureTime);
 		}
@@ -186,6 +185,7 @@ public abstract class Aircraft {
 	public Bookings getBookings() {
 		int total = numFirst + numBusiness + numPremium + numEconomy;
 		int available = (firstCapacity - numFirst) + (businessCapacity - numBusiness) + (premiumCapacity - numPremium) + (economyCapacity - numEconomy);
+		
 		return new Bookings(numFirst, numBusiness, numPremium, numEconomy, total, available);
 	}
 	
@@ -409,7 +409,7 @@ public abstract class Aircraft {
 	 */
 	private void checkInvalidNumPassengers(String flightCode, int departureTime, int first, int business, int premium, int economy) throws AircraftException {
 		if (flightCode == null || departureTime <= 0 || first < 0 || business < 0 || premium < 0 || economy < 0) {
-			throw new AircraftException("Invalid entries in parameters");
+			throw new AircraftException("Invalid entries in parameters or parameters don't conform to range requirements");
 		}
 	}
 	
