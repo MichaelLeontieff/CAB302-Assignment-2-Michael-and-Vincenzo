@@ -95,7 +95,7 @@ public abstract class Aircraft {
 	 */
 	public void cancelBooking(Passenger p,int cancellationTime) throws PassengerException, AircraftException {
 		// Some local exception checking
-		checkIfPassengersInSeating(p);
+		checkIfPassengerInSeating(p);
 		// Transition method on the passenger
 		p.cancelSeat(cancellationTime);
 		// Update of status string for the aircraft
@@ -297,30 +297,24 @@ public abstract class Aircraft {
 	 * @param p <code>Passenger</code> to be Confirmed
 	 * @return <code>boolean</code> true if seats in Class(p); false otherwise
 	 */
-	public boolean seatsAvailable(Passenger p) {	
+	public boolean seatsAvailable(Passenger p) {
+		// Initially set available to false
 		boolean available = false;
+		// Check if seats are available for each class
 		if (p instanceof First) { 
-			if (this.numFirst < this.firstCapacity) {
-				available = true;
-			}
+			available = seatsAvailableFirst();
 		}
 		else if (p instanceof Business) {
-			if (this.numBusiness < this.businessCapacity) {
-				available = true;
-			}
+			available = seatsAvailableBusiness();
 		}
 		else if (p instanceof Premium) {
-			if (this.numPremium < this.premiumCapacity) {
-				available = true;
-			}
+			available = seatsAvailablePremium();
 		}
 		else if (p instanceof Economy) {
-			if (this.numEconomy < this.economyCapacity) {
-				available = true;
-			}
+			available = seatsAvailableEconomy();
 		}
 		return available;
-	}//refactor
+	}
 
 	/* 
 	 * (non-Javadoc) (Supplied) 
@@ -335,7 +329,6 @@ public abstract class Aircraft {
 				+ " Y: " + numEconomy 
 			    + "]";
 	}
-
 
 	/**
 	 * Method to upgrade Passengers to try to fill the aircraft seating. 
@@ -357,7 +350,7 @@ public abstract class Aircraft {
 					//add something here to add and remove passengers
 					//Passenger upgrade = p.upgrade();
 					//this.seats.remove(p);
-					//this.seats.add(p);
+					//this.seats.add(upgrade);
 					//toRemove.add(p);
 					//toAdd.add(upgrade);
 					p.upgrade();
@@ -406,26 +399,69 @@ public abstract class Aircraft {
 		return msg + p.noSeatsMsg(); 
 	}
 	
+	/**
+	 * Helper method to check if invalid parameters have been provided in the 
+	 * constructor and throws an exception provided with a message
+	 * 
+	 * @param flightCode <code>String</code> containing flight ID 
+	 * @param departureTime <code>int</code> scheduled departure time
+	 * @param first <code>int</code> capacity of First Class 
+	 * @param business <code>int</code> capacity of Business Class 
+	 * @param premium <code>int</code> capacity of Premium Economy Class 
+	 * @param economy <code>int</code> capacity of Economy Class 
+	 * @throws AircraftException if isNull(flightCode) OR (departureTime <=0) OR ({first,business,premium,economy} <0)
+	 */
 	private void checkInvalidNumPassengers(String flightCode, int departureTime, int first, int business, int premium, int economy) throws AircraftException {
 		if (flightCode == null || departureTime <= 0 || first < 0 || business < 0 || premium < 0 || economy < 0) {
 			throw new AircraftException("Invalid entries in parameters");
 		}
 	}
 	
-	private void checkIfPassengersInSeating(Passenger p) throws AircraftException {
+	/**
+	 * Helper method to check if passengers are in the aircraft seating and 
+	 * throws exception provided with a message
+	 * 
+	 * @param p <code>Passenger</code> whose presence we are checking
+	 * @throws AircraftException if <code>Passenger</code> is not recorded in aircraft seating 
+	 */
+	private void checkIfPassengerInSeating(Passenger p) throws AircraftException {
 		if (!hasPassenger(p)) {
 			throw new AircraftException("The passenger is not recorded in the aircraft seating");
 		}
 	}
 	
+	/**
+	 * Helper method to check if seats are available on the aircraft and throws
+	 * exception provided with a message 
+	 *   
+	 * @param p <code>Passenger</code> whose fare class is to be checked for seats
+	 * @throws AircraftException if no seats available in <code>Passenger</code> fare class. 
+	 */
 	private void checkIfSeatsAreAvailable(Passenger p) throws AircraftException {
 		if (!seatsAvailable(p)) {
 			throw new AircraftException(noSeatsAvailableMsg(p));
 		}
 	}
 	
+	private boolean seatsAvailableFirst() {
+		return this.numFirst < this.firstCapacity;
+	}
+	
+	private boolean seatsAvailableBusiness() {
+		return this.numBusiness < this.businessCapacity;
+	}
+	
+	private boolean seatsAvailablePremium() {
+		return this.numPremium < this.premiumCapacity;
+	}
+	
+	private boolean seatsAvailableEconomy() {
+		return this.numEconomy < this.economyCapacity;
+	}
+	
 	/**
-	 * Increments passenger counts depending on their fare class. 
+	 * Helper method to increment passenger counts depending on their fare 
+	 * class
 	 * 
 	 * @param p <code>Passenger</code> whose count is to be incremented
 	 */
@@ -444,7 +480,7 @@ public abstract class Aircraft {
 	}
 	
 	/**
-	 * Decrements passenger counts depending on their fare class. 
+	 * Helper method to decrement passenger counts depending on their fare class 
 	 * 
 	 * @param p <code>Passenger</code> whose count is to be decremented
 	 */
