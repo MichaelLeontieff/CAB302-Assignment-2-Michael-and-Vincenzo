@@ -269,8 +269,7 @@ public abstract class Aircraft {
 	 * @return <code>boolean</code> true if isConfirmed(p); false otherwise 
 	 */
 	public boolean hasPassenger(Passenger p) {
-		return p.isConfirmed();
-		//return this.seats.contains(p);
+		return this.seats.contains(p);
 	}
 	
 
