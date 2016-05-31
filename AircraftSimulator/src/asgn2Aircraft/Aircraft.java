@@ -66,9 +66,8 @@ public abstract class Aircraft {
 	 */
 	public Aircraft(String flightCode,int departureTime, int first, int business, int premium, int economy) throws AircraftException {
 		// Check for exceptions
-		if (flightCode == null || departureTime <= 0 || first < 0 || business < 0 || premium < 0 || economy < 0) {
-			throw new AircraftException("Invalid entries in parameters");
-		}
+		checkInvalidNumPassengers(flightCode, departureTime, first, business, premium, economy);
+		
 		// Set each field
 		this.status = "";
 		this.flightCode = flightCode;
@@ -422,8 +421,24 @@ public abstract class Aircraft {
 		String msg = "";
 		return msg + p.noSeatsMsg(); 
 	}
-
-
+	
+	private void checkInvalidNumPassengers(String flightCode, int departureTime, int first, int business, int premium, int economy) throws AircraftException {
+		if (flightCode == null || departureTime <= 0 || first < 0 || business < 0 || premium < 0 || economy < 0) {
+			throw new AircraftException("Invalid entries in parameters");
+		}
+	}
+	
+	/*private void checkInvalidTimeParameter(int givenTime, String valueName, boolean inclusive) throws PassengerException {
+		if (inclusive) {
+			if (givenTime <= 0) {
+				throw new PassengerException(valueName + " less than or equal to 0");
+			}
+		} else {
+			if (givenTime < 0) {
+				throw new PassengerException(valueName + " less than 0");
+			}
+		}
+	}*/
 	//Used in the exception thrown when we can't confirm a passenger 
 	/** 
 	 * Helper method with error messages for failed bookings
