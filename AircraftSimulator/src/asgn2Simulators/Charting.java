@@ -21,6 +21,9 @@ import org.jfree.data.xy.XYDataset;
  *
  */
 public class Charting {
+	
+	private static final int NUM_SEATS_A380 = 484;
+	private static final int NUM_SEATS_B747 = 353;
 
 	private TimeSeriesCollection timeSeriesBookings;
 	private TimeSeriesCollection timeSeriesQueuedRefused;
@@ -225,6 +228,10 @@ public class Charting {
      */
     public void setQueued(int queued) {
     	this.queued = queued;
+    }
+    
+    public void setEmpty() {
+    	this.empty = ((NUM_SEATS_A380 * 2) + NUM_SEATS_B747) - first - business - premium - economy;
     }
     
     /**

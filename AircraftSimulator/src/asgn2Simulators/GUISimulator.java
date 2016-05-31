@@ -360,7 +360,7 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	    txtRNGInput = new JTextField(Integer.toString(Constants.DEFAULT_SEED), 6);
 	    txtDailyMean = new JTextField(Double.toString(Constants.DEFAULT_DAILY_BOOKING_MEAN), 6);
 	    txtQueueSize = new JTextField(Integer.toString(Constants.DEFAULT_MAX_QUEUE_SIZE), 6);
-	    txtCancellation = new JTextField(Integer.toString(Constants.CANCELLATION_PERIOD), 6);
+	    txtCancellation = new JTextField(Double.toString(Constants.DEFAULT_CANCELLATION_PROB), 6);
 	    
 	    // title
 	    addToPanel(pnlSimulation, lblSimulation, lblHeadingConstraints, 0, 0, 4, 1);
@@ -500,11 +500,7 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 			runSimulation();
 		} else {
 			txtLoggingOutput.append("Please fix errors before running simulation again!\n");
-		}
-		
-		
-		
-		
+		}	
 	}
 
 	/*
@@ -520,8 +516,8 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 		Calendar cal = GregorianCalendar.getInstance();
 
 		// main simulation loop
-		for (int time=0; time<=Constants.DURATION; time++) {
-			// freechart
+		for (int time = 0; time <= Constants.DURATION; time++) {
+			
 			cal.set(2016,0,time,0,0);
 	        Date timePoint = cal.getTime();
 	        
@@ -547,7 +543,7 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 			bookingsChart.setBusiness(sim.getTotalBusiness());
 			bookingsChart.setTotal(getTotalBookings(sim));
 			// not sure where this data is sourced
-			//bookingsChart.setEmpty();
+			bookingsChart.setEmpty();
 			queuedRefusedChart.setRefused(sim.numRefused());
 			queuedRefusedChart.setQueued(sim.numInQueue());
 			
