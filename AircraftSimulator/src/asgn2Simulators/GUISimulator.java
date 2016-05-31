@@ -182,6 +182,7 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 		// TODO Auto-generated method stub
 	    JFrame.setDefaultLookAndFeelDecorated(true);
         SwingUtilities.invokeLater(new GUISimulator("GUI Simulator"));
+        
 	}
 	
 	/*
@@ -581,7 +582,6 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 		txtLoggingOutput.append(sim.getSummary(time, flying));
 	}
 	
-	
 	/*
 	 * Private method that outputs the initial entry
 	 */
@@ -627,15 +627,15 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	}
 	
 	private Double getBusinessProb() {
-		return checkDouble(txtFirst.getText(), "Business Class Probability");
+		return checkDouble(txtBusiness.getText(), "Business Class Probability");
 	}
 	
 	private Double getPremiumProb() {
-		return checkDouble(txtFirst.getText(), "Premium Class Probability");
+		return checkDouble(txtPremium.getText(), "Premium Class Probability");
 	}
 	
 	private Double getEconomyProb() {
-		return checkDouble(txtFirst.getText(), "Economy Class Probability");
+		return checkDouble(txtEconomy.getText(), "Economy Class Probability");
 	}
 	
 	/*
