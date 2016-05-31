@@ -118,9 +118,7 @@ public abstract class Aircraft {
 	 */
 	public void confirmBooking(Passenger p,int confirmationTime) throws AircraftException, PassengerException { 
 		// Some local exception checking
-		if (!seatsAvailable(p)) {
-			throw new AircraftException(noSeatsAvailableMsg(p));
-		}
+		checkIfSeatsAreAvailable(p);
 		// Transition method on the passenger
 		p.confirmSeat(confirmationTime, this.departureTime);
 		// Update of status string for the aircraft
@@ -243,13 +241,8 @@ public abstract class Aircraft {
 	 * @return <code>List<Passenger></code> object containing the passengers.  
 	 */
 	public List<Passenger> getPassengers() {
-		List<Passenger> copyPassengers = new ArrayList<Passenger>();
-		for (Passenger p : this.seats) {
-			copyPassengers.add(p);
-		}
-		return copyPassengers;
+		return new ArrayList<Passenger>(this.seats);
 	}
-	//return new ArrayList<Passenger>(this.seats);
 	
 	/**
 	 * Method used to provide the current status of the aircraft for logging. (Supplied) 
@@ -423,17 +416,12 @@ public abstract class Aircraft {
 		}
 	}
 	
-	/*private void checkInvalidTimeParameter(int givenTime, String valueName, boolean inclusive) throws PassengerException {
-		if (inclusive) {
-			if (givenTime <= 0) {
-				throw new PassengerException(valueName + " less than or equal to 0");
-			}
-		} else {
-			if (givenTime < 0) {
-				throw new PassengerException(valueName + " less than 0");
-			}
+	private void checkIfSeatsAreAvailable(Passenger p) throws AircraftException {
+		if (!seatsAvailable(p)) {
+			throw new AircraftException(noSeatsAvailableMsg(p));
 		}
-	}*/
+	}
+	
 	//Used in the exception thrown when we can't confirm a passenger 
 	/** 
 	 * Helper method with error messages for failed bookings
