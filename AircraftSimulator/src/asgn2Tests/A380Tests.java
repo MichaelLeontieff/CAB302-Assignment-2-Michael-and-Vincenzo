@@ -41,6 +41,7 @@ public class A380Tests {
 	private static final int SINGLE_SEAT = 1;
 	private static final int MULTIPLE_PASSENGERS = 4;
 	private static final int MULTIPLE_SEATS = 5;
+	private static final int FIRST_INDEX = 0;
 	
 	// Declare test objects
 	private Aircraft fieldTestObject;
@@ -505,7 +506,7 @@ public class A380Tests {
 		// add passenger to aircraft
 		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);				
 		// check condition
-		assertTrue(generalTester.getPassengers().get(0).isConfirmed());
+		assertTrue(generalTester.getPassengers().get(FIRST_INDEX).isConfirmed());
 	}
 
 	@Test
@@ -529,7 +530,7 @@ public class A380Tests {
 		// add passenger to aircraft
 		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);				
 		// check condition
-		assertFalse(generalTester.getPassengers().get(0).isQueued());
+		assertFalse(generalTester.getPassengers().get(FIRST_INDEX).isQueued());
 	}
 
 	@Test
@@ -553,7 +554,7 @@ public class A380Tests {
 		// add passenger to aircraft
 		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);				
 		// check condition
-		assertFalse(generalTester.getPassengers().get(0).isNew());
+		assertFalse(generalTester.getPassengers().get(FIRST_INDEX).isNew());
 	}
 	
 	@Test
@@ -577,7 +578,7 @@ public class A380Tests {
 		// add passenger to aircraft
 		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);				
 		// check condition
-		assertFalse(generalTester.getPassengers().get(0).isRefused());
+		assertFalse(generalTester.getPassengers().get(FIRST_INDEX).isRefused());
 	}
 	
 	@Test
@@ -601,7 +602,7 @@ public class A380Tests {
 		// add passenger to aircraft
 		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);				
 		// check condition
-		assertFalse(generalTester.getPassengers().get(0).isFlown());
+		assertFalse(generalTester.getPassengers().get(FIRST_INDEX).isFlown());
 	}
 
 	@Test
@@ -625,7 +626,7 @@ public class A380Tests {
 		// add passenger to aircraft
 		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);				
 		// check condition
-		assertTrue(generalTester.getPassengers().get(0).wasConfirmed());
+		assertTrue(generalTester.getPassengers().get(FIRST_INDEX).wasConfirmed());
 	}
 
 	@Test
@@ -649,7 +650,7 @@ public class A380Tests {
 		// add passenger to aircraft
 		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);				
 		// check condition
-		assertFalse(generalTester.getPassengers().get(0).wasQueued());
+		assertFalse(generalTester.getPassengers().get(FIRST_INDEX).wasQueued());
 	}
 	
 	@Test (expected = AircraftException.class)
@@ -852,7 +853,7 @@ public class A380Tests {
 		// fly passengers
 		generalTester.flyPassengers(TEST_DEPART_TIME);	
 		// fetch first (and only) passenger in passenger list and check it's state
-		assertTrue(generalTester.getPassengers().get(0).isFlown());
+		assertTrue(generalTester.getPassengers().get(FIRST_INDEX).isFlown());
 	}
 	
 	@Test
@@ -877,7 +878,7 @@ public class A380Tests {
 		// fly passengers
 		generalTester.flyPassengers(TEST_DEPART_TIME);		
 		// fetch first (and only) passenger in passenger list and check it's state
-		assertFalse(generalTester.getPassengers().get(0).isNew());
+		assertFalse(generalTester.getPassengers().get(FIRST_INDEX).isNew());
 	}
 
 	public void FlyPassengersCorrectStateChangeIsConfirmedTest() throws AircraftException, PassengerException {
@@ -890,7 +891,7 @@ public class A380Tests {
 		// fly passengers
 		generalTester.flyPassengers(TEST_DEPART_TIME);	
 		// fetch first (and only) passenger in passenger list and check it's state
-		assertFalse(generalTester.getPassengers().get(0).isConfirmed());
+		assertFalse(generalTester.getPassengers().get(FIRST_INDEX).isConfirmed());
 	}
 
 	public void FlyPassengersCorrectStateChangeIsQueuedTest() throws AircraftException, PassengerException {
@@ -903,7 +904,7 @@ public class A380Tests {
 		// fly passengers
 		generalTester.flyPassengers(TEST_DEPART_TIME);	
 		// fetch first (and only) passenger in passenger list and check it's state
-		assertFalse(generalTester.getPassengers().get(0).isQueued());
+		assertFalse(generalTester.getPassengers().get(FIRST_INDEX).isQueued());
 	}
 
 	public void FlyPassengersCorrectStateChangeIsRefusedTest() throws AircraftException, PassengerException {
@@ -916,7 +917,7 @@ public class A380Tests {
 		// fly passengers
 		generalTester.flyPassengers(TEST_DEPART_TIME);	
 		// fetch first (and only) passenger in passenger list and check it's state
-		assertFalse(generalTester.getPassengers().get(0).isRefused());
+		assertFalse(generalTester.getPassengers().get(FIRST_INDEX).isRefused());
 	}
 	
 	public void FlyPassengersCorrectStateChangeWasConfirmedTest() throws AircraftException, PassengerException {
@@ -929,7 +930,7 @@ public class A380Tests {
 		// fly passengers
 		generalTester.flyPassengers(TEST_DEPART_TIME);	
 		// fetch first (and only) passenger in passenger list and check it's state
-		assertTrue(generalTester.getPassengers().get(0).wasConfirmed());
+		assertTrue(generalTester.getPassengers().get(FIRST_INDEX).wasConfirmed());
 	}
 	
 	public void FlyPassengersCorrectStateChangeWasQueuedTest() throws AircraftException, PassengerException {
@@ -942,7 +943,7 @@ public class A380Tests {
 		// fly passengers
 		generalTester.flyPassengers(TEST_DEPART_TIME);	
 		// fetch first (and only) passenger in passenger list and check it's state
-		assertFalse(generalTester.getPassengers().get(0).wasQueued());
+		assertFalse(generalTester.getPassengers().get(FIRST_INDEX).wasQueued());
 	}
 	
 	// GET BOOKINGS TESTS
@@ -1383,7 +1384,6 @@ public class A380Tests {
 	}
 	
 	// UPGRADE BOOKING TESTS
-	// these tests may need revising, the following two will be mirrored for Premium and Business
 	
 	@Test
 	public void UpgradeBookingsFromEconomyTestPremiumCounter() throws AircraftException, PassengerException {
@@ -1396,7 +1396,7 @@ public class A380Tests {
 		// upgrade to Premium
 		generalTester.upgradeBookings();
 		// if successful number of Premium passengers should be one
-		assertEquals(1, generalTester.getNumPremium());
+		assertEquals(SINGLE_PASSENGER, generalTester.getNumPremium());
 	}
 	
 	@Test
@@ -1414,6 +1414,20 @@ public class A380Tests {
 	}
 	
 	@Test
+	public void UpgradeBookingsFromEconomyToPremiumTestEconomyCounter() throws AircraftException, PassengerException {
+		// create aircraft with upgrade space
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 0, 0, 1, 1 );
+		// create economy passenger
+		testPassenger = new Economy(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		// confirm booking
+		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);		
+		// upgrade to Premium
+		generalTester.upgradeBookings();
+		// if successful number of Economy passengers should be zero
+		assertEquals(ZERO_PASSENGERS, generalTester.getNumEconomy());
+	}
+	
+	@Test
 	public void UpgradeBookingsFromPremiumTestCounter() throws AircraftException, PassengerException {
 		// create aircraft with upgrade space
 		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 0, 1, 1, 0 );
@@ -1424,7 +1438,7 @@ public class A380Tests {
 		// upgrade to Business
 		generalTester.upgradeBookings();
 		// if successful number of Business passengers should be one
-		assertEquals(1, generalTester.getNumBusiness());
+		assertEquals(SINGLE_PASSENGER, generalTester.getNumBusiness());
 	}
 	
 	@Test
@@ -1442,6 +1456,20 @@ public class A380Tests {
 	}
 	
 	@Test
+	public void UpgradeBookingsFromPremiumToBusinessTestPremiumCounter() throws AircraftException, PassengerException {
+		// create aircraft with upgrade space
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 0, 1, 1, 0 );
+		// create economy passenger
+		testPassenger = new Premium(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		// confirm booking
+		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);		
+		// upgrade to Premium
+		generalTester.upgradeBookings();
+		// if successful number of Premium passengers should be zero
+		assertEquals(ZERO_PASSENGERS, generalTester.getNumPremium());
+	}
+	
+	@Test
 	public void UpgradeBookingsFromBusinessTestFirstCounter() throws AircraftException, PassengerException {
 		// create aircraft with upgrade space
 		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 0, 0 );
@@ -1452,7 +1480,7 @@ public class A380Tests {
 		// upgrade to First
 		generalTester.upgradeBookings();
 		// if successful number of Business passengers should be one
-		assertEquals(1, generalTester.getNumFirst());
+		assertEquals(SINGLE_PASSENGER, generalTester.getNumFirst());
 	}
 	
 	@Test
@@ -1470,17 +1498,17 @@ public class A380Tests {
 	}
 	
 	@Test
-	public void UpgradeBookingsFromEconomyTestEconomyCounter() throws AircraftException, PassengerException {
+	public void UpgradeBookingsFromBusinessToFirstTestBusinessCounter() throws AircraftException, PassengerException {
 		// create aircraft with upgrade space
-		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 0, 0, 1, 1 );
-		// create first passenger
-		testPassenger = new Economy(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 0, 0 );
+		// create business passenger
+		testPassenger = new Business(TEST_BOOKING_TIME, TEST_DEPART_TIME);
 		// confirm booking
 		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);		
-		// upgrade to Premium
+		// upgrade to First
 		generalTester.upgradeBookings();
-		// if successful number of Economy passengers should be zero
-		assertEquals(0, generalTester.getNumEconomy());
+		// if successful number of Business passengers should be zero
+		assertEquals(ZERO_PASSENGERS, generalTester.getNumBusiness());
 	}
 
 	@Test
