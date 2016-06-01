@@ -119,8 +119,7 @@ public class BusinessTests {
 	 */
 	@Test
 	public void testUpgradeBookingTime() throws PassengerException {
-		// Set passenger to a confirmed state as upgrade will only get called on a passenger 
-		// in a seat
+		// Set passenger to a confirmed state as upgrade will only get called on a passenger in a seat
 		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
 		// Create new passenger instance which is an upgrade of the original passenger
 		upgradedPassenger = myPassenger.upgrade();
