@@ -15,7 +15,7 @@ import org.jfree.data.xy.XYDataset;
  * This class comprises the main methods and functionality for the JFreeChart Charting 
  * in use by the GUI Simulator Class
  * @author michaelleontieff
- *
+ * @version 1.0
  */
 public class ChartPanel {
 	

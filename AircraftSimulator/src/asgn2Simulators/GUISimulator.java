@@ -40,7 +40,7 @@ import java.awt.GridBagLayout;
 
 /**
  * @author Michael Leontieff
- *
+ * @version 1.1
  */
 @SuppressWarnings("serial")
 public class GUISimulator extends JFrame implements Runnable, ActionListener {
