@@ -497,6 +497,8 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 		
 		checkSumProbabilities(firstProb, businessProb, premiumProb, economyProb);
 		
+		checkProbabilityInput(cancellation);
+		
 		if (isValidInput) {
 			sim = new Simulator(seed,queueSize,dailyMean,Constants.DEFAULT_DAILY_BOOKING_SD,firstProb,businessProb,
 					  premiumProb,economyProb,cancellation);	
@@ -647,6 +649,16 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 		if (first + business + premium + economy > 1) {
 			isValidInput = false;
 			txtLoggingOutput.append("Sum of Class Probabilities must be equal to or less than one!\n");
+		}
+	}
+	
+	/*
+	 * private helper method to test if a probabaility is greater than one
+	 */
+	private void checkProbabilityInput(Double value) {
+		if (value > 1) {
+			isValidInput = false;
+			txtLoggingOutput.append("Cancellation Probability must be equal to or less than one!\n");
 		}
 	}
 	/*
