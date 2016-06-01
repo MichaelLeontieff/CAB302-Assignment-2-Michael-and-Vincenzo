@@ -495,6 +495,8 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 		double premiumProb = getPremiumProb();
 		double economyProb = getEconomyProb();
 		
+		checkSumProbabilities(firstProb, businessProb, premiumProb, economyProb);
+		
 		if (isValidInput) {
 			sim = new Simulator(seed,queueSize,dailyMean,Constants.DEFAULT_DAILY_BOOKING_SD,firstProb,businessProb,
 					  premiumProb,economyProb,cancellation);	
@@ -638,6 +640,15 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 		return checkDouble(txtEconomy.getText(), "Economy Class Probability");
 	}
 	
+	/*
+	 * Private helper method to check the sum of the probabilities
+	 */
+	private void checkSumProbabilities(Double first, Double business, Double premium, Double economy) {
+		if (first + business + premium + economy > 1) {
+			isValidInput = false;
+			txtLoggingOutput.append("Sum of Class Probabilities must be equal to or less than one!\n");
+		}
+	}
 	/*
 	 * Helper method that parses the string to double and returns it or null if
 	 * parse fails
