@@ -8,6 +8,8 @@ package asgn2Simulators;
 
 import java.io.IOException;
 
+import javax.swing.SwingUtilities;
+
 import asgn2Aircraft.AircraftException;
 import asgn2Passengers.PassengerException;
 
@@ -29,12 +31,18 @@ public class SimulationRunner {
 		final int NUM_ARGS = 9; 
 		Simulator s = null; 
 		Log l = null; 
+		boolean runGUI = true;
 		
 		try {
 			switch (args.length) {
 				case NUM_ARGS: {
 					s = createSimulatorUsingArgs(args); 
 					break;
+				}
+				case NUM_ARGS + 1: {
+					if (args[9] == "cli") {
+						runGUI = false;
+					}
 				}
 				case 0: {
 					s = new Simulator(); 
@@ -44,20 +52,27 @@ public class SimulationRunner {
 					printErrorAndExit(); 
 				}
 			}
-			l = new Log();
+			if (!runGUI) {
+				l = new Log();
+			}
 		} catch (SimulationException | IOException e1) {
 			e1.printStackTrace();
 			System.exit(-1);
 		}
-	
-		//Run the simulation 
-		SimulationRunner sr = new SimulationRunner(s,l);
-		try {
-			sr.runSimulation();
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.exit(-1);
-		} 
+		
+		if (runGUI) {
+			SwingUtilities.invokeLater(new GUISimulator("GUI Simulator", args));
+		}
+		else {
+			//Run the simulation 
+			SimulationRunner sr = new SimulationRunner(s,l);
+			try {
+				sr.runSimulation();
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.exit(-1);
+			} 
+		}
 	}
 	/**
 	 * Helper to process args for Simulator  

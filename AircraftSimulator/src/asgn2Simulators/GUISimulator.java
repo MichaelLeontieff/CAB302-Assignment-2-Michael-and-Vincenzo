@@ -156,6 +156,7 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	 * Simulator and time series Object
 	 */
 	private Simulator sim;
+	private String[] arguments;
 	private TimeSeriesCollection timeSeries;
 	
 	/*
@@ -166,8 +167,9 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	 * @param arg0
 	 * @throws HeadlessException
 	 */
-	public GUISimulator(String arg0) throws HeadlessException {
+	public GUISimulator(String arg0, String[] args) throws HeadlessException {
 		super(arg0);
+		arguments = args;
 		// TODO Auto-generated constructor stub
 	}
 
@@ -185,7 +187,7 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 	    JFrame.setDefaultLookAndFeelDecorated(true);
-        SwingUtilities.invokeLater(new GUISimulator("GUI Simulator"));
+        //SwingUtilities.invokeLater(new GUISimulator("GUI Simulator"));
         
 	}
 	
@@ -249,6 +251,13 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	    tabbedPane.setEnabledAt(1, false);
 	    tabbedPane.setEnabledAt(2, false);
 		
+	    // populate text fields with arguments if applicable
+	    if (arguments.length == 9) {
+	    	populateFieldsStringArguments(arguments);
+	    } else {
+	    	populateFieldsConstants();
+	    }
+	    
 		repaint();
 		setVisible(true);
 	}
@@ -426,15 +435,15 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	    lblExecution.setFont(headingFont);
 	    
 	    btnRunSimulation = new JButton("Run Simulation");
-	    btnRunSimulation.setPreferredSize(new Dimension(200, 35));
+	    btnRunSimulation.setPreferredSize(new Dimension(250, 35));
 	    btnRunSimulation.addActionListener(this);
 	    
-	    btnShowBookingGraph = new JButton("Show Bookings Graph");
-	    btnShowBookingGraph.setPreferredSize(new Dimension(200, 35));
+	    btnShowBookingGraph = new JButton("Show/Update Bookings Graph");
+	    btnShowBookingGraph.setPreferredSize(new Dimension(250, 35));
 	    btnShowBookingGraph.addActionListener(this);    
 	    
-	    btnShowQueueRefusedGraph = new JButton("Show Queue/Refused Graph");
-	    btnShowQueueRefusedGraph.setPreferredSize(new Dimension(200, 35));
+	    btnShowQueueRefusedGraph = new JButton("Show/Update Queue-Refused Graph");
+	    btnShowQueueRefusedGraph.setPreferredSize(new Dimension(250, 35));
 	    btnShowQueueRefusedGraph.addActionListener(this);    
 	    
 	    btnShowBookingGraph.setEnabled(false);
@@ -450,6 +459,7 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		Object src=e.getSource(); 	      
 			if (src == btnRunSimulation) {
+				tabbedPane.setSelectedIndex(0);
 				try {			
 					createSimulation();
 				} catch (AircraftException e1) {
@@ -501,7 +511,15 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	 */
 	private void populateFieldsStringArguments(String[] args) {
 		// String arguments length validated before reaching here
+		txtRNGInput.setText(args[0]);
+		txtDailyMean.setText(args[2]);
+		txtQueueSize.setText(args[1]);
+		txtCancellation.setText(args[8]);
 		
+		txtFirst.setText(args[4]);
+		txtBusiness.setText(args[6]);
+		txtPremium.setText(args[7]);
+		txtEconomy.setText(args[8]);
 	}
 	
 	/*
@@ -531,7 +549,7 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 		checkProbabilityInput(cancellation);
 		
 		if (isValidInput) {
-			sim = new Simulator(seed,queueSize,dailyMean,dailyMean * 0.33,firstProb,businessProb,
+			this.sim = new Simulator(seed,queueSize,dailyMean,dailyMean * 0.33,firstProb,businessProb,
 					  premiumProb,economyProb,cancellation);	
 			runSimulation();
 		} else {
@@ -543,6 +561,7 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	 * Method that runs the simulation and calls output methods
 	 */
 	private void runSimulation() throws AircraftException, SimulationException, PassengerException, IOException {
+		txtLoggingOutput.setText("");
 		sim.createSchedule();
 		initialEntry(sim);
 		
@@ -594,11 +613,24 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 		bookingsChart.compileTimeSeriesBookings();
 		queuedRefusedChart.compileTimeSeriesQueuedRefused();
 		
+
+		pnlChartOne.removeAll();
+		pnlChartTwo.removeAll();
+		
+		
+		pnlChartOne.repaint();
+		pnlChartTwo.repaint();
+		
 		pnlChartOne.add(bookingsChart.createComponentBookings());
 		pnlChartTwo.add(queuedRefusedChart.createComponentQueuedRefused());
+		
+		pnlChartOne.repaint();
+		pnlChartTwo.repaint();
 				
 		this.sim.finaliseQueuedAndCancelledPassengers(Constants.DURATION); 
 		finalise(this.sim);
+		
+	
 	}
 	
 	/*
@@ -632,7 +664,7 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	 * Private method that outputs the finalise string
 	 */
 	private void finalise(Simulator sim) {
-		txtLoggingOutput.append("End of Simulation\n");
+		txtLoggingOutput.append("\nEnd of Simulation\n");
 		txtLoggingOutput.append(sim.finalState());
 	}
 	
