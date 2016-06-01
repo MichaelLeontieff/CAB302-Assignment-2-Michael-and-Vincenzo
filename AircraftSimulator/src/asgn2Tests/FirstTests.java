@@ -32,12 +32,15 @@ public class FirstTests {
 	private static final int TEST_REFUSAL_TIME = 7;
 	private static final int TEST_GREATER_QUEUE_TIME = 8;
 	private static final int ALTERNATE_DEPARTURE_TIME = 20;
+	private static final int ALTERNATE_REFUSAL_TIME = 8;
 	private static final int NEGATIVE_BOUNDARY = -1;
 	private static final int NEGATIVE_PARAMETER = -5;
 	private static final int GREATER_BOOKING_TIME = 5;
+	private static final int GREATER_QUEUE_TIME = 12;
 	private static final int LESSER_DEPARTURE_TIME = 3;
 	private static final int ZERO_BOUNDARY_CASE = 0;
 	private static final int TEST_CANCELLATION_TIME_BOUNDARY = 11;
+	private static final int TEST_REFUSAL_TIME_BOUNDARY = 11;
 
 	// Declare test objects
 	private First myPassenger;
@@ -438,11 +441,20 @@ public class FirstTests {
 	}
 
 	@Test(expected = PassengerException.class)
-	public void testCancelSeatCancellationTimeLessThanZero() throws PassengerException {
+	public void testCancelSeatCancellationTimeLessThanZeroBoundaryCase() throws PassengerException {
 		// Set passenger to a confirmed state
 		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
 		// Cancel passenger's seat
 		myPassenger.cancelSeat(NEGATIVE_BOUNDARY);
+		// Expect exception
+	}
+	
+	@Test(expected = PassengerException.class)
+	public void testCancelSeatCancellationTimeLessThanZero() throws PassengerException {
+		// Set passenger to a confirmed state
+		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
+		// Cancel passenger's seat
+		myPassenger.cancelSeat(NEGATIVE_PARAMETER);
 		// Expect exception
 	}
 
@@ -488,6 +500,16 @@ public class FirstTests {
 		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
 		// Check condition
 		assertFalse(myPassenger.isQueued());
+	}
+	
+	@Test
+	public void testConfirmSeatExitQueueTimeSetToConfirmationTime() throws PassengerException {
+		// Set passenger to a queued state
+		myPassenger.queuePassenger(TEST_QUEUE_TIME, TEST_DEPARTURE_TIME);
+		// Set passenger to a confirmed state
+		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
+		// Check condition
+		assertTrue(myPassenger.getExitQueueTime() == myPassenger.getConfirmationTime());
 	}
 
 	@Test
@@ -562,9 +584,16 @@ public class FirstTests {
 	}
 
 	@Test(expected = PassengerException.class)
-	public void testConfirmSeatConfirmationTimeLessThanZero() throws PassengerException {
+	public void testConfirmSeatConfirmationTimeLessThanZeroBoundaryCase() throws PassengerException {
 		// Set passenger to a confirmed state
 		myPassenger.confirmSeat(NEGATIVE_BOUNDARY, TEST_DEPARTURE_TIME);
+		// Expect exception
+	}
+	
+	@Test(expected = PassengerException.class)
+	public void testConfirmSeatConfirmationTimeLessThanZero() throws PassengerException {
+		// Set passenger to a confirmed state
+		myPassenger.confirmSeat(NEGATIVE_PARAMETER, TEST_DEPARTURE_TIME);
 		// Expect exception
 	}
 
@@ -664,7 +693,7 @@ public class FirstTests {
 		// Set passenger to a flown state
 		myPassenger.flyPassenger(TEST_DEPARTURE_TIME);
 		// Set passenger to a flown state again
-		myPassenger.flyPassenger(20);
+		myPassenger.flyPassenger(ALTERNATE_DEPARTURE_TIME);
 		// Expect exception
 	}
 
@@ -673,16 +702,25 @@ public class FirstTests {
 		// Set passenger to a confirmed state
 		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
 		// Set passenger to a flown state
-		myPassenger.flyPassenger(0);
+		myPassenger.flyPassenger(ZERO_BOUNDARY_CASE);
 		// Expect exception
 	}
 
+	@Test(expected = PassengerException.class)
+	public void testFlyPassengerDepartureTimeLessThanZeroBoundaryCase() throws PassengerException {
+		// Set passenger to a confirmed state
+		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
+		// Set passenger to a flown state
+		myPassenger.flyPassenger(NEGATIVE_BOUNDARY);
+		// Expect exception
+	}
+	
 	@Test(expected = PassengerException.class)
 	public void testFlyPassengerDepartureTimeLessThanZero() throws PassengerException {
 		// Set passenger to a confirmed state
 		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
 		// Set passenger to a flown state
-		myPassenger.flyPassenger(-1);
+		myPassenger.flyPassenger(NEGATIVE_PARAMETER);
 		// Expect exception
 	}
 
@@ -693,7 +731,7 @@ public class FirstTests {
 	 */
 	@Test
 	public void testGetBookingTime() {
-		assertEquals(1, myPassenger.getBookingTime());
+		assertEquals(TEST_BOOKING_TIME, myPassenger.getBookingTime());
 	}
 
 	// GET CONFIRMATION TIME TESTS
@@ -708,12 +746,12 @@ public class FirstTests {
 		// Set passenger to a confirmed state
 		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
 		// Check condition
-		assertEquals(5, myPassenger.getConfirmationTime());
+		assertEquals(TEST_CONFIRMATION_TIME, myPassenger.getConfirmationTime());
 	}
 
 	@Test
 	public void testGetConfirmationTimeBeforeConfirmingSeat() {
-		assertEquals(0, myPassenger.getConfirmationTime());
+		assertEquals(ZERO_BOUNDARY_CASE, myPassenger.getConfirmationTime());
 	}
 
 	// GET DEPARTURE TIME TESTS
@@ -723,7 +761,7 @@ public class FirstTests {
 	 */
 	@Test
 	public void testGetDepartureTime() {
-		assertEquals(10, myPassenger.getDepartureTime());
+		assertEquals(TEST_DEPARTURE_TIME, myPassenger.getDepartureTime());
 	}
 
 	@Test
@@ -731,7 +769,7 @@ public class FirstTests {
 		// Set passenger to a queued state
 		myPassenger.queuePassenger(TEST_QUEUE_TIME, ALTERNATE_DEPARTURE_TIME);
 		// Check condition
-		assertEquals(20, myPassenger.getDepartureTime());
+		assertEquals(ALTERNATE_DEPARTURE_TIME, myPassenger.getDepartureTime());
 	}
 
 	@Test
@@ -739,7 +777,7 @@ public class FirstTests {
 		// Set passenger to a confirmed state
 		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, ALTERNATE_DEPARTURE_TIME);
 		// Check condition
-		assertEquals(20, myPassenger.getDepartureTime());
+		assertEquals(ALTERNATE_DEPARTURE_TIME, myPassenger.getDepartureTime());
 	}
 
 	@Test
@@ -749,7 +787,7 @@ public class FirstTests {
 		// Set Passenger to a flown state
 		myPassenger.flyPassenger(ALTERNATE_DEPARTURE_TIME);
 		// Check condition
-		assertEquals(20, myPassenger.getDepartureTime());
+		assertEquals(ALTERNATE_DEPARTURE_TIME, myPassenger.getDepartureTime());
 	}
 
 	// GET ENTER QUEUE TIME TESTS
@@ -764,7 +802,7 @@ public class FirstTests {
 		// Set passenger to a queued state
 		myPassenger.queuePassenger(TEST_QUEUE_TIME, TEST_DEPARTURE_TIME);
 		// Check condition
-		assertEquals(4, myPassenger.getEnterQueueTime());
+		assertEquals(TEST_QUEUE_TIME, myPassenger.getEnterQueueTime());
 	}
 
 	// GET EXIT QUEUE TIME TESTS
@@ -779,9 +817,9 @@ public class FirstTests {
 		// Set passenger to a queued state
 		myPassenger.queuePassenger(TEST_QUEUE_TIME, TEST_DEPARTURE_TIME);
 		// Set passenger to a confirmed state
-		myPassenger.confirmSeat(9, TEST_DEPARTURE_TIME);
+		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
 		// Check condition
-		assertEquals(9, myPassenger.getExitQueueTime());
+		assertEquals(TEST_CONFIRMATION_TIME, myPassenger.getExitQueueTime());
 	}
 
 	@Test
@@ -791,7 +829,7 @@ public class FirstTests {
 		// Set passenger to a refused state
 		myPassenger.refusePassenger(TEST_REFUSAL_TIME);
 		// Check condition
-		assertEquals(7, myPassenger.getExitQueueTime());
+		assertEquals(TEST_REFUSAL_TIME, myPassenger.getExitQueueTime());
 	}
 
 	// GET PASSENGER ID TESTS
@@ -801,7 +839,7 @@ public class FirstTests {
 	 */
 	@Test
 	public void testGetPassID() {	
-		assertEquals("F:101", myPassenger.getPassID());
+		assertEquals("F:104", myPassenger.getPassID());
 	} 
 
 	// IS CONFIRMED TESTS
@@ -1072,6 +1110,16 @@ public class FirstTests {
 		// Check condition
 		assertTrue(myPassenger.isRefused());
 	}
+	
+	@Test
+	public void testQueuePassengerWasQueuedAfterBeingQueued() throws PassengerException {
+		// Set passenger to a queued state
+		myPassenger.queuePassenger(TEST_QUEUE_TIME, TEST_DEPARTURE_TIME);
+		// Set passenger to a refused state
+		myPassenger.refusePassenger(TEST_REFUSAL_TIME);
+		// Check condition
+		assertTrue(myPassenger.wasQueued());
+	}
 
 	@Test(expected = PassengerException.class)
 	public void testQueuePassengerWhenPassengerStateIsAlreadyQueued() throws PassengerException {
@@ -1107,21 +1155,28 @@ public class FirstTests {
 		// Set passenger to a flown state
 		myPassenger.flyPassenger(TEST_DEPARTURE_TIME);
 		// Set passenger to a queued state
-		myPassenger.queuePassenger(12, 20);
+		myPassenger.queuePassenger(GREATER_QUEUE_TIME, ALTERNATE_DEPARTURE_TIME);
 		// Expect exception
 	}
 
 	@Test(expected = PassengerException.class)
+	public void testQueuePassengerWhenQueueTimeIsLessThanZeroBoundaryCase() throws PassengerException {
+		// Set passenger to a queued state
+		myPassenger.queuePassenger(NEGATIVE_BOUNDARY, TEST_DEPARTURE_TIME);
+		// Expect exception
+	}
+	
+	@Test(expected = PassengerException.class)
 	public void testQueuePassengerWhenQueueTimeIsLessThanZero() throws PassengerException {
 		// Set passenger to a queued state
-		myPassenger.queuePassenger(-1, TEST_DEPARTURE_TIME);
+		myPassenger.queuePassenger(NEGATIVE_PARAMETER, TEST_DEPARTURE_TIME);
 		// Expect exception
 	}
 
 	@Test(expected = PassengerException.class)
 	public void testQueuePassengerWhenDepartureTimeIsLessThanQueueTime() throws PassengerException {
 		// Set passenger to a queued state
-		myPassenger.queuePassenger(8, 5);
+		myPassenger.queuePassenger(TEST_QUEUE_TIME, LESSER_DEPARTURE_TIME);
 		// Expect exception
 	}
 
@@ -1204,7 +1259,7 @@ public class FirstTests {
 		// Set passenger to a refused state
 		myPassenger.refusePassenger(TEST_REFUSAL_TIME);
 		// Set passenger to a refused state again
-		myPassenger.refusePassenger(8);
+		myPassenger.refusePassenger(ALTERNATE_REFUSAL_TIME);
 		// Expected exception
 	}
 
@@ -1215,29 +1270,29 @@ public class FirstTests {
 		// Set passenger to a flown state
 		myPassenger.flyPassenger(TEST_DEPARTURE_TIME);
 		// Set passenger to a refused state
-		myPassenger.refusePassenger(11);
+		myPassenger.refusePassenger(TEST_REFUSAL_TIME_BOUNDARY);
 		// Expected exception
 	}
 
 	@Test(expected = PassengerException.class)
 	public void testRefusePassengerWhenRefusalTimeIsLessThanZero() throws PassengerException {
 		// Set passenger to a refused state
-		myPassenger.refusePassenger(-1);
+		myPassenger.refusePassenger(NEGATIVE_BOUNDARY);
+		// Expected exception
+	}
+	
+	@Test(expected = PassengerException.class)
+	public void testRefusePassengerWhenRefusalTimeIsLessThanBookingTimeAndIsANegativeNumber()
+			throws PassengerException {
+		// Set passenger to a refused state
+		myPassenger.refusePassenger(NEGATIVE_PARAMETER);
 		// Expected exception
 	}
 
 	@Test(expected = PassengerException.class)
 	public void testRefusePassengerWhenRefusalTimeIsLessThanBookingTime() throws PassengerException {
 		// Set passenger to a refused state
-		myPassenger.refusePassenger(0);
-		// Expected exception
-	}
-
-	@Test(expected = PassengerException.class)
-	public void testRefusePassengerWhenRefusalTimeIsLessThanBookingTimeAndIsANegativeNumber()
-			throws PassengerException {
-		// Set passenger to a refused state
-		myPassenger.refusePassenger(-1);
+		myPassenger.refusePassenger(ZERO_BOUNDARY_CASE);
 		// Expected exception
 	}
 
