@@ -40,7 +40,7 @@ public class First extends Passenger {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see asgn1Passengers.Passenger#noSeatsMsg
+	 * @see asgn1Passengers.Passenger#noSeatsMsg()
 	 */
 	@Override
 	public String noSeatsMsg() {
@@ -50,7 +50,7 @@ public class First extends Passenger {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see asgn1Passengers.Passenger#upgrade
+	 * @see asgn1Passengers.Passenger#upgrade()
 	 */
 	@Override
 	public Passenger upgrade() {
