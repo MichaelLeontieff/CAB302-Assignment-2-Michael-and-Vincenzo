@@ -37,6 +37,7 @@ public class FirstTests {
 	private static final int GREATER_BOOKING_TIME = 5;
 	private static final int LESSER_DEPARTURE_TIME = 3;
 	private static final int ZERO_BOUNDARY_CASE = 0;
+	private static final int TEST_CANCELLATION_TIME_BOUNDARY = 11;
 
 	// Declare test objects
 	private First myPassenger;
@@ -315,7 +316,7 @@ public class FirstTests {
 	 * @throws PassengerException
 	 */
 	@Test
-	public void testCancelSeatIsNewStateAfterConfirmingSeat() throws PassengerException {
+	public void testCancelSeatIsNewStateAfterCancellingSeat() throws PassengerException {
 		// Set passenger to a confirmed state
 		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
 		// Cancel the passenger's seat
@@ -441,7 +442,7 @@ public class FirstTests {
 		// Set passenger to a confirmed state
 		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
 		// Cancel passenger's seat
-		myPassenger.cancelSeat(-1);
+		myPassenger.cancelSeat(NEGATIVE_BOUNDARY);
 		// Expect exception
 	}
 
@@ -450,7 +451,7 @@ public class FirstTests {
 		// Set passenger to a confirmed state
 		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
 		// Cancel passenger's seat
-		myPassenger.cancelSeat(11);
+		myPassenger.cancelSeat(TEST_CANCELLATION_TIME_BOUNDARY);
 		// Expect exception
 	}
 
@@ -522,6 +523,14 @@ public class FirstTests {
 		// Check condition
 		assertFalse(myPassenger.isConfirmed());
 	}
+	
+	@Test
+	public void testConfirmSeatWasConfirmedAfterConfirmingSeat() throws PassengerException {
+		// Set passenger to a confirmed state
+		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
+		// Check condition
+		assertTrue(myPassenger.wasConfirmed());
+	}
 
 	@Test(expected = PassengerException.class)
 	public void testConfirmSeatAfterConfirmingAgain() throws PassengerException {
@@ -548,21 +557,21 @@ public class FirstTests {
 		// Set passenger to a flown state
 		myPassenger.flyPassenger(TEST_DEPARTURE_TIME);
 		// Set passenger to a confirmed state again
-		myPassenger.confirmSeat(12, 20);
+		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
 		// Expect exception
 	}
 
 	@Test(expected = PassengerException.class)
 	public void testConfirmSeatConfirmationTimeLessThanZero() throws PassengerException {
 		// Set passenger to a confirmed state
-		myPassenger.confirmSeat(-1, TEST_DEPARTURE_TIME);
+		myPassenger.confirmSeat(NEGATIVE_BOUNDARY, TEST_DEPARTURE_TIME);
 		// Expect exception
 	}
 
 	@Test(expected = PassengerException.class)
 	public void testConfirmSeatConfirmationTimeGreaterThanDepartureTime() throws PassengerException {
 		// Set passenger to a confirmed state
-		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, 2);
+		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, LESSER_DEPARTURE_TIME);
 		// Expect exception
 	}
 
