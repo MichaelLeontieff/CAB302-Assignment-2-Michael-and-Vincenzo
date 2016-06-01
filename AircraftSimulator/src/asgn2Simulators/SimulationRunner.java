@@ -40,12 +40,12 @@ public class SimulationRunner {
 					break;
 				}
 				case NUM_ARGS + 1: {
-					if (args[0].equals("cli")) {
+					if (args[0].equals("-cli")) {
 						runGUI = false;
 					}
 				}
 				case 1: {
-					if (args[0].equals("cli")) {
+					if (args[0].equals("-cli")) {
 						runGUI = false;
 					}
 				}

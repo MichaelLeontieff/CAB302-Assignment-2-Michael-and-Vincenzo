@@ -614,6 +614,9 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 		sim.createSchedule();
 		initialEntry(sim);
 		
+		// logging object
+		Log log = new Log();
+		
 		asgn2Simulators.ChartPanel bookingsChart = new asgn2Simulators.ChartPanel(BOOKINGS_CHART);
 		asgn2Simulators.ChartPanel queuedRefusedChart = new asgn2Simulators.ChartPanel(QUEUE_REFUSE_CHART);
 		
@@ -634,6 +637,7 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 				this.sim.processQueue(time);
 				this.sim.flyPassengers(time);
 				this.sim.updateTotalCounts(time); 
+				log.logFlightEntries(time, sim);
 				
 				// set data for bookings chart 
 				bookingsChart.setEconomy(sim.getTotalEconomy());
@@ -652,7 +656,10 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 			} else {
 				this.sim.processQueue(time);
 			}
-			
+			//Log progress 
+			log.logQREntries(time, sim);
+			log.logEntry(time,this.sim);
+			// text area output
 			logEntry(time, this.sim);
 		}
 		
@@ -665,6 +672,8 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 		pnlChartOne.add(bookingsChart.createComponentBookings());
 		pnlChartTwo.add(queuedRefusedChart.createComponentQueuedRefused());
 				
+		log.logQREntries(Constants.DURATION, sim);
+		log.finalise(this.sim);
 		this.sim.finaliseQueuedAndCancelledPassengers(Constants.DURATION); 
 		finalise(this.sim);
 	}
