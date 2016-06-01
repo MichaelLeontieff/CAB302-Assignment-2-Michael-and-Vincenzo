@@ -43,7 +43,6 @@ import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.xy.XYDataset;
 
-
 import asgn2Aircraft.AircraftException;
 import asgn2Passengers.PassengerException;
 
@@ -60,6 +59,7 @@ import java.awt.GridBagLayout;
  */
 @SuppressWarnings("serial")
 public class GUISimulator extends JFrame implements Runnable, ActionListener {
+	
 	/*
 	 * Constants that define window dimensions
 	 */
@@ -68,6 +68,10 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	
 	private static final int BOOKINGS_CHART = 1;
 	private static final int QUEUE_REFUSE_CHART = 2;
+	
+	/*
+	 * Qualified import
+	 */
 	
 
 	/* tabbed pane
@@ -495,6 +499,10 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	/*
 	 * Private method to populate fields with string arguments
 	 */
+	private void populateFieldsStringArguments(String[] args) {
+		// String arguments length validated before reaching here
+		
+	}
 	
 	/*
 	 * create simulator object with parameters
@@ -519,7 +527,7 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 		checkProbabilityInput(cancellation);
 		
 		if (isValidInput) {
-			sim = new Simulator(seed,queueSize,dailyMean,Constants.DEFAULT_DAILY_BOOKING_SD,firstProb,businessProb,
+			sim = new Simulator(seed,queueSize,dailyMean,dailyMean * 0.33,firstProb,businessProb,
 					  premiumProb,economyProb,cancellation);	
 			runSimulation();
 		} else {
@@ -534,8 +542,8 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 		sim.createSchedule();
 		initialEntry(sim);
 		
-		Charting bookingsChart = new Charting(BOOKINGS_CHART);
-		Charting queuedRefusedChart = new Charting(QUEUE_REFUSE_CHART);
+		asgn2Simulators.ChartPanel bookingsChart = new asgn2Simulators.ChartPanel(BOOKINGS_CHART);
+		asgn2Simulators.ChartPanel queuedRefusedChart = new asgn2Simulators.ChartPanel(QUEUE_REFUSE_CHART);
 		
 		Calendar cal = GregorianCalendar.getInstance();
 
