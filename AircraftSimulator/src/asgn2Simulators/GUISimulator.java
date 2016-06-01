@@ -38,7 +38,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
 /**
- * @author hogan
+ * @author Michael Leontieff
  *
  */
 @SuppressWarnings("serial")
@@ -50,13 +50,17 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	private static final int WINDOW_WIDTH = 800;
 	private static final int WINDOW_HEIGHT = 650;
 	
+	/*
+	 * Constants to be parsed via constructor to ChartPanel class
+	 */
 	private static final int BOOKINGS_CHART = 1;
 	private static final int QUEUE_REFUSE_CHART = 2;
 	
 	/*
-	 * Qualified import
+	 * Misc Constants
 	 */
-	
+	private static final int NUM_ARGS = 9;
+	private static final int FONT_SIZE = 24;
 
 	/* tabbed pane
 	 * 
@@ -141,7 +145,6 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	 */
 	private Simulator sim;
 	private String[] arguments;
-	//private TimeSeriesCollection timeSeries;
 	
 	/*
 	 * Validation tracker
@@ -154,7 +157,6 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	public GUISimulator(String arg0, String[] args) throws HeadlessException {
 		super(arg0);
 		arguments = args;
-		// TODO Auto-generated constructor stub
 	}
 
 	/* (non-Javadoc)
@@ -165,30 +167,21 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 		createGUI();
 	}
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-	    JFrame.setDefaultLookAndFeelDecorated(true);
-        //SwingUtilities.invokeLater(new GUISimulator("GUI Simulator"));
-        
-	}
-	
+
 	/*
-	 * Program entry point. Selects GUI or CLI from command line arg 
+	 * Program entry point. Initialises panels and their elements through private method calls
 	 * options. 
 	 * 
-	 */
-	
+	 */	
 	private void createGUI() {
+		JFrame.setDefaultLookAndFeelDecorated(true);
 		// set general GUI parameters
 		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 		setResizable(false);
 	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    setLayout(new BorderLayout());
 	    tabbedPane = new JTabbedPane();
-	    headingFont = new Font("Arial", Font.BOLD, 24);
+	    headingFont = new Font("Arial", Font.BOLD, FONT_SIZE);
 		
 	    lblHeadingConstraints = new GridBagConstraints(); 
 	    lblSubHeadingConstraints = new GridBagConstraints(); 
@@ -232,11 +225,11 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 		this.getContentPane().add(pnlUserInput, BorderLayout.SOUTH);
 		
 	    // disable chart tabs
-	    tabbedPane.setEnabledAt(1, false);
-	    tabbedPane.setEnabledAt(2, false);
+	    tabbedPane.setEnabledAt(BOOKINGS_CHART, false);
+	    tabbedPane.setEnabledAt(QUEUE_REFUSE_CHART, false);
 		
 	    // populate text fields with arguments if applicable
-	    if (arguments.length == 9) {
+	    if (arguments.length == NUM_ARGS) {
 	    	populateFieldsStringArguments(arguments);
 	    } else {
 	    	populateFieldsConstants();
