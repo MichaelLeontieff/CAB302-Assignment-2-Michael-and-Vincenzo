@@ -1073,21 +1073,21 @@ public class A380Tests {
 	
 	@Test
 	public void GetNumBusinessClassPassengersTest() {
-		assertEquals(1, getTestNumPassClass.getNumBusiness());
+		assertEquals(SINGLE_PASSENGER, getTestNumPassClass.getNumBusiness());
 	}
 	
 	// GET NUM ECONOMY TESTS
 	
 	@Test
 	public void GetNumEcomonyClassPassengersTest() {
-		assertEquals(1, getTestNumPassClass.getNumEconomy());
+		assertEquals(SINGLE_PASSENGER, getTestNumPassClass.getNumEconomy());
 	}
 	
 	// GET NUM FIRST TESTS
 	
 	@Test
 	public void GetNumFirstClassPassengersTest() {
-		assertEquals(1, getTestNumPassClass.getNumFirst());
+		assertEquals(SINGLE_PASSENGER, getTestNumPassClass.getNumFirst());
 	}
 	
 	// GET NUM PASSENGERS TESTS
