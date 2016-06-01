@@ -1,8 +1,6 @@
 package asgn2Simulators;
 
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
@@ -56,9 +54,6 @@ public class ChartPanel {
 	private int firstPrev;
 	private int totalPrev;
 	private int emptyPrev;
-	
-	private int queuedPrev;
-	private int refusedPrev;
 	
 	private static final int BOOKINGS_CHART = 1;
 	private static final int QUEUE_REFUSE_CHART = 2;
