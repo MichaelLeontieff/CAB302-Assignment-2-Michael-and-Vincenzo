@@ -429,11 +429,11 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	    btnRunSimulation.setPreferredSize(new Dimension(200, 35));
 	    btnRunSimulation.addActionListener(this);
 	    
-	    btnShowBookingGraph = new JButton("Show Bookings Graph");
+	    btnShowBookingGraph = new JButton("Show/Update Bookings Graph");
 	    btnShowBookingGraph.setPreferredSize(new Dimension(200, 35));
 	    btnShowBookingGraph.addActionListener(this);    
 	    
-	    btnShowQueueRefusedGraph = new JButton("Show Queue/Refused Graph");
+	    btnShowQueueRefusedGraph = new JButton("Show/Update Queue-Refused Graph");
 	    btnShowQueueRefusedGraph.setPreferredSize(new Dimension(200, 35));
 	    btnShowQueueRefusedGraph.addActionListener(this);    
 	    
@@ -450,6 +450,7 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		Object src=e.getSource(); 	      
 			if (src == btnRunSimulation) {
+				tabbedPane.setSelectedIndex(0);
 				try {			
 					createSimulation();
 				} catch (AircraftException e1) {
@@ -531,7 +532,7 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 		checkProbabilityInput(cancellation);
 		
 		if (isValidInput) {
-			sim = new Simulator(seed,queueSize,dailyMean,dailyMean * 0.33,firstProb,businessProb,
+			this.sim = new Simulator(seed,queueSize,dailyMean,dailyMean * 0.33,firstProb,businessProb,
 					  premiumProb,economyProb,cancellation);	
 			runSimulation();
 		} else {
@@ -543,6 +544,7 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	 * Method that runs the simulation and calls output methods
 	 */
 	private void runSimulation() throws AircraftException, SimulationException, PassengerException, IOException {
+		txtLoggingOutput.setText("");
 		sim.createSchedule();
 		initialEntry(sim);
 		
@@ -594,11 +596,24 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 		bookingsChart.compileTimeSeriesBookings();
 		queuedRefusedChart.compileTimeSeriesQueuedRefused();
 		
+
+		pnlChartOne.removeAll();
+		pnlChartTwo.removeAll();
+		
+		
+		pnlChartOne.repaint();
+		pnlChartTwo.repaint();
+		
 		pnlChartOne.add(bookingsChart.createComponentBookings());
 		pnlChartTwo.add(queuedRefusedChart.createComponentQueuedRefused());
+		
+		pnlChartOne.repaint();
+		pnlChartTwo.repaint();
 				
 		this.sim.finaliseQueuedAndCancelledPassengers(Constants.DURATION); 
 		finalise(this.sim);
+		
+	
 	}
 	
 	/*
@@ -632,7 +647,7 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	 * Private method that outputs the finalise string
 	 */
 	private void finalise(Simulator sim) {
-		txtLoggingOutput.append("End of Simulation\n");
+		txtLoggingOutput.append("\nEnd of Simulation\n");
 		txtLoggingOutput.append(sim.finalState());
 	}
 	
