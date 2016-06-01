@@ -12,6 +12,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -61,6 +62,8 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	 */
 	private static final int NUM_ARGS = 9;
 	private static final int FONT_SIZE = 24;
+	
+	private static final int TXT_LOGGING_OUTPUT_TAB = 0;
 
 	/* tabbed pane
 	 * 
@@ -497,7 +500,7 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		Object src=e.getSource(); 	      
 			if (src == btnRunSimulation) {
-				tabbedPane.setSelectedIndex(0);
+				tabbedPane.setSelectedIndex(TXT_LOGGING_OUTPUT_TAB);
 				try {			
 					createSimulation();
 				} catch (AircraftException e1) {
@@ -520,11 +523,11 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 			btnShowQueueRefusedGraph.setEnabled(true);
 			
 			if (src == btnShowBookingGraph) {
-				tabbedPane.setSelectedIndex(1);
+				tabbedPane.setSelectedIndex(BOOKINGS_CHART);
 			}
 			
 			if (src == btnShowQueueRefusedGraph) {
-				tabbedPane.setSelectedIndex(2);
+				tabbedPane.setSelectedIndex(QUEUE_REFUSE_CHART);
 			}		
 	}
 	
@@ -705,7 +708,8 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	 * @param sim Simulator Object
 	 */
 	private void finalise(Simulator sim) {
-		txtLoggingOutput.append("\nEnd of Simulation\n");
+		String timeLog = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+		txtLoggingOutput.append("\n" + timeLog + ": End of Simulation\n");
 		txtLoggingOutput.append(sim.finalState());
 	}
 	
