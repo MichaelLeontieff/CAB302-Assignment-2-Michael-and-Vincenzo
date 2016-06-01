@@ -119,7 +119,8 @@ public class BusinessTests {
 	 */
 	@Test
 	public void testUpgradeBookingTime() throws PassengerException {
-		// Set passenger to a confirmed state as upgrade will only get called on a passenger in a seat
+		// Set passenger to a confirmed state as upgrade will only get called on a passenger 
+		// in a seat
 		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
 		// Create new passenger instance which is an upgrade of the original passenger
 		upgradedPassenger = myPassenger.upgrade();
@@ -296,17 +297,6 @@ public class BusinessTests {
 		// Create new passenger instance which is an upgrade of the original passenger
 		upgradedPassenger = myPassenger.upgrade();
 		// Check if the passID's do not match
-		assertTrue(myPassenger.getPassID() != upgradedPassenger.getPassID());
-	} 
-	
-	/*	@Test
-	public void testUpgradeBothNotQueued() throws PassengerException {
-		// Set passenger to a confirmed state
-		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
-		// Create new passenger instance which is an upgrade of the original passenger
-		upgradedPassenger = myPassenger.upgrade();
-		// Check if both passenger instances are in confirmed states
-		assertTrue(myPassenger.isQueued() == upgradedPassenger.isQueued());
-		assertEquals(false, myPassenger.isQueued() && upgradedPassenger.isQueued())
-	} */	
+		assertFalse(myPassenger.getPassID().equals(upgradedPassenger.getPassID()));
+	} 	
 }
