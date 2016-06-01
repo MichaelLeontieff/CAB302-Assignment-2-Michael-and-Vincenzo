@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.XYPlot;
@@ -20,7 +19,7 @@ import org.jfree.data.xy.XYDataset;
  * @author michaelleontieff
  *
  */
-public class Charting {
+public class ChartPanel {
 	
 	private static final int NUM_SEATS_A380 = 484;
 	private static final int NUM_SEATS_B747 = 353;
@@ -68,7 +67,7 @@ public class Charting {
 	 * Constructor to instantiate obejcts required for chart creation
 	 * @param chartType defines the type of chart to construct
 	 */
-	public Charting(int chartType) {
+	public ChartPanel(int chartType) {
 		if (chartType == BOOKINGS_CHART) {
 			timeSeriesBookings = new TimeSeriesCollection(); 
 			
@@ -122,16 +121,16 @@ public class Charting {
      * Create Bookings Chart 
      * @return chart panel for adding into tabbed pane
      */
-    public ChartPanel createComponentBookings() {
-    	return new ChartPanel(createChartBookings(timeSeriesBookings));
+    public org.jfree.chart.ChartPanel createComponentBookings() {
+    	return new org.jfree.chart.ChartPanel(createChartBookings(timeSeriesBookings));
     }
     
     /**
      * Create Queued Refused Chart 
      * @return chart panel for adding into tabbed pane
      */
-    public ChartPanel createComponentQueuedRefused() {
-    	return new ChartPanel(createChartQueuedRefused(timeSeriesQueuedRefused));
+    public org.jfree.chart.ChartPanel createComponentQueuedRefused() {
+    	return new org.jfree.chart.ChartPanel(createChartQueuedRefused(timeSeriesQueuedRefused));
     }
     
     public Date getTimePoint() {
