@@ -21,7 +21,6 @@ public class A380 extends Aircraft {
 	static final int PREMIUM = 35;
 	static final int ECONOMY = 371;
 
-	
 	/**
 	 * Constructor for A380 uses default fare class capacities 
 	 * 
