@@ -30,6 +30,11 @@ public class PremiumTests {
 	private static final int TEST_DEPARTURE_TIME = 15;
 	private static final int TEST_CONFIRMATION_TIME = 8;
 	private static final int TEST_QUEUE_TIME = 5;
+	private static final int NEGATIVE_BOUNDARY = -1;
+	private static final int NEGATIVE_PARAMETER = -10;
+	private static final int ZERO_BOUNDARY_CASE = 0;
+	private static final int LESSER_DEPARTURE_TIME = 1;
+	
 
 	// Declare test objects 
 	private Premium myPassenger;
@@ -68,32 +73,32 @@ public class PremiumTests {
 	
 	@Test (expected = PassengerException.class)
 	public void testPremiumDepartureTimeEqualToZero() throws PassengerException {
-		testPassenger = new Premium(TEST_BOOKING_TIME, 0);
+		testPassenger = new Premium(TEST_BOOKING_TIME, ZERO_BOUNDARY_CASE);
 	}
 	
 	@Test (expected = PassengerException.class)
 	public void testPremiumDepartureTimeLessThanZeroBoundaryCase() throws PassengerException {
-		testPassenger = new Premium(TEST_BOOKING_TIME, -1);
+		testPassenger = new Premium(TEST_BOOKING_TIME, NEGATIVE_BOUNDARY);
 	}
 	
 	@Test (expected = PassengerException.class)
 	public void testPremiumDepartureTimeLessThanZero() throws PassengerException {
-		testPassenger = new Premium(TEST_BOOKING_TIME, -5);
+		testPassenger = new Premium(TEST_BOOKING_TIME, NEGATIVE_PARAMETER);
 	}
 	
 	@Test (expected = PassengerException.class)
 	public void testPremiumDepartureTimeLessThanBookingTime() throws PassengerException {
-		testPassenger = new Premium(TEST_BOOKING_TIME, 1);
+		testPassenger = new Premium(TEST_BOOKING_TIME, LESSER_DEPARTURE_TIME);
 	}
 	
 	@Test (expected = PassengerException.class)
 	public void testPremiumDepartureTimeLessThanBookingTimeLessThanZero() throws PassengerException {
-		testPassenger = new Premium(TEST_BOOKING_TIME, -1);
+		testPassenger = new Premium(TEST_BOOKING_TIME, NEGATIVE_BOUNDARY);
 	}
 	
 	@Test (expected = PassengerException.class)
 	public void testPremiumDepartureTimeLessThanBookingTimeZeroDepartureTime() throws PassengerException {
-		testPassenger = new Premium(TEST_BOOKING_TIME, 0);
+		testPassenger = new Premium(TEST_BOOKING_TIME, ZERO_BOUNDARY_CASE);
 	}
 
 	// NO SEATS MESSAGE TESTS

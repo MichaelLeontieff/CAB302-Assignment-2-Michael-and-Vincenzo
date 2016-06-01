@@ -6,6 +6,7 @@
  */
 package asgn2Tests;
 
+
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
@@ -45,7 +46,6 @@ public class FirstTests {
 	// Declare test objects
 	private First myPassenger;
 	private First testPassenger;
-	private First testPassengerTwo;
 	private Passenger upgradedPassenger;
 
 	/**
