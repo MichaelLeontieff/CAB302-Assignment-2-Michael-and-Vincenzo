@@ -7,6 +7,9 @@
 package asgn2Passengers;
 
 /**
+ * Specialisation of the {@link asgn2Passengers.Passenger} class to represent a  
+ * passenger of the First class
+ * 
  * @author hogan
  *
  */
