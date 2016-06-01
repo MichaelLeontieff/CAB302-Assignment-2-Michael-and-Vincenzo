@@ -508,6 +508,10 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	 * create simulator object with parameters
 	 */
 	private void createSimulation() throws SimulationException, AircraftException, PassengerException, IOException {
+		// re-disable graph buttons
+		btnShowBookingGraph.setEnabled(false);
+		btnShowQueueRefusedGraph.setEnabled(false);
+		
 		// reset tracker
 		isValidInput = true;
 		
