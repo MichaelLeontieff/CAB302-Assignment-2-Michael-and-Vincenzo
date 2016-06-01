@@ -157,8 +157,7 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	 */
 	private Simulator sim;
 	private String[] arguments;
-	private TimeSeriesCollection timeSeries;
-	private boolean commandLineArg;
+	//private TimeSeriesCollection timeSeries;
 	
 	/*
 	 * Validation tracker
@@ -255,7 +254,6 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	    // populate text fields with arguments if applicable
 	    if (arguments.length == 9) {
 	    	populateFieldsStringArguments(arguments);
-	    	commandLineArg = true;
 	    } else {
 	    	populateFieldsConstants();
 	    }
@@ -519,9 +517,9 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 		txtCancellation.setText(args[8]);
 		
 		txtFirst.setText(args[4]);
-		txtBusiness.setText(args[6]);
-		txtPremium.setText(args[7]);
-		txtEconomy.setText(args[8]);
+		txtBusiness.setText(args[5]);
+		txtPremium.setText(args[6]);
+		txtEconomy.setText(args[7]);
 	}
 	
 	/*
@@ -551,8 +549,10 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 		checkProbabilityInput(cancellation);
 		
 		if (isValidInput) {
+			
 			this.sim = new Simulator(seed,queueSize,dailyMean,dailyMean * 0.33,firstProb,businessProb,
 					  premiumProb,economyProb,cancellation);	
+				
 			runSimulation();
 		} else {
 			txtLoggingOutput.append("Please fix errors before running simulation again!\n");
