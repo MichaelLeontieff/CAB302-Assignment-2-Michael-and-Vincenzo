@@ -32,6 +32,8 @@ public class FirstTests {
 	private static final int TEST_REFUSAL_TIME = 7;
 	private static final int TEST_GREATER_QUEUE_TIME = 8;
 	private static final int ALTERNATE_DEPARTURE_TIME = 20;
+	private static final int NEGATIVE_BOUNDARY = -1;
+	private static final int NEGATIVE_PARAMETER = -5;
 
 	// Declare test objects
 	private First myPassenger;
@@ -63,12 +65,12 @@ public class FirstTests {
 	
 	@Test(expected = PassengerException.class)
 	public void testFirstBookingTimeLessThanZeroBoundaryCase() throws PassengerException {
-		testPassenger = new First(-1, TEST_DEPARTURE_TIME);
+		testPassenger = new First(NEGATIVE_BOUNDARY, TEST_DEPARTURE_TIME);
 	}
 
 	@Test(expected = PassengerException.class)
 	public void testFirstBookingTimeLessThanZero() throws PassengerException {
-		testPassenger = new First(-5, TEST_DEPARTURE_TIME);
+		testPassenger = new First(NEGATIVE_PARAMETER, TEST_DEPARTURE_TIME);
 	}
 
 	@Test(expected = PassengerException.class)
@@ -78,12 +80,12 @@ public class FirstTests {
 
 	@Test(expected = PassengerException.class)
 	public void testFirstDepartureTimeLessThanZeroBoundaryCase() throws PassengerException {
-		testPassenger = new First(TEST_BOOKING_TIME, -1);
+		testPassenger = new First(TEST_BOOKING_TIME, NEGATIVE_BOUNDARY);
 	}
 
 	@Test(expected = PassengerException.class)
 	public void testFirstDepartureTimeLessThanZero() throws PassengerException {
-		testPassenger = new First(TEST_BOOKING_TIME, -7);
+		testPassenger = new First(TEST_BOOKING_TIME, NEGATIVE_PARAMETER);
 	}
 
 	@Test(expected = PassengerException.class)
@@ -419,7 +421,7 @@ public class FirstTests {
 	}
 
 	@Test(expected = PassengerException.class)
-	public void testCancelSeatWhenPassengerStateIsRefused() throws PassengerException {
+	public void testCancelSeatWhenPassengerStateIsRefused()  throws PassengerException {
 		// Set passenger to a refused state
 		myPassenger.refusePassenger(TEST_REFUSAL_TIME);
 		// Cancel passenger's seat
