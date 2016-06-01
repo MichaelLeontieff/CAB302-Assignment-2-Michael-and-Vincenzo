@@ -504,16 +504,12 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 				try {			
 					createSimulation();
 				} catch (AircraftException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				} catch (SimulationException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				} catch (PassengerException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
@@ -705,8 +701,7 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	 * @throws Simulation Exception
 	 */
 	private void initialEntry(Simulator sim) throws SimulationException {
-		String timeLog = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
-		txtLoggingOutput.append( timeLog + ": Start of Simulation\n");
+		txtLoggingOutput.append( getCurrentTime() + ": Start of Simulation\n");
 		txtLoggingOutput.append(sim.toString() + "\n");
 		String capacities = sim.getFlights(Constants.FIRST_FLIGHT).initialState();
 		txtLoggingOutput.append(capacities);
@@ -718,9 +713,16 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	 * @param sim Simulator Object
 	 */
 	private void finalise(Simulator sim) {
-		String timeLog = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
-		txtLoggingOutput.append("\n" + timeLog + ": End of Simulation\n");
+		txtLoggingOutput.append("\n" + getCurrentTime() + ": End of Simulation\n");
 		txtLoggingOutput.append(sim.finalState());
+	}
+	
+	/**
+	 * Private helper method to return the current time for use in logging
+	 * @return
+	 */
+	private String getCurrentTime() {
+		return new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
 	}
 	
 	/**
