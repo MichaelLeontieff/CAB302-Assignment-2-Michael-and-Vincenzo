@@ -1,27 +1,19 @@
 /**
  * 
+ * This file is a test case which forms part of the AircraftSimulator Project, written as 
+ * part of the assessment for CAB302, Semester 1, 2016. 
+ * 
  */
 package asgn2Tests;
 
-import static org.junit.Assert.*;
 
+import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-
-import asgn2Aircraft.A380;
-import asgn2Aircraft.Aircraft;
-import asgn2Aircraft.AircraftException;
-import asgn2Aircraft.Bookings;
-import asgn2Passengers.Business;
-import asgn2Passengers.Economy;
-import asgn2Passengers.First;
-import asgn2Passengers.Passenger;
-import asgn2Passengers.PassengerException;
-import asgn2Passengers.Premium;
+import asgn2Aircraft.*;
+import asgn2Passengers.*;
 
 /**
  * This class represents a unit test class for the abstract Aircraft class tested through the A380 subclass as part of the
@@ -32,21 +24,20 @@ import asgn2Passengers.Premium;
  *
  */
 public class A380Tests {
-
-	/**
-	 * @throws java.lang.Exception
-	 *
-	 */
 	
-	// constants
+	// Declare constants
 	private static final String TEST_FLIGHT_CODE = "LAX123";
 	private static final int TEST_BOOKING_TIME = 5;
 	private static final int TEST_DEPART_TIME = 20;
 	private static final int TEST_CONFIRM_TIME = 10;
 	private static final int TEST_CANCELLATION_TIME = 10;
 	private static final int GET_TEST_NUM_PASS_PASSENGER_COUNT = 4;
+	private static final int NEGATIVE_BOUNDARY = -1;
+	private static final int NEGATIVE_PARAMETER = -5;
+	private static final int ZERO_BOUNDARY_CASE = 0;
+	private static final int ZERO_PASSENGERS = 0;
 	
-	// test objects
+	// Declare test objects
 	private Aircraft fieldTestObject;
 	private Aircraft exceptionTestObject;
 	private Aircraft cancelBookingTest;
@@ -80,8 +71,6 @@ public class A380Tests {
 	}
 	
 	// CONSTRUCTOR TESTS
-		
-		// constructor exception tests
 	
 	@Test
 	public void ValidParametersExceptionTest() throws AircraftException {
@@ -95,13 +84,18 @@ public class A380Tests {
 	}
 	
 	@Test (expected = AircraftException.class)
+	public void DepartTimeLessThanZeroBoundaryExceptionTest() throws AircraftException {
+		exceptionTestObject = new A380(TEST_FLIGHT_CODE, NEGATIVE_BOUNDARY);
+	}
+	
+	@Test (expected = AircraftException.class)
 	public void DepartTimeLessThanZeroExceptionTest() throws AircraftException {
-		exceptionTestObject = new A380(TEST_FLIGHT_CODE, -1);
+		exceptionTestObject = new A380(TEST_FLIGHT_CODE, NEGATIVE_PARAMETER);
 	}
 	
 	@Test (expected = AircraftException.class)
 	public void DepartTimeZeroExceptionTest() throws AircraftException {
-		exceptionTestObject = new A380(TEST_FLIGHT_CODE, 0);
+		exceptionTestObject = new A380(TEST_FLIGHT_CODE, ZERO_BOUNDARY_CASE);
 	}
 	
 	@Test (expected = AircraftException.class)
@@ -137,7 +131,7 @@ public class A380Tests {
 		// cancel booking
 		cancelBookingTest.cancelBooking(testPassenger, TEST_CANCELLATION_TIME);
 		// check condition
-		assertTrue(cancelBookingTest.getNumPassengers() == 0);
+		assertEquals(ZERO_PASSENGERS, cancelBookingTest.getNumPassengers());
 	}
 
 	@Test
@@ -151,7 +145,7 @@ public class A380Tests {
 		// cancel booking
 		cancelBookingTest.cancelBooking(testPassenger, TEST_CANCELLATION_TIME);
 		// check condition
-		assertTrue(cancelBookingTest.getNumPassengers() == 0);
+		assertEquals(ZERO_PASSENGERS, cancelBookingTest.getNumPassengers());
 	}
 
 	@Test
@@ -165,7 +159,7 @@ public class A380Tests {
 		// cancel booking
 		cancelBookingTest.cancelBooking(testPassenger, TEST_CANCELLATION_TIME);
 		// check condition
-		assertTrue(cancelBookingTest.getNumPassengers() == 0);
+		assertEquals(ZERO_PASSENGERS, cancelBookingTest.getNumPassengers());
 	}
 
 	@Test
@@ -277,7 +271,7 @@ public class A380Tests {
 		// cancel booking
 		cancelBookingTest.cancelBooking(testPassenger, TEST_CANCELLATION_TIME);
 		// check condition
-		assertTrue(cancelBookingTest.getNumPassengers() == 0);
+		assertEquals(ZERO_PASSENGERS, cancelBookingTest.getNumPassengers());
 	}
 	
 	@Test
@@ -291,7 +285,7 @@ public class A380Tests {
 		// cancel booking
 		cancelBookingTest.cancelBooking(testPassenger, TEST_CANCELLATION_TIME);
 		// check condition
-		assertTrue(cancelBookingTest.getNumFirst() == 0);
+		assertEquals(ZERO_PASSENGERS, cancelBookingTest.getNumFirst());
 	}
 	
 	@Test
@@ -305,7 +299,7 @@ public class A380Tests {
 		// cancel booking
 		cancelBookingTest.cancelBooking(testPassenger, TEST_CANCELLATION_TIME);
 		// check condition
-		assertTrue(cancelBookingTest.getNumBusiness() == 0);
+		assertEquals(ZERO_PASSENGERS, cancelBookingTest.getNumBusiness());
 	}
 	
 	@Test
@@ -319,7 +313,7 @@ public class A380Tests {
 		// cancel booking
 		cancelBookingTest.cancelBooking(testPassenger, TEST_CANCELLATION_TIME);
 		// check condition
-		assertTrue(cancelBookingTest.getNumPremium() == 0);
+		assertEquals(ZERO_PASSENGERS, cancelBookingTest.getNumPremium());
 	}
 	
 	@Test
@@ -333,10 +327,8 @@ public class A380Tests {
 		// cancel booking
 		cancelBookingTest.cancelBooking(testPassenger, TEST_CANCELLATION_TIME);
 		// check condition
-		assertTrue(cancelBookingTest.getNumEconomy() == 0);
+		assertEquals(ZERO_PASSENGERS, cancelBookingTest.getNumEconomy());
 	}
-	
-	
 	
 	@Test
 	public void CancelBookingTestCheckForPassengerObject() throws PassengerException, AircraftException {
@@ -349,7 +341,7 @@ public class A380Tests {
 		// cancel booking
 		cancelBookingTest.cancelBooking(testPassenger, TEST_CANCELLATION_TIME);
 		// check condition
-		assertFalse(cancelBookingTest.getPassengers().contains(cancelBookingTest));
+		assertFalse(cancelBookingTest.getPassengers().contains(testPassenger));
 	}
 	
 	
