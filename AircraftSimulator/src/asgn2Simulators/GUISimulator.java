@@ -156,6 +156,7 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	 * Simulator and time series Object
 	 */
 	private Simulator sim;
+	private String[] arguments;
 	private TimeSeriesCollection timeSeries;
 	
 	/*
@@ -166,8 +167,9 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	 * @param arg0
 	 * @throws HeadlessException
 	 */
-	public GUISimulator(String arg0) throws HeadlessException {
+	public GUISimulator(String arg0, String[] args) throws HeadlessException {
 		super(arg0);
+		arguments = args;
 		// TODO Auto-generated constructor stub
 	}
 
@@ -185,7 +187,7 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 	    JFrame.setDefaultLookAndFeelDecorated(true);
-        SwingUtilities.invokeLater(new GUISimulator("GUI Simulator"));
+        //SwingUtilities.invokeLater(new GUISimulator("GUI Simulator"));
         
 	}
 	
@@ -502,7 +504,15 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	 */
 	private void populateFieldsStringArguments(String[] args) {
 		// String arguments length validated before reaching here
+		txtRNGInput.setText(args[0]);
+		txtDailyMean.setText(args[2]);
+		txtQueueSize.setText(args[1]);
+		txtCancellation.setText(args[8]);
 		
+		txtFirst.setText(args[4]);
+		txtBusiness.setText(args[6]);
+		txtPremium.setText(args[7]);
+		txtEconomy.setText(args[8]);
 	}
 	
 	/*
