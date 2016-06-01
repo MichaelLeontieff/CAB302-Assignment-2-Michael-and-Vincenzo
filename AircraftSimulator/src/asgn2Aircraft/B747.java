@@ -44,5 +44,4 @@ public class B747 extends Aircraft {
 		super(flightCode, departureTime, first, business, premium, economy);
 		this.type = "B747";
 	}
-
 }
