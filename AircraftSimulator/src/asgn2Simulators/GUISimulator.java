@@ -12,6 +12,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -61,6 +62,8 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	 */
 	private static final int NUM_ARGS = 9;
 	private static final int FONT_SIZE = 24;
+	
+	private static final int TXT_LOGGING_OUTPUT_TAB = 0;
 
 	/* tabbed pane
 	 * 
@@ -497,7 +500,7 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		Object src=e.getSource(); 	      
 			if (src == btnRunSimulation) {
-				tabbedPane.setSelectedIndex(0);
+				tabbedPane.setSelectedIndex(TXT_LOGGING_OUTPUT_TAB);
 				try {			
 					createSimulation();
 				} catch (AircraftException e1) {
@@ -520,11 +523,11 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 			btnShowQueueRefusedGraph.setEnabled(true);
 			
 			if (src == btnShowBookingGraph) {
-				tabbedPane.setSelectedIndex(1);
+				tabbedPane.setSelectedIndex(BOOKINGS_CHART);
 			}
 			
 			if (src == btnShowQueueRefusedGraph) {
-				tabbedPane.setSelectedIndex(2);
+				tabbedPane.setSelectedIndex(QUEUE_REFUSE_CHART);
 			}		
 	}
 	
@@ -562,6 +565,10 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	
 	/**
 	 * Private method to create simulator object with parameters
+	 * @throws SimulationException
+	 * @throws Aircraft Exception
+	 * @throws Passenger Exception
+	 * @throws IOException
 	 */
 	private void createSimulation() throws SimulationException, AircraftException, PassengerException, IOException {
 		// re-disable graph buttons
@@ -595,8 +602,12 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 		}	
 	}
 
-	/*
+	/**
 	 * Private method that runs the simulation and calls output methods
+	 * @throws SimulationException
+	 * @throws Aircraft Exception
+	 * @throws Passenger Exception
+	 * @throws IOException
 	 */
 	private void runSimulation() throws AircraftException, SimulationException, PassengerException, IOException {
 		txtLoggingOutput.setText("");
@@ -650,15 +661,9 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 		
 		pnlChartOne.removeAll();
 		pnlChartTwo.removeAll();
-				
-		pnlChartOne.repaint();
-		pnlChartTwo.repaint();
 		
 		pnlChartOne.add(bookingsChart.createComponentBookings());
 		pnlChartTwo.add(queuedRefusedChart.createComponentQueuedRefused());
-		
-		pnlChartOne.repaint();
-		pnlChartTwo.repaint();
 				
 		this.sim.finaliseQueuedAndCancelledPassengers(Constants.DURATION); 
 		finalise(this.sim);
@@ -677,6 +682,8 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	 * Private method that outputs the summary of the simulator for that day
 	 * @param time Current time
 	 * @param sim Simulator Object
+	 * @throws IOException
+	 * @throws Simulation Exception
 	 */
 	public void logEntry(int time,Simulator sim) throws IOException, SimulationException {
 		boolean flying = (time >= Constants.FIRST_FLIGHT);
@@ -686,6 +693,7 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	/**
 	 * Private method that outputs the initial entry
 	 * @param sim Simulator Object
+	 * @throws Simulation Exception
 	 */
 	private void initialEntry(Simulator sim) throws SimulationException {
 		txtLoggingOutput.append("Start of Simulation\n");
@@ -700,11 +708,12 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	 * @param sim Simulator Object
 	 */
 	private void finalise(Simulator sim) {
-		txtLoggingOutput.append("\nEnd of Simulation\n");
+		String timeLog = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+		txtLoggingOutput.append("\n" + timeLog + ": End of Simulation\n");
 		txtLoggingOutput.append(sim.finalState());
 	}
 	
-	/*
+	/**
 	 * Numerous getters which fetch the content of the text fields and return it 
 	 * if it's acceptable for the simulation, if not then an error is raised.
 	 * 

@@ -1,8 +1,6 @@
 package asgn2Simulators;
 
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
@@ -57,9 +55,6 @@ public class ChartPanel {
 	private int totalPrev;
 	private int emptyPrev;
 	
-	private int queuedPrev;
-	private int refusedPrev;
-	
 	private static final int BOOKINGS_CHART = 1;
 	private static final int QUEUE_REFUSE_CHART = 2;
 	
@@ -92,7 +87,7 @@ public class ChartPanel {
      */
      private JFreeChart createChartBookings(final XYDataset dataset) {
         final JFreeChart result = ChartFactory.createTimeSeriesChart(
-            "Bookings Chart", "Days", "Passengers", dataset, true, true, false);
+            "Bookings Chart (Daily)", "Days", "Passengers", dataset, true, true, false);
         final XYPlot plot = result.getXYPlot();
         ValueAxis domain = plot.getDomainAxis();
         domain.setAutoRange(true);
@@ -108,7 +103,7 @@ public class ChartPanel {
       */
      private JFreeChart createChartQueuedRefused(final XYDataset dataset) {
          final JFreeChart result = ChartFactory.createTimeSeriesChart(
-             "Queued and Refused Chart", "Days", "Passengers", dataset, true, true, false);
+             "Queued and Refused Chart (Cumulative)", "Days", "Passengers", dataset, true, true, false);
          final XYPlot plot = result.getXYPlot();
          ValueAxis domain = plot.getDomainAxis();
          domain.setAutoRange(true);
