@@ -30,6 +30,10 @@ public class BusinessTests {
 	private static final int TEST_DEPARTURE_TIME = 20;
 	private static final int TEST_CONFIRMATION_TIME = 10;
 	private static final int TEST_QUEUE_TIME = 7;
+	private static final int NEGATIVE_BOUNDARY = -1;
+	private static final int NEGATIVE_PARAMETER = -5;
+	private static final int ZERO_BOUNDARY_CASE = 0;
+	private static final int LESSER_DEPARTURE_TIME = 3;
 
 	// Declare test objects 
 	private Business myPassenger;
@@ -59,42 +63,42 @@ public class BusinessTests {
 	
 	@Test (expected = PassengerException.class)
 	public void testBusinessBookingTimeLessThanZeroBoundaryCase() throws PassengerException {
-		testPassenger = new Business(-1, TEST_DEPARTURE_TIME);
+		testPassenger = new Business(NEGATIVE_BOUNDARY, TEST_DEPARTURE_TIME);
 	}
 	
 	@Test (expected = PassengerException.class)
 	public void testBusinessBookingTimeLessThanZero() throws PassengerException {
-		testPassenger = new Business(-5, TEST_DEPARTURE_TIME);
+		testPassenger = new Business(NEGATIVE_PARAMETER, TEST_DEPARTURE_TIME);
 	}
 	
 	@Test (expected = PassengerException.class)
 	public void testBusinessDepartureTimeEqualToZero() throws PassengerException {
-		testPassenger = new Business(TEST_BOOKING_TIME, 0);
+		testPassenger = new Business(TEST_BOOKING_TIME, ZERO_BOUNDARY_CASE);
 	}
 	
 	@Test (expected = PassengerException.class)
 	public void testBusinessDepartureTimeLessThanZeroBoundaryCase() throws PassengerException {
-		testPassenger = new Business(TEST_BOOKING_TIME, -1);
+		testPassenger = new Business(TEST_BOOKING_TIME, NEGATIVE_BOUNDARY);
 	}
 	
 	@Test (expected = PassengerException.class)
 	public void testBusinessDepartureTimeLessThanZero() throws PassengerException {
-		testPassenger = new Business(TEST_BOOKING_TIME, -10);
+		testPassenger = new Business(TEST_BOOKING_TIME, NEGATIVE_PARAMETER);
 	}
 	
 	@Test (expected = PassengerException.class)
 	public void testBusinessDepartureTimeLessThanBookingTime() throws PassengerException {
-		testPassenger = new Business(TEST_BOOKING_TIME, 2);
+		testPassenger = new Business(TEST_BOOKING_TIME, LESSER_DEPARTURE_TIME);
 	}
 	
 	@Test (expected = PassengerException.class)
 	public void testBusinessDepartureTimeLessThanBookingTimeLessThanZero() throws PassengerException {
-		testPassenger = new Business(TEST_BOOKING_TIME, -1);
+		testPassenger = new Business(TEST_BOOKING_TIME, NEGATIVE_BOUNDARY);
 	}
 	
 	@Test (expected = PassengerException.class)
 	public void testBusinessDepartureTimeLessThanBookingTimeZeroDepartureTime() throws PassengerException {
-		testPassenger = new Business(TEST_BOOKING_TIME, 0);
+		testPassenger = new Business(TEST_BOOKING_TIME, ZERO_BOUNDARY_CASE);
 	}
 	
 	// NO SEATS MESSAGE TESTS
