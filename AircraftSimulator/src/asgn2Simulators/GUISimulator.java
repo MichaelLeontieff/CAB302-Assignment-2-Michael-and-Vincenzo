@@ -426,15 +426,15 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	    lblExecution.setFont(headingFont);
 	    
 	    btnRunSimulation = new JButton("Run Simulation");
-	    btnRunSimulation.setPreferredSize(new Dimension(200, 35));
+	    btnRunSimulation.setPreferredSize(new Dimension(250, 35));
 	    btnRunSimulation.addActionListener(this);
 	    
 	    btnShowBookingGraph = new JButton("Show/Update Bookings Graph");
-	    btnShowBookingGraph.setPreferredSize(new Dimension(200, 35));
+	    btnShowBookingGraph.setPreferredSize(new Dimension(250, 35));
 	    btnShowBookingGraph.addActionListener(this);    
 	    
 	    btnShowQueueRefusedGraph = new JButton("Show/Update Queue-Refused Graph");
-	    btnShowQueueRefusedGraph.setPreferredSize(new Dimension(200, 35));
+	    btnShowQueueRefusedGraph.setPreferredSize(new Dimension(250, 35));
 	    btnShowQueueRefusedGraph.addActionListener(this);    
 	    
 	    btnShowBookingGraph.setEnabled(false);
