@@ -158,6 +158,7 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	private Simulator sim;
 	private String[] arguments;
 	private TimeSeriesCollection timeSeries;
+	private boolean commandLineArg;
 	
 	/*
 	 * Validation tracker
@@ -254,6 +255,7 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	    // populate text fields with arguments if applicable
 	    if (arguments.length == 9) {
 	    	populateFieldsStringArguments(arguments);
+	    	commandLineArg = true;
 	    } else {
 	    	populateFieldsConstants();
 	    }
@@ -585,39 +587,34 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 				this.sim.processQueue(time);
 				this.sim.flyPassengers(time);
 				this.sim.updateTotalCounts(time); 
-				//logFlightEntries(time, sim);
+				
+				// set data for bookings chart 
+				bookingsChart.setEconomy(sim.getTotalEconomy());
+				bookingsChart.setPremium(sim.getTotalPremium());
+				bookingsChart.setFirst(sim.getTotalFirst());
+				bookingsChart.setBusiness(sim.getTotalBusiness());
+				bookingsChart.setTotal(getTotalBookings(sim));
+				bookingsChart.setEmpty();
+				
+				// set data for queue refused chart
+				queuedRefusedChart.setRefused(sim.numRefused());
+				queuedRefusedChart.setQueued(sim.numInQueue());
+				
+				bookingsChart.addToTimeSeriesBookings(timePoint);
+				queuedRefusedChart.addToTimeSeriesQueuedRefused(timePoint);
 			} else {
 				this.sim.processQueue(time);
 			}
 			
 			logEntry(time, this.sim);
-			
-			bookingsChart.setEconomy(sim.getTotalEconomy());
-			bookingsChart.setPremium(sim.getTotalPremium());
-			bookingsChart.setFirst(sim.getTotalFirst());
-			bookingsChart.setBusiness(sim.getTotalBusiness());
-			bookingsChart.setTotal(getTotalBookings(sim));
-			// not sure where this data is sourced
-			bookingsChart.setEmpty();
-			queuedRefusedChart.setRefused(sim.numRefused());
-			queuedRefusedChart.setQueued(sim.numInQueue());
-			
-			
-
-			// add the metrics to the time series with timePoint association
-			bookingsChart.addToTimeSeriesBookings(timePoint);
-			queuedRefusedChart.addToTimeSeriesQueuedRefused(timePoint);
-			
 		}
 		
 		bookingsChart.compileTimeSeriesBookings();
 		queuedRefusedChart.compileTimeSeriesQueuedRefused();
 		
-
 		pnlChartOne.removeAll();
 		pnlChartTwo.removeAll();
-		
-		
+				
 		pnlChartOne.repaint();
 		pnlChartTwo.repaint();
 		
@@ -629,8 +626,6 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 				
 		this.sim.finaliseQueuedAndCancelledPassengers(Constants.DURATION); 
 		finalise(this.sim);
-		
-	
 	}
 	
 	/*
