@@ -87,7 +87,7 @@ public class ChartPanel {
      */
      private JFreeChart createChartBookings(final XYDataset dataset) {
         final JFreeChart result = ChartFactory.createTimeSeriesChart(
-            "Bookings Chart", "Days", "Passengers", dataset, true, true, false);
+            "Bookings Chart (Daily)", "Days", "Passengers", dataset, true, true, false);
         final XYPlot plot = result.getXYPlot();
         ValueAxis domain = plot.getDomainAxis();
         domain.setAutoRange(true);
@@ -103,7 +103,7 @@ public class ChartPanel {
       */
      private JFreeChart createChartQueuedRefused(final XYDataset dataset) {
          final JFreeChart result = ChartFactory.createTimeSeriesChart(
-             "Queued and Refused Chart", "Days", "Passengers", dataset, true, true, false);
+             "Queued and Refused Chart (Cumulative)", "Days", "Passengers", dataset, true, true, false);
          final XYPlot plot = result.getXYPlot();
          ValueAxis domain = plot.getDomainAxis();
          domain.setAutoRange(true);
