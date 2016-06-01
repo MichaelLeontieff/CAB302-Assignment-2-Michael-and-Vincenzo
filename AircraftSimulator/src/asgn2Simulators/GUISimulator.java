@@ -705,7 +705,8 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	 * @throws Simulation Exception
 	 */
 	private void initialEntry(Simulator sim) throws SimulationException {
-		txtLoggingOutput.append("Start of Simulation\n");
+		String timeLog = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+		txtLoggingOutput.append( timeLog + ": Start of Simulation\n");
 		txtLoggingOutput.append(sim.toString() + "\n");
 		String capacities = sim.getFlights(Constants.FIRST_FLIGHT).initialState();
 		txtLoggingOutput.append(capacities);
