@@ -150,8 +150,10 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	 * Validation tracker
 	 */
 	private boolean isValidInput = true;
+	
 	/**
 	 * @param arg0
+	 * @param args String array parsed from Simulation Runner that contains simulation arguments
 	 * @throws HeadlessException
 	 */
 	public GUISimulator(String arg0, String[] args) throws HeadlessException {
@@ -168,8 +170,8 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	}
 
 
-	/*
-	 * Program entry point. Initialises panels and their elements through private method calls
+	/**
+	 * Called from Run() - Initialises panels and their elements through private method calls
 	 * options. 
 	 * 
 	 */	
@@ -239,6 +241,10 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 		setVisible(true);
 	}
 	
+	/**
+	 * Private helper method to construct user input fields panel (which is comprised of three other panels)
+	 * and place them within a grid bag layout
+	 */
 	private void userInputFieldsPanel() {
 		GridBagLayout layout = new GridBagLayout();
 		pnlUserInput.setLayout(layout);
@@ -253,6 +259,15 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 		
 	}
 	
+	/**
+	 * Private helper method to return constraints object based on given parameter fields
+	 * @param x grid x
+	 * @param y grid y
+	 * @param w grid width
+	 * @param h grid height
+	 * @param paddingx padding x axis
+	 * @return GridBagConstraints obejct comprised of parameters
+	 */
 	private GridBagConstraints gridBagConstraints(int x, int y, int w, int h, int paddingx) {
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.gridx = x;
@@ -268,6 +283,9 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 		return constraints;
 	}
 	
+	/**
+	 * Private Method to set the constraints of the top label headings
+	 */
 	private void setConstraintsLblHeading() {
 	    lblHeadingConstraints.anchor = GridBagConstraints.CENTER;
 	    lblHeadingConstraints.weightx = 100;
@@ -275,6 +293,9 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	    lblHeadingConstraints.gridwidth = 2;
 	}
 	
+	/**
+	 * Private Method to set the constraints of the sub headings
+	 */
 	private void setConstraintsLblSubHeading() {
 	    lblSubHeadingConstraints.anchor = GridBagConstraints.WEST;
 	    lblSubHeadingConstraints.weightx = 100;
@@ -283,6 +304,9 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	    lblSubHeadingConstraints.insets = new Insets(0, 10, 0, 10);
 	}
 	
+	/**
+	 * Private Method to set the constraints of the text fields
+	 */
 	private void setConstraintsTxtField() {
 	    txtConstraints.anchor = GridBagConstraints.EAST;
 	    txtConstraints.weightx = 100;
@@ -290,12 +314,27 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	    txtConstraints.gridwidth = 2;
 	}
 	
+	/**
+	 * Private helper to create panel with parameter colour
+	 * @param c colour of background
+	 * @return JPanel with defined colour
+	 */
 	private JPanel createPanel(Color c) {
 		JPanel jp = new JPanel();
 		jp.setBackground(c);
 		return jp;
 	}
 	
+	/**
+	 * Private helper method to add parameter Component to parameter JPanel with parameter constraints
+	 * @param jp JPanel
+	 * @param c Component to be added
+	 * @param constraints Constraints that apply to Component
+	 * @param x grid x
+	 * @param y grid y
+	 * @param w grid width
+	 * @param h grid height
+	 */
 	private void addToPanel(JPanel jp,Component c, GridBagConstraints constraints, int x, int y, int w, int h) {  
 	      constraints.gridx = x;
 	      constraints.gridy = y;
@@ -304,6 +343,10 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	      jp.add(c, constraints);
 	   }
 	
+	/**
+	 * Private helper method which constructs the logging panel using a gridbag layout
+	 * and handles the instantiation of the contained elements
+	 */
 	private void layoutLoggingPanel() {
 		GridBagLayout layout = new GridBagLayout();
 		pnlLoggingOutput.setLayout(layout);
@@ -319,6 +362,9 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 		tabbedPane.addTab("Text Logging Output", pnlLoggingOutput);
 	}
 	
+	/**
+	 * Private helper method to handle panel creation for the Bookings chart
+	 */
 	private void layoutFreechartOnePanel() {
 		GridBagLayout layout = new GridBagLayout();
 		pnlChartOne.setLayout(layout);
@@ -326,6 +372,9 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 		tabbedPane.addTab("Chart One", pnlChartOne);
 	}
 	
+	/**
+	 * Private helper method to handle panel creation for the Queued/Refused chart
+	 */
 	private void layoutFreechartTwoPanel() {
 		GridBagLayout layout = new GridBagLayout();
 		pnlChartTwo.setLayout(layout);
@@ -333,6 +382,9 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 		tabbedPane.addTab("Chart Two", pnlChartTwo);
 	}
 	
+	/**
+	 * Private helper method to handle the creation of panels and elements for the simulation panel
+	 */
 	private void layoutSimulationPanel() {
 		GridBagLayout layout = new GridBagLayout();
 		pnlSimulation.setLayout(layout);
@@ -369,6 +421,9 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	    addToPanel(pnlSimulation, txtCancellation, txtConstraints, 0, 4, 1, 1);
 	}
 	
+	/**
+	 * Private helper method to handle the creation of panels and elements for the Fare Classes panel
+	 */
 	private void layoutFareClassesPanel() {
 		GridBagLayout layout = new GridBagLayout();
 		pnlFareClasses.setLayout(layout);
@@ -404,6 +459,9 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	    addToPanel(pnlFareClasses, txtEconomy, txtConstraints, 0, 4, 1, 1); 
 	}
 	
+	/**
+	 * Private helper method to handle the creation of panels and elements for the Execution panel
+	 */
 	private void layoutExecutionPanel() {
 		GridBagLayout layout = new GridBagLayout();
 		pnlExecution.setLayout(layout);
@@ -432,6 +490,9 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	    addToPanel(pnlExecution, btnShowQueueRefusedGraph, lblHeadingConstraints, 0, 15, 1, 5);
 	}
 
+	/**
+	 * Overridden class from ActionListener to handle events
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object src=e.getSource(); 	      
@@ -464,11 +525,10 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 			
 			if (src == btnShowQueueRefusedGraph) {
 				tabbedPane.setSelectedIndex(2);
-			}
-			
+			}		
 	}
 	
-	/*
+	/**
 	 * Private method to populate fields with constants
 	 */
 	private void populateFieldsConstants() {
@@ -483,7 +543,8 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 		txtEconomy.setText(Double.toString(Constants.DEFAULT_ECONOMY_PROB));
 	}
 	
-	/*
+	/**
+	 * @param String array containing arguments
 	 * Private method to populate fields with string arguments
 	 */
 	private void populateFieldsStringArguments(String[] args) {
@@ -499,8 +560,8 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 		txtEconomy.setText(args[7]);
 	}
 	
-	/*
-	 * create simulator object with parameters
+	/**
+	 * Private method to create simulator object with parameters
 	 */
 	private void createSimulation() throws SimulationException, AircraftException, PassengerException, IOException {
 		// re-disable graph buttons
@@ -526,10 +587,8 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 		checkProbabilityInput(cancellation);
 		
 		if (isValidInput) {
-			
 			this.sim = new Simulator(seed,queueSize,dailyMean,dailyMean * 0.33,firstProb,businessProb,
-					  premiumProb,economyProb,cancellation);	
-				
+					  premiumProb,economyProb,cancellation);			
 			runSimulation();
 		} else {
 			txtLoggingOutput.append("Please fix errors before running simulation again!\n");
@@ -537,7 +596,7 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	}
 
 	/*
-	 * Method that runs the simulation and calls output methods
+	 * Private method that runs the simulation and calls output methods
 	 */
 	private void runSimulation() throws AircraftException, SimulationException, PassengerException, IOException {
 		txtLoggingOutput.setText("");
@@ -605,24 +664,28 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 		finalise(this.sim);
 	}
 	
-	/*
+	/**
 	 * Private method to fetch the number of total bookings
+	 * @param Simulator object
 	 */
 	private int getTotalBookings(Simulator sim) {
 		return sim.getTotalBusiness() + sim.getTotalEconomy() 
 		+ sim.getTotalFirst() + sim.getTotalPremium();
 	}
 	
-	/*
+	/**
 	 * Private method that outputs the summary of the simulator for that day
+	 * @param time Current time
+	 * @param sim Simulator Object
 	 */
 	public void logEntry(int time,Simulator sim) throws IOException, SimulationException {
 		boolean flying = (time >= Constants.FIRST_FLIGHT);
 		txtLoggingOutput.append(sim.getSummary(time, flying));
 	}
 	
-	/*
+	/**
 	 * Private method that outputs the initial entry
+	 * @param sim Simulator Object
 	 */
 	private void initialEntry(Simulator sim) throws SimulationException {
 		txtLoggingOutput.append("Start of Simulation\n");
@@ -632,8 +695,9 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	}
 	
 	
-	/*
+	/**
 	 * Private method that outputs the finalise string
+	 * @param sim Simulator Object
 	 */
 	private void finalise(Simulator sim) {
 		txtLoggingOutput.append("\nEnd of Simulation\n");
@@ -677,8 +741,12 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 		return checkDouble(txtEconomy.getText(), "Economy Class Probability");
 	}
 	
-	/*
+	/**
 	 * Private helper method to check the sum of the probabilities
+	 * @param first probablity of first class
+	 * @param business probablity of business class
+	 * @param premium probablity of premium class
+	 * @param economy probablity of economy class
 	 */
 	private void checkSumProbabilities(Double first, Double business, Double premium, Double economy) {
 		if (first + business + premium + economy > 1) {
@@ -687,8 +755,9 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 		}
 	}
 	
-	/*
+	/**
 	 * private helper method to test if a probabaility is greater than one
+	 * @param value given probability to check
 	 */
 	private void checkProbabilityInput(Double value) {
 		if (value > 1) {
@@ -696,9 +765,12 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 			txtLoggingOutput.append("Cancellation Probability must be equal to or less than one!\n");
 		}
 	}
-	/*
+	
+	/**
 	 * Helper method that parses the string to double and returns it or null if
 	 * parse fails
+	 * @param name String input that represent name
+	 * @param input input string sourced from text fields
 	 */
 	private Double checkDouble(String input, String name) {
 		double value = 0;
@@ -715,9 +787,11 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 		return value;
 	}
 	
-	/*
+	/**
 	 * Helper method that parses the string to double and returns it or null if
 	 * parse fails
+	 * @param name String input that represent name
+	 * @param input input string sourced from text fields
 	 */
 	private Integer checkInteger(String input, String name) {
 		int value = 0;
