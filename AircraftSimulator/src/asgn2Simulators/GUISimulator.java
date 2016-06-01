@@ -478,6 +478,25 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	}
 	
 	/*
+	 * Private method to populate fields with constants
+	 */
+	private void populateFieldsConstants() {
+		txtRNGInput.setText(Integer.toString(Constants.DEFAULT_SEED));
+		txtDailyMean.setText(Double.toString(Constants.DEFAULT_DAILY_BOOKING_MEAN));
+		txtQueueSize.setText(Integer.toString(Constants.DEFAULT_MAX_QUEUE_SIZE));
+		txtCancellation.setText(Double.toString(Constants.DEFAULT_CANCELLATION_PROB));
+		
+		txtFirst.setText(Double.toString(Constants.DEFAULT_FIRST_PROB));
+		txtBusiness.setText(Double.toString(Constants.DEFAULT_BUSINESS_PROB));
+		txtPremium.setText(Double.toString(Constants.DEFAULT_PREMIUM_PROB));
+		txtEconomy.setText(Double.toString(Constants.DEFAULT_ECONOMY_PROB));
+	}
+	
+	/*
+	 * Private method to populate fields with string arguments
+	 */
+	
+	/*
 	 * create simulator object with parameters
 	 */
 	private void createSimulation() throws SimulationException, AircraftException, PassengerException, IOException {
