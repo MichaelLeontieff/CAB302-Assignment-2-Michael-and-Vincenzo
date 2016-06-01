@@ -40,7 +40,7 @@ public class SimulationRunner {
 					break;
 				}
 				case NUM_ARGS + 1: {
-					if (args[9] == "true") {
+					if (args[9] == "cli") {
 						runGUI = false;
 					}
 				}

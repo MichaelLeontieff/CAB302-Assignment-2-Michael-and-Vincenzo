@@ -251,6 +251,13 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	    tabbedPane.setEnabledAt(1, false);
 	    tabbedPane.setEnabledAt(2, false);
 		
+	    // populate text fields with arguments if applicable
+	    if (arguments.length == 9) {
+	    	populateFieldsStringArguments(arguments);
+	    } else {
+	    	populateFieldsConstants();
+	    }
+	    
 		repaint();
 		setVisible(true);
 	}
