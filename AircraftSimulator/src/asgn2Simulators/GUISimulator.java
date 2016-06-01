@@ -562,6 +562,10 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	
 	/**
 	 * Private method to create simulator object with parameters
+	 * @throws SimulationException
+	 * @throws Aircraft Exception
+	 * @throws Passenger Exception
+	 * @throws IOException
 	 */
 	private void createSimulation() throws SimulationException, AircraftException, PassengerException, IOException {
 		// re-disable graph buttons
@@ -595,8 +599,12 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 		}	
 	}
 
-	/*
+	/**
 	 * Private method that runs the simulation and calls output methods
+	 * @throws SimulationException
+	 * @throws Aircraft Exception
+	 * @throws Passenger Exception
+	 * @throws IOException
 	 */
 	private void runSimulation() throws AircraftException, SimulationException, PassengerException, IOException {
 		txtLoggingOutput.setText("");
@@ -650,15 +658,9 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 		
 		pnlChartOne.removeAll();
 		pnlChartTwo.removeAll();
-				
-		pnlChartOne.repaint();
-		pnlChartTwo.repaint();
 		
 		pnlChartOne.add(bookingsChart.createComponentBookings());
 		pnlChartTwo.add(queuedRefusedChart.createComponentQueuedRefused());
-		
-		pnlChartOne.repaint();
-		pnlChartTwo.repaint();
 				
 		this.sim.finaliseQueuedAndCancelledPassengers(Constants.DURATION); 
 		finalise(this.sim);
@@ -677,6 +679,8 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	 * Private method that outputs the summary of the simulator for that day
 	 * @param time Current time
 	 * @param sim Simulator Object
+	 * @throws IOException
+	 * @throws Simulation Exception
 	 */
 	public void logEntry(int time,Simulator sim) throws IOException, SimulationException {
 		boolean flying = (time >= Constants.FIRST_FLIGHT);
@@ -686,6 +690,7 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	/**
 	 * Private method that outputs the initial entry
 	 * @param sim Simulator Object
+	 * @throws Simulation Exception
 	 */
 	private void initialEntry(Simulator sim) throws SimulationException {
 		txtLoggingOutput.append("Start of Simulation\n");
@@ -704,7 +709,7 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 		txtLoggingOutput.append(sim.finalState());
 	}
 	
-	/*
+	/**
 	 * Numerous getters which fetch the content of the text fields and return it 
 	 * if it's acceptable for the simulation, if not then an error is raised.
 	 * 
