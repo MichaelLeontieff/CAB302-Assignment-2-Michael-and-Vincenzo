@@ -1,9 +1,15 @@
 /**
  * 
+ * This file is part of the AircraftSimulator Project, written as 
+ * part of the assessment for CAB302, semester 1, 2016. 
+ * 
  */
 package asgn2Passengers;
 
 /**
+ * Specialisation of the {@link asgn2Passengers.Passenger} class to represent a  
+ * passenger of the First class
+ * 
  * @author hogan
  *
  */
@@ -20,12 +26,8 @@ public class First extends Passenger {
 	 * @see asgnPassengers.Passenger#Passenger(int,int)
 	 */
 	public First(int bookingTime, int departureTime) throws PassengerException {
-		//Call super here 
-		super(bookingTime, departureTime);
-		
-		this.passID = "F:" + this.passID;
-
-		
+		super(bookingTime, departureTime);	
+		this.passID = "F:" + this.passID;	
 	}
 	
 	/**
@@ -35,15 +37,23 @@ public class First extends Passenger {
 
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see asgn1Passengers.Passenger#noSeatsMsg()
+	 */
 	@Override
 	public String noSeatsMsg() {
 		return "No seats available in First";
 	}
 
-	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see asgn1Passengers.Passenger#upgrade()
+	 */
 	@Override
 	public Passenger upgrade() {
-		//Think about it :) 
 		// cannot be upgraded from first ergo return current passenger
 		return this;
 	}

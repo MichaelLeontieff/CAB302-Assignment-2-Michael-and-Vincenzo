@@ -1,9 +1,15 @@
 /**
  * 
+ * This file is part of the AircraftSimulator Project, written as 
+ * part of the assessment for CAB302, semester 1, 2016. 
+ * 
  */
 package asgn2Passengers;
 
 /**
+ * Specialisation of the {@link asgn2Passengers.Passenger} class to represent a  
+ * passenger of the Economy class
+ * 
  * @author hogan
  *
  */
@@ -19,18 +25,26 @@ public class Economy extends Passenger {
 	 * @throws PassengerException if invalid bookingTime or departureTime 
 	 * @see asgnPassengers.Passenger#Passenger(int,int)
 	 */
-	public Economy(int bookingTime,int departureTime) throws PassengerException {
-		//Call super here 
+	public Economy(int bookingTime,int departureTime) throws PassengerException { 
 		super(bookingTime, departureTime);
-		//Stuff here
 		this.passID = "Y:" + this.passID;
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see asgn1Passengers.Passenger#noSeatsMsg()
+	 */
 	@Override
 	public String noSeatsMsg() {
 		return "No seats available in Economy";
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see asgn1Passengers.Passenger#upgrade()
+	 */
 	@Override
 	public Passenger upgrade() {
 		// Create new passenger object

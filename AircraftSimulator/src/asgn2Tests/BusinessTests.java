@@ -10,10 +10,7 @@ package asgn2Tests;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
-import asgn2Passengers.Business;
-import asgn2Passengers.First;
-import asgn2Passengers.Passenger;
-import asgn2Passengers.PassengerException;
+import asgn2Passengers.*;
 
 /**
  * This class represents a JUnit test class for the Business class as part of the

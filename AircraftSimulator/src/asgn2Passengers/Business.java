@@ -1,9 +1,15 @@
 /**
  * 
+ * This file is part of the AircraftSimulator Project, written as 
+ * part of the assessment for CAB302, semester 1, 2016. 
+ * 
  */
 package asgn2Passengers;
 
 /**
+ * Specialisation of the {@link asgn2Passengers.Passenger} class to represent a  
+ * passenger of the Business class
+ * 
  * @author hogan
  *
  */
@@ -19,10 +25,8 @@ public class Business extends Passenger {
 	 * @throws PassengerException if invalid bookingTime or departureTime 
 	 * @see asgnPassengers.Passenger#Passenger(int,int)
 	 */
-	public Business(int bookingTime, int departureTime) throws PassengerException {
-		//Call super here 
+	public Business(int bookingTime, int departureTime) throws PassengerException { 
 		super(bookingTime, departureTime);
-		//Stuff here
 		this.passID = "J:" + this.passID;
 	}
 	
@@ -33,16 +37,26 @@ public class Business extends Passenger {
 		
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see asgn1Passengers.Passenger#noSeatsMsg()
+	 */
 	@Override
 	public String noSeatsMsg() {
 		return "No seats available in Business";
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see asgn1Passengers.Passenger#upgrade()
+	 */
 	@Override
 	public Passenger upgrade() {
-		// Create new passenger object of type First()  upgrade
+		// Create new passenger object of type First() upgrade
 		Passenger upgraded = new First();
-		// copy over previous states
+		// Copy over previous states
 		upgraded.copyPassengerState(this);
 		upgraded.passID = "F(U)" + upgraded.passID;
 		return upgraded;

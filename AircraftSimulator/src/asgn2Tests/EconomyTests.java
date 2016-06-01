@@ -10,12 +10,7 @@ package asgn2Tests;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
-
-import asgn2Passengers.Business;
-import asgn2Passengers.Economy;
-import asgn2Passengers.Passenger;
-import asgn2Passengers.PassengerException;
-import asgn2Passengers.Premium;
+import asgn2Passengers.*;
 
 /**
  * This class represents a JUnit test class for the Economy class as part of the
@@ -32,6 +27,10 @@ public class EconomyTests {
 	private static final int TEST_DEPARTURE_TIME = 20;
 	private static final int TEST_CONFIRMATION_TIME = 10;
 	private static final int TEST_QUEUE_TIME = 6;
+	private static final int NEGATIVE_BOUNDARY = -1;
+	private static final int NEGATIVE_PARAMETER = -7;
+	private static final int ZERO_BOUNDARY_CASE = 0;
+	private static final int LESSER_DEPARTURE_TIME = 2;
 
 	// Declare test objects 
 	private Economy myPassenger;
@@ -61,42 +60,42 @@ public class EconomyTests {
 	
 	@Test (expected = PassengerException.class)
 	public void testEconomyBookingTimeLessThanZeroBoundaryCase() throws PassengerException {
-		testPassenger = new Economy(-1, TEST_DEPARTURE_TIME);
+		testPassenger = new Economy(NEGATIVE_BOUNDARY, TEST_DEPARTURE_TIME);
 	}
 	
 	@Test (expected = PassengerException.class)
 	public void testEconomyBookingTimeLessThanZero() throws PassengerException {
-		testPassenger = new Economy(-7, TEST_DEPARTURE_TIME);
+		testPassenger = new Economy(NEGATIVE_PARAMETER, TEST_DEPARTURE_TIME);
 	}
 	
 	@Test (expected = PassengerException.class)
 	public void testEconomyDepatureTimeEqualToZero() throws PassengerException {
-		testPassenger = new Economy(TEST_BOOKING_TIME, 0);
+		testPassenger = new Economy(TEST_BOOKING_TIME, ZERO_BOUNDARY_CASE);
 	}
 	
 	@Test (expected = PassengerException.class)
 	public void testEconomyDepartureTimeLessThanZeroBoundaryCase() throws PassengerException {
-		testPassenger = new Economy(TEST_BOOKING_TIME, -1);
+		testPassenger = new Economy(TEST_BOOKING_TIME, NEGATIVE_BOUNDARY);
 	}
 	
 	@Test (expected = PassengerException.class)
 	public void testEconomyDepartureTimeLessThanZero() throws PassengerException {
-		testPassenger = new Economy(TEST_BOOKING_TIME, -5);
+		testPassenger = new Economy(TEST_BOOKING_TIME, NEGATIVE_PARAMETER);
 	}
 	
 	@Test (expected = PassengerException.class)
 	public void testEconomyDepartureTimeLessThanBookingTime() throws PassengerException {
-		testPassenger = new Economy(TEST_BOOKING_TIME, 1);
+		testPassenger = new Economy(TEST_BOOKING_TIME, LESSER_DEPARTURE_TIME);
 	}
 	
 	@Test (expected = PassengerException.class)
 	public void testEconomyDepartureTimeLessThanBookingTimeLessThanZero() throws PassengerException {
-		testPassenger = new Economy(TEST_BOOKING_TIME, -1);
+		testPassenger = new Economy(TEST_BOOKING_TIME, NEGATIVE_BOUNDARY);
 	}
 	
 	@Test (expected = PassengerException.class)
 	public void testEconomyDepartureTimeLessThanBookingTimeZeroDepartureTime() throws PassengerException {
-		testPassenger = new Economy(TEST_BOOKING_TIME, 0);
+		testPassenger = new Economy(TEST_BOOKING_TIME, ZERO_BOUNDARY_CASE);
 	}
 
 	// NO SEATS MESSAGE TESTS
@@ -108,6 +107,8 @@ public class EconomyTests {
 	public void testNoSeatsMsg() {
 		assertEquals("No seats available in Economy", myPassenger.noSeatsMsg());
 	}
+	
+	// UPGRADE TESTS
 
 	/**
 	 * Test method for {@link asgn2Passengers.Economy#upgrade()}.
@@ -291,18 +292,6 @@ public class EconomyTests {
 		// Create new passenger instance which is an upgrade of the original passenger
 		upgradedPassenger = myPassenger.upgrade();
 		// Check if the passID's do not match
-		assertTrue(myPassenger.getPassID() != upgradedPassenger.getPassID());
-	} 
-	
-	/*	@Test
-	public void testUpgradeBothNotQueued() throws PassengerException {
-		// Set passenger to a confirmed state
-		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
-		// Create new passenger instance which is an upgrade of the original passenger
-		upgradedPassenger = myPassenger.upgrade();
-		// Check if both passenger instances are in confirmed states
-		assertTrue(myPassenger.isQueued() == upgradedPassenger.isQueued());
-		assertEquals(false, myPassenger.isQueued() && upgradedPassenger.isQueued())
-	} */	
-
+		assertFalse(myPassenger.getPassID().equals(upgradedPassenger.getPassID()));
+	} 	
 }
