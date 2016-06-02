@@ -482,9 +482,9 @@ public abstract class Passenger {
 	/**
 	 * Check boundaries of parameter in regards to zero
 	 * and throw exception
-	 * @param givenTime supplied time as integer
-	 * @param supplied String which gives content to given value
-	 * @param inclusive defines whether the value should include or exclude 0
+	 * @param <code>givenTime</code> supplied time as integer
+	 * @param <code>supplied</code> String which gives content to given value
+	 * @param <code>inclusive</code> defines whether the value should include or exclude 0
 	 */
 	private void checkInvalidTimeParameter(int givenTime, String valueName, boolean inclusive) throws PassengerException {
 		if (inclusive) {
@@ -501,9 +501,9 @@ public abstract class Passenger {
 	/**
 	 * Private helper method to compare two parameters to see if the first is less than the other
 	 * and throw exception
-	 * @param lessThanTime upper bound value
-	 * @param greaterThanTime lower bound value
-	 * @param preceed String of text to preceed the statement in exception
+	 * @param <code>lessThanTime</code> upper bound value
+	 * @param <code>greaterThanTime</code> lower bound value
+	 * @param <code>preceed</code> String of text to preceed the statement in exception
 	 * @throws Passenger Exception
 	 */
 	private void checkBoundsTime(int lessThanTime, int greaterThanTime, String preceed) throws PassengerException {
