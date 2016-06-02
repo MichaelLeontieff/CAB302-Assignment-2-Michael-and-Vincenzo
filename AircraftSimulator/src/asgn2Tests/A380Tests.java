@@ -25,7 +25,9 @@ import asgn2Passengers.*;
  */
 public class A380Tests {
 	
-	// Declare constants
+	/*
+	 *  Declare constants
+	 */
 	private static final String TEST_FLIGHT_CODE = "LAX123";
 	private static final int TEST_BOOKING_TIME = 5;
 	private static final int TEST_DEPART_TIME = 20;
@@ -43,7 +45,9 @@ public class A380Tests {
 	private static final int MULTIPLE_SEATS = 5;
 	private static final int FIRST_INDEX = 0;
 	
-	// Declare test objects
+	/*
+	 *  Declare test objects
+	 */
 	private Aircraft exceptionTestObject;
 	private Aircraft cancelBookingTest;
 	private Aircraft generalTester;
@@ -76,6 +80,11 @@ public class A380Tests {
 	
 	// CONSTRUCTOR TESTS
 	
+	/**
+	 * Test methods for {@link asgn2Aircraft.A380#A380()}.
+	 * 
+	 * @throws AircraftException
+	 */	
 	@Test
 	public void ValidParametersExceptionTest() throws AircraftException {
 		exceptionTestObject = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME);
@@ -124,6 +133,12 @@ public class A380Tests {
 	
 	// CANCEL BOOKING TESTS
 	
+	/**
+	 * Test methods for {@link asgn2Aircraft.A380#cancelBooking()}.
+	 * 
+	 * @throws AircraftException
+	 * @throws PassengerException
+	 */	
 	@Test
 	public void CancelBookingTestCheckBusinessNumberOfPassengersDecrementCount() throws PassengerException, AircraftException {
 		
@@ -278,6 +293,12 @@ public class A380Tests {
 	
 	// CONFIRM BOOKING TESTS
 	
+	/**
+	 * Test methods for {@link asgn2Aircraft.A380#confirmBooking()}.
+	 * 
+	 * @throws AircraftException
+	 * @throws PassengerException
+	 */		
 	@Test
 	public void ConfirmBookingTestCheckObjectInSeats() throws PassengerException, AircraftException {	
 		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 1, 1 );	
@@ -492,6 +513,12 @@ public class A380Tests {
 	
 	// FLIGHT EMPTY TESTS
 	
+	/**
+	 * Test methods for {@link asgn2Aircraft.A380#flightEmpty()}.
+	 * 
+	 * @throws AircraftException
+	 * @throws PassengerException
+	 */	
 	@Test
 	public void FlightEmptyEmptyTest() throws AircraftException {
 		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 1, 1 );
@@ -559,6 +586,12 @@ public class A380Tests {
 	
 	// FLIGHT FULL TESTS
 	
+	/**
+	 * Test methods for {@link asgn2Aircraft.A380#flightFull()}.
+	 * 
+	 * @throws AircraftException
+	 * @throws PassengerException
+	 */	
 	@Test
 	public void FlightFullNotFullTest() throws AircraftException {
 		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 1, 1 );
@@ -626,6 +659,12 @@ public class A380Tests {
 	
 	 // FLY PASSENGERS TESTS
 	
+	/**
+	 * Test methods for {@link asgn2Aircraft.A380#flyPassengers()}.
+	 * 
+	 * @throws AircraftException
+	 * @throws PassengerException
+	 */	
 	@Test
 	public void FlyPassengersCorrectStateChangeTest() throws AircraftException, PassengerException {	
 		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 1, 1 );			
@@ -693,6 +732,12 @@ public class A380Tests {
 	
 	// GET BOOKINGS TESTS
 	
+	/**
+	 * Test methods for {@link asgn2Aircraft.A380#getBookings()}.
+	 * 
+	 * @throws AircraftException
+	 * @throws PassengerException
+	 */	
 	@Test 
 	public void GetBookingsTestNumEconomy() throws AircraftException, PassengerException {
 		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 0, 0, 0, 1 );		
@@ -836,6 +881,12 @@ public class A380Tests {
 	
 	// GET PASSENGERS TESTS
 	
+	/**
+	 * Test methods for {@link asgn2Aircraft.A380#getPassengers()}.
+	 * 
+	 * @throws AircraftException
+	 * @throws PassengerException
+	 */	
 	@Test
 	public void GetPassengersTest() throws AircraftException, PassengerException {
 		List<Passenger> seats = new ArrayList<Passenger>();	
@@ -882,6 +933,12 @@ public class A380Tests {
 	
 	// HAS PASSENGER TESTS
 	
+	/**
+	 * Test methods for {@link asgn2Aircraft.A380#hasPassenger()}.
+	 * 
+	 * @throws AircraftException
+	 * @throws PassengerException
+	 */	
 	@Test
 	public void HasPassengerTrueTest() throws AircraftException, PassengerException {	
 		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 1, 1 );
@@ -916,6 +973,12 @@ public class A380Tests {
 	
 	// SEATS AVAILABLE TESTS
 	
+	/**
+	 * Test methods for {@link asgn2Aircraft.A380#seatsAvailable()}.
+	 * 
+	 * @throws AircraftException
+	 * @throws PassengerException
+	 */	
 	@Test
 	public void SeatsAvailableTrueFirstTest() throws AircraftException, PassengerException {		
 		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 1, 1 );	
@@ -1038,6 +1101,12 @@ public class A380Tests {
 	
 	// UPGRADE BOOKING TESTS
 	
+	/**
+	 * Test methods for {@link asgn2Aircraft.A380#upgradeBooking()}.
+	 * 
+	 * @throws AircraftException
+	 * @throws PassengerException
+	 */	
 	@Test
 	public void UpgradeBookingsFromEconomyTestPremiumCounter() throws AircraftException, PassengerException { 
 		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 0, 0, 1, 1 );

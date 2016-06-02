@@ -22,7 +22,9 @@ import asgn2Passengers.*;
  */
 public class PremiumTests {
 
-	// Declare constants
+	/*
+	 *  Declare constants
+	 */
 	private static final int TEST_BOOKING_TIME = 2;
 	private static final int TEST_DEPARTURE_TIME = 15;
 	private static final int TEST_CONFIRMATION_TIME = 8;
@@ -33,7 +35,9 @@ public class PremiumTests {
 	private static final int LESSER_DEPARTURE_TIME = 1;
 	
 
-	// Declare test objects 
+	/*
+	 *  Declare test objects 
+	 */
 	private Premium myPassenger;
 	private Premium testPassenger;
 	private Passenger upgradedPassenger;
