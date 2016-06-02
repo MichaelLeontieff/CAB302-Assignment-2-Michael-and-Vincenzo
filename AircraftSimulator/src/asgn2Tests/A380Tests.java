@@ -44,7 +44,6 @@ public class A380Tests {
 	private static final int FIRST_INDEX = 0;
 	
 	// Declare test objects
-	private Aircraft fieldTestObject;
 	private Aircraft exceptionTestObject;
 	private Aircraft cancelBookingTest;
 	private Aircraft generalTester;
