@@ -106,9 +106,9 @@ public class SimulationRunner {
 	 */
 	private static void printErrorAndExit() {
 		String str = "Usage: java asgn2Simulators.SimulationRunner [SIM Args]\n";
-		str += "SIM Args: seed maxQueueSize meanBookings sdBookings "; 
-		str += "firstProb businessProb premiumProb economyProb cancelProb\n";
-		str += "If no arguments, default values are used\n";
+		str += "An incorrect number of arguments have been supplied!\n";
+		str += "Either set the correct type and number of arguments or desert them";
+		str += " to run with the defaults.";
 		System.err.println(str);
 		System.exit(-1);
 	}
