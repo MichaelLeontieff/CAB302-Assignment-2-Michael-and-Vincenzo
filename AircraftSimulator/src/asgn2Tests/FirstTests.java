@@ -639,16 +639,6 @@ public class FirstTests {
 		assertEquals(TEST_REFUSAL_TIME, myPassenger.getExitQueueTime());
 	}
 
-	// GET PASSENGER ID TESTS
-
-	/**
-	 * Test method for {@link asgn2Passengers.Passenger#getPassID()}.
-	 */
-	@Test
-	public void testGetPassID() {	
-		assertEquals("F:104", myPassenger.getPassID());
-	} 
-
 	// IS CONFIRMED TESTS
 
 	/**
