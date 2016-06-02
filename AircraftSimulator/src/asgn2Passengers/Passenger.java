@@ -42,7 +42,8 @@ package asgn2Passengers;
  * {@link asgn2Passengers.PassengerException} is thrown if the state is inappropriate: see method javadoc for details. 
  * The method javadoc also indicates the constraints on the time and other parameters.<br><br>
  * 
- * @author hogan
+ * @author Michael Leontieff 
+ * @version 1.0
  *
  */
 public abstract class Passenger {
@@ -478,9 +479,12 @@ public abstract class Passenger {
 	//Various private helper methods to check arguments and throw exceptions
 	
 
-	/*
+	/**
 	 * Check boundaries of parameter in regards to zero
 	 * and throw exception
+	 * @param givenTime supplied time as integer
+	 * @param supplied String which gives content to given value
+	 * @param inclusive defines whether the value should include or exclude 0
 	 */
 	private void checkInvalidTimeParameter(int givenTime, String valueName, boolean inclusive) throws PassengerException {
 		if (inclusive) {
@@ -493,9 +497,14 @@ public abstract class Passenger {
 			}
 		}
 	}
-	/*
+	
+	/**
 	 * Private helper method to compare two parameters to see if the first is less than the other
 	 * and throw exception
+	 * @param lessThanTime upper bound value
+	 * @param greaterThanTime lower bound value
+	 * @param preceed String of text to preceed the statement in exception
+	 * @throws Passenger Exception
 	 */
 	private void checkBoundsTime(int lessThanTime, int greaterThanTime, String preceed) throws PassengerException {
 		if (lessThanTime < greaterThanTime) {

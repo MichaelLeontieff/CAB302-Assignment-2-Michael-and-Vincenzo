@@ -64,6 +64,16 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	private static final int FONT_SIZE = 24;
 	
 	private static final int TXT_LOGGING_OUTPUT_TAB = 0;
+	
+	private static final int RNG_INPUT_ARG = 0;
+	private static final int DAILY_MEAN_ARG = 2;
+	private static final int QUEUE_SIZE_ARG = 1;
+	private static final int FIRST_PROB_INPUT_ARG = 4;
+	private static final int BUSINESS_PROB_INPUT_ARG = 5;
+	private static final int PREMIUM_PROB_INPUT_ARG = 6;
+	private static final int ECONOMY_PROB_INPUT_ARG = 7;
+	private static final int CANCELLATION_INPUT_ARG = 8;
+	
 
 	/* tabbed pane
 	 * 
@@ -504,16 +514,12 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 				try {			
 					createSimulation();
 				} catch (AircraftException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				} catch (SimulationException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				} catch (PassengerException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
@@ -524,8 +530,7 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 			
 			if (src == btnShowBookingGraph) {
 				tabbedPane.setSelectedIndex(BOOKINGS_CHART);
-			}
-			
+			}	
 			if (src == btnShowQueueRefusedGraph) {
 				tabbedPane.setSelectedIndex(QUEUE_REFUSE_CHART);
 			}		
@@ -552,15 +557,15 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	 */
 	private void populateFieldsStringArguments(String[] args) {
 		// String arguments length validated before reaching here
-		txtRNGInput.setText(args[0]);
-		txtDailyMean.setText(args[2]);
-		txtQueueSize.setText(args[1]);
-		txtCancellation.setText(args[8]);
+		txtRNGInput.setText(args[RNG_INPUT_ARG]);
+		txtDailyMean.setText(args[DAILY_MEAN_ARG]);
+		txtQueueSize.setText(args[QUEUE_SIZE_ARG]);
+		txtCancellation.setText(args[CANCELLATION_INPUT_ARG]);
 		
-		txtFirst.setText(args[4]);
-		txtBusiness.setText(args[5]);
-		txtPremium.setText(args[6]);
-		txtEconomy.setText(args[7]);
+		txtFirst.setText(args[FIRST_PROB_INPUT_ARG]);
+		txtBusiness.setText(args[BUSINESS_PROB_INPUT_ARG]);
+		txtPremium.setText(args[PREMIUM_PROB_INPUT_ARG]);
+		txtEconomy.setText(args[ECONOMY_PROB_INPUT_ARG]);
 	}
 	
 	/**
@@ -705,8 +710,7 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	 * @throws Simulation Exception
 	 */
 	private void initialEntry(Simulator sim) throws SimulationException {
-		String timeLog = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
-		txtLoggingOutput.append( timeLog + ": Start of Simulation\n");
+		txtLoggingOutput.append( getCurrentTime() + ": Start of Simulation\n");
 		txtLoggingOutput.append(sim.toString() + "\n");
 		String capacities = sim.getFlights(Constants.FIRST_FLIGHT).initialState();
 		txtLoggingOutput.append(capacities);
@@ -718,9 +722,16 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	 * @param sim Simulator Object
 	 */
 	private void finalise(Simulator sim) {
-		String timeLog = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
-		txtLoggingOutput.append("\n" + timeLog + ": End of Simulation\n");
+		txtLoggingOutput.append("\n" + getCurrentTime() + ": End of Simulation\n");
 		txtLoggingOutput.append(sim.finalState());
+	}
+	
+	/**
+	 * Private helper method to return the current time for use in logging
+	 * @return
+	 */
+	private String getCurrentTime() {
+		return new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
 	}
 	
 	/**
