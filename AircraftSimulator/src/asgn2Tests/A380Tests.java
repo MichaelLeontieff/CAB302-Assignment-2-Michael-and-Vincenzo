@@ -42,8 +42,9 @@ public class A380Tests {
 	private static final int TWO_PASSENGERS = 2;
 	private static final int SINGLE_SEAT = 1;
 	private static final int MULTIPLE_PASSENGERS = 4;
-	private static final int MULTIPLE_SEATS = 5;
+	private static final int MULTIPLE_SEATS = 4;
 	private static final int FIRST_INDEX = 0;
+	private static final int TWO_SEATS_ADD_ONE_PASSENGER = 2;
 	
 	/*
 	 *  Declare test objects
@@ -641,7 +642,7 @@ public class A380Tests {
 
 	@Test
 	public void FlightFullNotFullTestUsingEachClassOfPassenger() throws AircraftException, PassengerException {
-		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 2, 3 );
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, TWO_SEATS_ADD_ONE_PASSENGER, TWO_SEATS_ADD_ONE_PASSENGER );
 		
 		testPassenger = new First(TEST_BOOKING_TIME, TEST_DEPART_TIME);
 		testPassengerTwo = new Business(TEST_BOOKING_TIME, TEST_DEPART_TIME);
@@ -772,7 +773,7 @@ public class A380Tests {
 	
 	@Test 
 	public void GetBookingsTestNumAvailable() throws AircraftException, PassengerException {		
-		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 2, 1 );		
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, TWO_SEATS_ADD_ONE_PASSENGER, 1 );		
 
 		Passenger FirstBookingTest = new First(TEST_BOOKING_TIME, TEST_DEPART_TIME);
 		Passenger EconomyBookingTest = new Economy(TEST_BOOKING_TIME, TEST_DEPART_TIME);
@@ -806,7 +807,8 @@ public class A380Tests {
 	
 	@Test 
 	public void GetBookingsTestNumAvailableMultipleSeatsAvailable() throws AircraftException, PassengerException {
-		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 2, 2, 2, 3 );		
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 
+				TWO_SEATS_ADD_ONE_PASSENGER, TWO_SEATS_ADD_ONE_PASSENGER, TWO_SEATS_ADD_ONE_PASSENGER, TWO_SEATS_ADD_ONE_PASSENGER );		
 
 		Passenger FirstBookingTest = new First(TEST_BOOKING_TIME, TEST_DEPART_TIME);
 		Passenger EconomyBookingTest = new Economy(TEST_BOOKING_TIME, TEST_DEPART_TIME);
@@ -823,7 +825,8 @@ public class A380Tests {
 
 	@Test 
 	public void GetBookingsTestNumTotalWithSeatsRemaining() throws AircraftException, PassengerException {
-		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 1, 2 );		
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 1, TWO_SEATS_ADD_ONE_PASSENGER );
+		
 		Passenger FirstBookingTest = new First(TEST_BOOKING_TIME, TEST_DEPART_TIME);
 		Passenger EconomyBookingTest = new Economy(TEST_BOOKING_TIME, TEST_DEPART_TIME);
 		Passenger PremiumBookingTest = new Premium(TEST_BOOKING_TIME, TEST_DEPART_TIME);
@@ -839,8 +842,7 @@ public class A380Tests {
 	
 	@Test 
 	public void GetBookingsTestNumTotalWithNoPassengers() throws AircraftException, PassengerException {	
-		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 1, 2 );		
-		Passenger FirstBookingTest = new First(TEST_BOOKING_TIME, TEST_DEPART_TIME);
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 1, TWO_SEATS_ADD_ONE_PASSENGER );		
 		assertEquals(ZERO_PASSENGERS, generalTester.getBookings().getTotal());
 	}
 	
@@ -1045,7 +1047,7 @@ public class A380Tests {
 
 	@Test
 	public void SeatsAvailableVacantSeatsFirstTest() throws AircraftException, PassengerException {	
-		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 2, 1, 1, 1 );	
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, TWO_SEATS_ADD_ONE_PASSENGER, 1, 1, 1 );	
 		testPassenger = new First(TEST_BOOKING_TIME, TEST_DEPART_TIME);
 		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);	
 		assertTrue(generalTester.seatsAvailable(testPassenger));	
@@ -1061,7 +1063,7 @@ public class A380Tests {
 
 	@Test
 	public void SeatsAvailableVacantSeatsBusinessTest() throws AircraftException, PassengerException {	
-		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 2, 1, 1 );
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, TWO_SEATS_ADD_ONE_PASSENGER, 1, 1 );
 		testPassenger = new Business(TEST_BOOKING_TIME, TEST_DEPART_TIME);
 		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);	
 		assertTrue(generalTester.seatsAvailable(testPassenger));	
@@ -1077,7 +1079,7 @@ public class A380Tests {
 
 	@Test
 	public void SeatsAvailableVacantSeatsPremiumTest() throws AircraftException, PassengerException {		
-		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 2, 1 );	
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, TWO_SEATS_ADD_ONE_PASSENGER, 1 );	
 		testPassenger = new Premium(TEST_BOOKING_TIME, TEST_DEPART_TIME);
 		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);	
 		assertTrue(generalTester.seatsAvailable(testPassenger));	
@@ -1093,7 +1095,7 @@ public class A380Tests {
 
 	@Test
 	public void SeatsAvailableVacantSeatsEconomyTest() throws AircraftException, PassengerException {	
-		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 1, 2 );
+		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 1, TWO_SEATS_ADD_ONE_PASSENGER );
 		testPassenger = new Economy(TEST_BOOKING_TIME, TEST_DEPART_TIME);
 		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);	
 		assertTrue(generalTester.seatsAvailable(testPassenger));	
@@ -1212,7 +1214,7 @@ public class A380Tests {
 		testPassenger = new First(TEST_BOOKING_TIME, TEST_DEPART_TIME);	
 		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);			
 		generalTester.upgradeBookings();	
-		assertEquals(1, generalTester.getNumFirst());
+		assertEquals(SINGLE_PASSENGER, generalTester.getNumFirst());
 	}
 
 	@Test
@@ -1230,6 +1232,6 @@ public class A380Tests {
 		testPassenger = new First(TEST_BOOKING_TIME, TEST_DEPART_TIME);
 		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);		
 		generalTester.upgradeBookings();
-		assertTrue(generalTester.getPassengers().get(0) instanceof First);
+		assertTrue(generalTester.getPassengers().get(FIRST_INDEX) instanceof First);
 	}
 }
