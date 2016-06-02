@@ -67,7 +67,7 @@ public class ChartPanel {
 	
 	/**
 	 * Constructor to instantiate obejcts required for chart creation
-	 * @param chartType defines the type of chart to construct
+	 * @param <code>chartType</code> defines the type of chart to construct
 	 */
 	public ChartPanel(int chartType) {
 		if (chartType == BOOKINGS_CHART) {
@@ -89,8 +89,8 @@ public class ChartPanel {
 	
 	/**
      * Helper method to deliver the Chart for Bookings- currently uses default colours and auto range 
-     * @param dataset TimeSeriesCollection for plotting 
-     * @returns chart to be added to panel 
+     * @param dataset <code>TimeSeriesCollection</code> for plotting 
+     * @returns <code>JFreeChart</code> to be added to panel 
      */
      private JFreeChart createChartBookings(final XYDataset dataset) {
         final JFreeChart result = ChartFactory.createTimeSeriesChart(
@@ -105,8 +105,8 @@ public class ChartPanel {
     
  	/**
       * Helper method to deliver the Chart for Queue Refused Passengers - currently uses default colours and auto range 
-      * @param dataset TimeSeriesCollection for plotting 
-      * @returns chart to be added to panel 
+      * @param dataset <code>TimeSeriesCollection</code> for plotting 
+      * @returns <code>JFreechart</code> to be added to panel 
       */
      private JFreeChart createChartQueuedRefused(final XYDataset dataset) {
          final JFreeChart result = ChartFactory.createTimeSeriesChart(
@@ -121,7 +121,7 @@ public class ChartPanel {
      
     /**
      * Create Bookings Chart 
-     * @return chart panel for adding into tabbed pane
+     * @return <code>ChartPanel</code> for adding into tabbed pane
      */
     public org.jfree.chart.ChartPanel createComponentBookings() {
     	return new org.jfree.chart.ChartPanel(createChartBookings(timeSeriesBookings));
@@ -129,7 +129,7 @@ public class ChartPanel {
     
     /**
      * Create Queued Refused Chart 
-     * @return chart panel for adding into tabbed pane
+     * @return <code>ChartPanel</code> for adding into tabbed pane
      */
     public org.jfree.chart.ChartPanel createComponentQueuedRefused() {
     	return new org.jfree.chart.ChartPanel(createChartQueuedRefused(timeSeriesQueuedRefused));
@@ -141,7 +141,7 @@ public class ChartPanel {
     
     /**
      * Method to add the time series to the Bookings Collection
-     * @param timePoint current timepoint in simulation
+     * @param <code>timePoint</code> current timepoint in simulation
      */
     public void addToTimeSeriesBookings(Date timePoint) {
     	busTotal.add(new Day(timePoint),business);
@@ -154,7 +154,7 @@ public class ChartPanel {
     
     /**
      * Method to add the time series to the Queued Refused Collection
-     * @param timePoint current timepoint in simulation
+     * @param <code>timePoint</code> current timepoint in simulation
      */
     public void addToTimeSeriesQueuedRefused(Date timePoint) {
     	refusedTotal.add(new Day(timePoint),refused);
@@ -163,7 +163,7 @@ public class ChartPanel {
     
     /**
      * Method to calculate and set the economy value through calculating the daily bookings from a cumulative input
-     * @param economy total number of bookings
+     * @param <code>economyTotal</code> number of bookings
      */
     public void setEconomy(int economy) {
     	economyPrev += this.economy;
@@ -172,7 +172,7 @@ public class ChartPanel {
     
     /**
      * Method to calculate and set the premium value through calculating the daily bookings from a cumulative input
-     * @param premium total number of bookings
+     * @param <code>premiumtotal</code> number of bookings
      */
     public void setPremium(int premium) {
     	premiumPrev += this.premium;
@@ -181,7 +181,7 @@ public class ChartPanel {
     
     /**
      * Method to calculate and set the business value through calculating the daily bookings from a cumulative input
-     * @param business total number of bookings
+     * @param <code>businessTotal</code> number of bookings
      */
     public void setBusiness(int business) {
     	businessPrev += this.business;
@@ -190,7 +190,7 @@ public class ChartPanel {
     
     /**
      * Method to calculate and set the first value through calculating the daily bookings from a cumulative input
-     * @param first total number of bookings
+     * @param <code>firstTotal</code> number of bookings
      */
     public void setFirst(int first) {
     	firstPrev += this.first;
@@ -199,7 +199,7 @@ public class ChartPanel {
     
     /**
      * Method to calculate and set the total value through calculating the daily bookings from a cumulative input
-     * @param total total number of bookings
+     * @param <code>total</code> number of bookings
      */
     public void setTotal(int total) {
     	totalPrev += this.total;
@@ -208,7 +208,7 @@ public class ChartPanel {
     
     /**
      * Method to calculate and set the empty value through calculating the daily bookings from a cumulative input
-     * @param empty total number of bookings
+     * @param <code>empty</code> total number of bookings
      */
     public void setEmpty(int empty) {
     	emptyPrev += this.empty;
@@ -217,7 +217,7 @@ public class ChartPanel {
     
     /**
      * Method to calculate and set the refused value through calculating the daily bookings from a cumulative input
-     * @param refused total number of bookings
+     * @param <code>refused</code> total number of bookings
      */
     public void setRefused(int refused) {
     	this.refused = refused;
@@ -225,7 +225,7 @@ public class ChartPanel {
     
     /**
      * Method to set the Queued value through parameter input
-     * @param queued current number of queued passengers
+     * @param <code>queued</code> current number of queued passengers
      */
     public void setQueued(int queued) {
     	this.queued = queued;
