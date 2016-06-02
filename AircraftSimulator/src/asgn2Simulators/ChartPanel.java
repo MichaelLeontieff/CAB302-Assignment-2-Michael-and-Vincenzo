@@ -1,3 +1,9 @@
+/**
+ * 
+ * This file is part of the AircraftSimulator Project, written as 
+ * part of the assessment for CAB302, semester 1, 2016. 
+ * 
+ */
 package asgn2Simulators;
 
 import java.util.Date;
@@ -21,6 +27,10 @@ public class ChartPanel {
 	
 	private static final int NUM_SEATS_A380 = 484;
 	private static final int NUM_SEATS_B747 = 353;
+	private static final int NUM_A380 = 2;
+	
+	private static final int BOOKINGS_CHART = 1;
+	private static final int QUEUE_REFUSE_CHART = 2;
 
 	private TimeSeriesCollection timeSeriesBookings;
 	private TimeSeriesCollection timeSeriesQueuedRefused;
@@ -55,23 +65,20 @@ public class ChartPanel {
 	private int totalPrev;
 	private int emptyPrev;
 	
-	private static final int BOOKINGS_CHART = 1;
-	private static final int QUEUE_REFUSE_CHART = 2;
-	
 	/**
 	 * Constructor to instantiate obejcts required for chart creation
 	 * @param chartType defines the type of chart to construct
 	 */
 	public ChartPanel(int chartType) {
 		if (chartType == BOOKINGS_CHART) {
-			timeSeriesBookings = new TimeSeriesCollection(); 
-			
+			timeSeriesBookings = new TimeSeriesCollection(); 	
 			econTotal = new TimeSeries("Economy"); 
 			busTotal = new TimeSeries("Business");
 			firstTotal = new TimeSeries("First"); 
 			premiumTotal = new TimeSeries("Premium"); 
 			totalTotal = new TimeSeries("Total Bookings"); 
 			seatsAvailTotal = new TimeSeries("Seats Available");
+			
 		} else if (chartType == QUEUE_REFUSE_CHART){
 			timeSeriesQueuedRefused = new TimeSeriesCollection(); 
 			refusedTotal = new TimeSeries("Refused");
@@ -225,7 +232,7 @@ public class ChartPanel {
     }
     
     public void setEmpty() {
-    	this.empty = ((NUM_SEATS_A380 * 2) + NUM_SEATS_B747) - first - business - premium - economy;
+    	this.empty = ((NUM_SEATS_A380 * NUM_A380) + NUM_SEATS_B747) - first - business - premium - economy;
     }
     
     /**
