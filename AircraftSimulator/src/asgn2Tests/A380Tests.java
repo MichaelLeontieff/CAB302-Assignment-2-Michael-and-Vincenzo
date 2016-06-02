@@ -42,15 +42,11 @@ public class A380Tests {
 	private static final int MULTIPLE_PASSENGERS = 4;
 	private static final int MULTIPLE_SEATS = 4;
 	private static final int FIRST_INDEX = 0;
-<<<<<<< HEAD
 	private static final int TWO_SEATS_ADD_ONE_PASSENGER = 2;
 	
 	/*
 	 *  Declare test objects
 	 */
-=======
-
->>>>>>> 4983ca1dd1bbfbb86e15a51626d7a31479bc15cd
 	private Aircraft exceptionTestObject;
 	private Aircraft cancelBookingTest;
 	private Aircraft generalTester;
