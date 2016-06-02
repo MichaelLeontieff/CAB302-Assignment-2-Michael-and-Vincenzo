@@ -37,6 +37,10 @@ import asgn2Simulators.Log;
 public abstract class Aircraft {
 	
 	private static final int EMPTY_SEATS = 0;
+	private static final int BUSINESS_PASSENGER = 0;
+	private static final int PREMIUM_PASSENGER = 1;
+	private static final int ECONOMY_PASSENGER = 2;
+	private static final int PASSENGER_CLASS = 3;
 
 	protected int firstCapacity;
 	protected int businessCapacity;
@@ -336,36 +340,18 @@ public abstract class Aircraft {
 	 * where possible to Premium.  
 	 */
 	public void upgradeBookings() { 
-		//ArrayList<Passenger> toRemove = new ArrayList<Passenger>();
-		//ArrayList<Passenger> toAdd = new ArrayList<Passenger>();
-		for (int i = 0; i < 3; i++) {
+		for (int i = BUSINESS_PASSENGER; i < PASSENGER_CLASS; i++) {
 			for (Passenger p : this.seats) {
-				if (((i == 0) && (p instanceof Business) && (numFirst < firstCapacity)) ||
-						((i == 1) && (p instanceof Premium) && (numBusiness < businessCapacity)) ||
-						(( i == 2) && (p instanceof Economy) && (numPremium < premiumCapacity))) {
-					//add something here to add and remove passengers
-					//Passenger upgrade = p.upgrade();
-					//this.seats.remove(p);
-					//this.seats.add(upgrade);
-					//toRemove.add(p);
-					//toAdd.add(upgrade);
-					p.upgrade();
-					if (i == 0) {
-						numBusiness--;
-						numFirst++;
-					}
-					else if (i == 1) {
-						numPremium--;
-						numBusiness++;
-					}
-					else if (i == 2) {
-						numEconomy--;
-						numPremium++;
-					}
+				if ((i == BUSINESS_PASSENGER) && (p instanceof Business) && (numFirst < firstCapacity)) {
+					upgradeBusiness(p);
+				}
+				else if ((i == PREMIUM_PASSENGER) && (p instanceof Premium) && (numBusiness < businessCapacity)) {
+					upgradePremium(p);
+				}
+				else if ((i == ECONOMY_PASSENGER) && (p instanceof Economy) && (numPremium < premiumCapacity)) {
+					upgradeEconomy(p);
 				}
 			}
-			//this.seats.removeAll(toRemove);
-			//this.seats.addAll(toAdd);
 		}
 	}
 
@@ -512,5 +498,41 @@ public abstract class Aircraft {
 		} else {
 			this.numEconomy--;
 		}
+	}
+	
+	/**
+	 * Helper method to upgrade a Business passenger to First class and increment or decrement
+	 * the relevant counts 
+	 * 
+	 * @param p <code>Passenger</code> whose fare class and counts will be updated
+	 */
+	private void upgradeBusiness(Passenger p) {
+		Passenger upgrade = p.upgrade();
+		numBusiness--;
+		numFirst++;
+	}
+	
+	/**
+	 * Helper method to upgrade a Premium passenger to Business class and increment or decrement
+	 * the relevant counts 
+	 * 
+	 * @param p <code>Passenger</code> whose fare class and counts will be updated
+	 */
+	private void upgradePremium(Passenger p) {
+		Passenger upgrade = p.upgrade();
+		numPremium--;
+		numBusiness++;
+	}
+	
+	/**
+	 * Helper method to upgrade an Economy passenger to Premium class and increment or decrement
+	 * the relevant counts 
+	 * 
+	 * @param p <code>Passenger</code> whose fare class and counts will be updated
+	 */
+	private void upgradeEconomy(Passenger p) {
+		Passenger upgrade = p.upgrade();
+		numEconomy--;
+		numPremium++;
 	}
 }
