@@ -545,8 +545,7 @@ public class FirstTests {
 	@Test(expected = PassengerException.class)
 	public void testFlyPassengerDepartureTimeLessThanZero() throws PassengerException {
 		myPassenger.confirmSeat(TEST_CONFIRMATION_TIME, TEST_DEPARTURE_TIME);
-		myPassenger.flyPassenger(NEGATIVE_PARAMETER);
-		
+		myPassenger.flyPassenger(NEGATIVE_PARAMETER);	
 	}
 
 	// GET BOOKING TIME TESTS

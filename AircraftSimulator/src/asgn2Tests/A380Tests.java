@@ -1612,17 +1612,4 @@ public class A380Tests {
 		assertTrue(generalTester.getPassengers().contains(testPassenger));
 	}
 
-	@Test
-	public void UpgradeBookingsFromFirstTestContainmentAndInstanceType() throws AircraftException, PassengerException {
-		// create aircraft with upgrade space
-		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 0, 0 );
-		// create first passenger
-		testPassenger = new First(TEST_BOOKING_TIME, TEST_DEPART_TIME);
-		// confirm booking
-		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);		
-		// upgrade to First
-		generalTester.upgradeBookings();
-		// passenger should remain as a First instance
-		assertTrue(generalTester.getPassengers().get(0) instanceof First);
-	}
 }
