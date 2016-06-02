@@ -783,7 +783,7 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	private void checkSumProbabilities(Double first, Double business, Double premium, Double economy) {
 		if (first + business + premium + economy > 1) {
 			isValidInput = false;
-			txtLoggingOutput.append("Sum of Class Probabilities must be equal to or less than one!\n");
+			txtLoggingOutput.setText("Sum of Class Probabilities must be equal to or less than one!\n");
 		}
 	}
 	
@@ -794,7 +794,7 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 	private void checkProbabilityInput(Double value) {
 		if (value > 1) {
 			isValidInput = false;
-			txtLoggingOutput.append("Cancellation Probability must be equal to or less than one!\n");
+			txtLoggingOutput.setText("Cancellation Probability must be equal to or less than one!\n");
 		}
 	}
 	
@@ -810,11 +810,11 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 		try {
 		  value = Double.parseDouble(input);
 		} catch(NumberFormatException e) {
-			txtLoggingOutput.append(name + " Could not be passed to Double\n");
+			txtLoggingOutput.setText(name + " Could not be passed to Double\n");
 			isValidInput = false;
 		}
 		if (value < 0) {
-			txtLoggingOutput.append(name + " is less than zero\n");
+			txtLoggingOutput.setText(name + " is less than zero\n");
 		}
 		return value;
 	}
@@ -831,7 +831,7 @@ public class GUISimulator extends JFrame implements Runnable, ActionListener {
 		try {
 		  value = Integer.parseInt(input);
 		} catch(NumberFormatException e) {
-			txtLoggingOutput.append(name + " Could not be passed to Integer\n");
+			txtLoggingOutput.setText(name + " Could not be passed to Integer\n");
 			isValidInput = false;
 		}
 		if (value < 0) {
