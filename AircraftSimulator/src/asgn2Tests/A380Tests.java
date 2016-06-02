@@ -1184,30 +1184,12 @@ public class A380Tests {
 	}
 
 	@Test
-	public void UpgradeBookingsFromEconomyTestCheckContainmentAndInstanceType() throws AircraftException, PassengerException { 
-		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 0, 0, 1, 1 );		
-		testPassenger = new Economy(TEST_BOOKING_TIME, TEST_DEPART_TIME);		
-		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);				
-		generalTester.upgradeBookings();
-		assertTrue(generalTester.getPassengers().get(0) instanceof Premium);
-	}
-
-	@Test
 	public void UpgradeBookingsFromPremiumTestPremiumCounter() throws AircraftException, PassengerException {	 
 		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 0, 1, 1, 0 );	
 		testPassenger = new Premium(TEST_BOOKING_TIME, TEST_DEPART_TIME);	
 		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);			
 		generalTester.upgradeBookings();
-		assertEquals(0, generalTester.getNumPremium());
-	}
-
-	@Test
-	public void UpgradeBookingsFromPremiumTestContainmentAndInstanceType() throws AircraftException, PassengerException {
-		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 0, 1, 1, 0 );
-		testPassenger = new Premium(TEST_BOOKING_TIME, TEST_DEPART_TIME);
-		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);		
-		generalTester.upgradeBookings();
-		assertTrue(generalTester.getPassengers().get(0) instanceof Business);
+		assertEquals(ZERO_PASSENGERS, generalTester.getNumPremium());
 	}
 
 	@Test
@@ -1216,16 +1198,7 @@ public class A380Tests {
 		testPassenger = new Business(TEST_BOOKING_TIME, TEST_DEPART_TIME);
 		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);			
 		generalTester.upgradeBookings();
-		assertEquals(0, generalTester.getNumBusiness());
-	}
-
-	@Test
-	public void UpgradeBookingsFromBusinessTestContainmentAndInstanceType() throws AircraftException, PassengerException {
-		generalTester = new A380(TEST_FLIGHT_CODE, TEST_DEPART_TIME, 1, 1, 0, 0 );
-		testPassenger = new Business(TEST_BOOKING_TIME, TEST_DEPART_TIME);	
-		generalTester.confirmBooking(testPassenger, TEST_CONFIRM_TIME);			
-		generalTester.upgradeBookings();
-		assertTrue(generalTester.getPassengers().get(0) instanceof First);
+		assertEquals(ZERO_PASSENGERS, generalTester.getNumBusiness());
 	}
 
 	@Test
